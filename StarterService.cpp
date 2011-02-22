@@ -32,9 +32,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.12  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
 // Revision 3.11  2010/10/08 08:48:50  pascal_verdier
 // Include files order changed.
 //

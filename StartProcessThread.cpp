@@ -1,7 +1,7 @@
 static const char *RcsId = "$Header$";
 //+=============================================================================
 //
-// file :         StartProcessThread.cpp
+// file :         Starter.cpp
 //
 // description :  C++ source for the Starter start process thread.
 //
@@ -32,12 +32,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.23  2010/10/18 12:58:52  pascal_verdier
-// Pogo-7 compatibility
-//
-// Revision 3.22  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
 // Revision 3.21  2010/10/08 08:48:50  pascal_verdier
 // Include files order changed.
 //
@@ -369,21 +363,19 @@ string StartWinThread::get_server_name_with_cotes(string servname)
 	string::size_type	pos = servname.find_last_of("/\\");
 	if (pos!=string::npos)
 	{
+		/*
 		string	str("\"");
 		str += servname.substr(0, pos);
 		str += "\"";
 		str += servname.substr(pos);
 		
-		return str;
-		
-		/*
 		string	str("\"");
 		str += servname;
 		str += "\"";
-
-		string	str("c:\\\"Program Files\"\\Tango\\notify_daemon.bat");
 		return str;
 		*/
+		string	str("c:\\\"Program Files\"\\Tango\\notify_daemon.bat");
+		return str;
 	}
 	else
 		return servname;

@@ -32,12 +32,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.28  2010/10/18 12:58:52  pascal_verdier
-// Pogo-7 compatibility
-//
-// Revision 3.27  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
 // Revision 3.26  2010/10/08 08:48:50  pascal_verdier
 // Include files order changed.
 //
@@ -430,11 +424,11 @@ void StarterUtil::manage_log_file_history(char *filename, int nb_max)
 	
 	//	Get the log file list
 	vector<string>	list =  get_log_file_list(log_file);
-	for (unsigned int i=0 ; i<list.size() ; i++)
+	for (int i=0 ; i<list.size() ; i++)
 		cout << list[i] << endl;
 	
 	//	Check if too much files -> delete
-	while (list.size()>((unsigned int)nb_max-1))	//	-1 because a new one will exist bellow
+	while (list.size()>(nb_max-1))	//	-1 because a new one will exist bellow
 	{
 		cout << "Removing " << list[0] << endl;
 		if (remove(list[0].c_str())<0)
@@ -655,10 +649,7 @@ vector<string>	StarterUtil::get_host_ds_list()
 				//	Get process name only in lower case before compeare
 				string	s = (*pos).substr(0, idx);
 				transform(s.begin(), s.end(), s.begin(), ::tolower);
-				if (s=="starter"  ||
-					s=="databaseds" ||
-					s=="tangoaccesscontrol" ||
-					s=="logconsumer")
+				if (s=="starter"  ||  s=="databaseds" || s=="logconsumer")
 				{
 					tmp.erase(pos);
 					pos--;	//	because erase decrease size !
@@ -673,6 +664,7 @@ vector<string>	StarterUtil::get_host_ds_list()
 	cout << servnames.size() << " servers found" << endl;
 	for (unsigned int j=0 ; j<servnames.size() ; j++)
 		cout << "\t" <<  servnames[j]	<< endl;
+
 	return servnames;
 }
 //+------------------------------------------------------------------
@@ -740,10 +732,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
 			//	Get process name only in lower case before compeare
 			string	s = (*pos).substr(0, idx);
 			transform(s.begin(), s.end(), s.begin(), ::tolower);
-			if (s!="starter"            &&
-				s!="databaseds"         &&
-				s!="tangoaccesscontrol" &&
-				s!="logconsumer")
+			if (s!="starter"  &&  s!="databaseds" && s!="logconsumer")
 			{
 				result.push_back(*pos);		//	Server name
 				result.push_back(*(pos+1));	//	Controlled/Not Controlled

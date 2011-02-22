@@ -1,4 +1,3 @@
-/*----- PROTECTED REGION ID(ClassFactory.cpp) ENABLED START -----*/
 static const char *RcsId = "$Header$";
 //+=============================================================================
 //
@@ -36,9 +35,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.5  2010/10/15 06:21:07  pascal_verdier
-// Copyright added.
-//
 // Revision 3.4  2010/09/21 12:18:58  pascal_verdier
 // GPL Licence added to header.
 //
@@ -103,4 +99,3 @@ void Tango::DServer::class_factory()
 	add_class(Starter_ns::StarterClass::init("Starter"));
 
 }
-/*----- PROTECTED REGION END -----*/

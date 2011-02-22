@@ -32,9 +32,6 @@
 // $Revision$
 //
 // $Log$
-// Revision 3.2  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
 // Revision 3.1  2010/09/21 12:18:58  pascal_verdier
 // GPL Licence added to header.
 //
