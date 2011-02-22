@@ -1,0 +1,109 @@
+                     Tango Database server README
+                     ============================
+ 
+This file contains information on installing/upgrading the Tango database
+server. This guide assumes that a MySQL daemon runs on the machine you
+want to install the database and that the DB server has history capabilities
+(Release_2_9 or higher).
+Note: You need jive 3.3 or higher to be able to access history.
+
+------------------------------------------------------------------------
+Starting from scratch
+------------------------------------------------------------------------
+
+#Launch the mysql client
+
+mysql -u[user] -p[password]
+
+#Create the tango scheme, add the declaration of the DB server and
+#initialise history tables.
+
+mysql>source tango_create.sql
+
+# Set-up the environment variables MYSQL_USER and MYSQL_PASSWORD
+# or prepare the my.cnf (mysql configuration file) file to specify 
+# the mysql user and its password to be used to connect to the database.
+
+# The user is root without a password
+export MYSQL_USER=root
+
+#Now, you should be able to launch the DB server
+
+Databaseds 2 -ORBendPoint giop:tcp:[hostname]:[port]
+
+#To test if the DB server is working fine, you can launch jive
+
+export TANGO_HOST=[hostname]:[port]
+jive
+
+
+------------------------------------------------------------------------
+How to upgrade the DB scheme. This section descrbies what you have to do 
+if you already use a DB server running with an old scheme (without history 
+tables)
+------------------------------------------------------------------------
+
+#Launch the mysql client
+
+mysql -u[user] -p[password]
+
+#Check if the database scheme has already history tables
+
+mysql>show tables;
+
+#If the scheme already has history tables, you should see the 6 following 
+#tables
++--------------------------------+
+| Tables_in_tango                |
++--------------------------------+
+| ...                            |
+| history_ids                    |
+| property_attribute_class_hist  |
+| property_attribute_device_hist |
+| property_class_hist            |
+| property_device_hist           |
+| property_hist                  |
+| ...                            |
++--------------------------------+
+
+#Note: If your database server stops with the following exception,that means 
+#that you don't have the correct scheme.
+
+Received a CORBA::Exception
+Tango exception
+Severity = ERROR
+Error reason = DB_SQLError
+Desc : Failed to query TANGO database (error=Table 'tango.property_device_hist' doesn't exist)
+Origin : DataBase::check_history_tables()
+
+#If you don't have the history scheme:
+#Use the db_init_history program to create/initialise history tables.
+#This program will create and fill the history tables with the current 
+#dababase property values (to initialize the first value of the 
+#property history). This tool does not affect old tables, that means 
+#that even if you run this tool, you will still be able to launch
+#an old release of the DB server.
+
+db_init_history [user] [password]
+
+#Now, you should be able to launch the DB server
+
+Databaseds 2 -ORBendPoint giop:tcp:[hostname]:[port]
+
+#To test if the DB server is working fine, you can launch jive
+
+export TANGO_HOST=[hostname]:[port]
+jive
+
+
+------------------------------------------------------------------------
+How to change the history depth (Number of value kept in the property history)
+------------------------------------------------------------------------
+
+You can set the property history depth by setting the "historyDepth" device 
+property of the DB server. The default value is 10.
+Note that you have to launch the DB server in order to be able to configure 
+this property with Jive and then to restart the DB server to take change into
+account.
+
+

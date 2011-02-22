@@ -1,0 +1,484 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<Title> Tango Device Server User's Guide </Title>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#7F00FF" ALINK="#FF0000">
+
+<P><!-------TITLE------></P>
+
+<TABLE BORDER="0" WIDTH="100%">
+    <TR>
+        <TD ALIGN="left">
+			<A HREF="http://www.esrf.fr/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0 Height="60"></A>
+		</Td>
+        <TD ALIGN="center">
+			<A HREF="http://www.elettra.trieste.it/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0 Height="60"></A>
+
+		</Td>
+        <TD ALIGN="center">
+			<A HREF="http://www.synchrotron-soleil.fr/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0 Height="60"></A>
+		</Td>
+        <TD ALIGN="right">
+			<A HREF="http://www.cells.es/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/alba.jpg" BORDER=0 Height="54"></A>
+		</Td>
+        <TD ALIGN="right">
+			<A HREF="http://www.desy.de/html/home/index_eng.html" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/desy.gif" BORDER=0 Height="60"></A>
+		</Td>
+    	 <Td>
+			<H2><FONT COLOR="#7F00FF">
+			<Center><A HREF="http://www.tango-controls.org/" TARGET="_top">
+					 TANGO </a> <Br> Device Server
+			</Center></FONT>
+		</Td>
+    </TR>
+</TABLE>
+
+<HR WIDTH="100%"></H5>
+<Br>
+<center>
+<h1>
+TANGO Device Server for testing generic clients		<Br>
+Device Commands Description 		<Br> <Br>
+TangoTest Class	<Br>
+</h1>
+<b>
+Revision:  - Author: taurel
+</b>
+</center>
+
+
+<Br>
+<Br>
+<Br>
+<A NAME="Init"><!-- --></A>
+<A NAME="Init"><!-- --></A>
+<h2>1 - Init</h2>
+<ul>
+<Li><Strong>Description: </Strong> This commands re-initialise a device keeping the same network connection.<Br>
+After an Init command executed on a device, it is not necessary for client to re-connect to the device.<Br>
+This command first calls the device <i> delete_device() </i>method and then execute its <i> init_device()</i> method.<Br>
+For C++ device server, all the memory allocated in the <i> nit_device() </i> method must be freed in the <i> delete_device() </i> method.<Br>
+The language device desctructor automatically calls the <i> delete_device() </i> method.<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : none.<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_VOID</Strong>
+ : none.<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::FAULT<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="State"><!-- --></A>
+<A NAME="State"><!-- --></A>
+<h2>2 - State</h2>
+<ul>
+<Li><Strong>Description: </Strong> This command gets the device state (stored in its <i>device_state</i> data member) and returns it to the caller.<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : none.<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_STATE</Strong>
+ : State Code<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::FAULT<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="Status"><!-- --></A>
+<A NAME="Status"><!-- --></A>
+<h2>3 - Status</h2>
+<ul>
+<Li><Strong>Description: </Strong> This command gets the device status (stored in its <i>device_status</i> data member) and returns it to the caller.<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : none.<Br>&nbsp
+<Li><Strong>Argout:<Br>CONST_DEV_STRING</Strong>
+ : Status description<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::FAULT<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevBoolean"><!-- --></A>
+<A NAME="DevBoolean"><!-- --></A>
+<h2>4 - DevBoolean</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevBoolean comand example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_BOOLEAN</Strong>
+ : Any boolean value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_BOOLEAN</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevDouble"><!-- --></A>
+<A NAME="DevDouble"><!-- --></A>
+<h2>5 - DevDouble</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevDouble command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_DOUBLE</Strong>
+ : Any DevDouble value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_DOUBLE</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevFloat"><!-- --></A>
+<A NAME="DevFloat"><!-- --></A>
+<h2>6 - DevFloat</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevFloat command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_FLOAT</Strong>
+ : Any DevFloat value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_FLOAT</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevLong"><!-- --></A>
+<A NAME="DevLong"><!-- --></A>
+<h2>7 - DevLong</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevLong command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_LONG</Strong>
+ : Any DevLong value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_LONG</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::FAULT<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevLong64"><!-- --></A>
+<A NAME="DevLong64"><!-- --></A>
+<h2>8 - DevLong64</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevLong command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_LONG64</Strong>
+ : Any DevLong64 value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_LONG64</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::FAULT<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevShort"><!-- --></A>
+<A NAME="DevShort"><!-- --></A>
+<h2>9 - DevShort</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevShort command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_SHORT</Strong>
+ : Any DevShort value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_SHORT</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevString"><!-- --></A>
+<A NAME="DevString"><!-- --></A>
+<h2>10 - DevString</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_STRING</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_STRING</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevULong"><!-- --></A>
+<A NAME="DevULong"><!-- --></A>
+<h2>11 - DevULong</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevULong command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_ULONG</Strong>
+ : Any DevULong<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_ULONG</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevULong64"><!-- --></A>
+<A NAME="DevULong64"><!-- --></A>
+<h2>12 - DevULong64</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevULong64 command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_ULONG64</Strong>
+ : Any DevULong64 value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_ULONG64</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::FAULT<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevUShort"><!-- --></A>
+<A NAME="DevUShort"><!-- --></A>
+<h2>13 - DevUShort</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevUShort command example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_USHORT</Strong>
+ : Any DevUShort value<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_USHORT</Strong>
+ : Echo of the argin value<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarCharArray"><!-- --></A>
+<A NAME="DevVarCharArray"><!-- --></A>
+<h2>14 - DevVarCharArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_CHARARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_CHARARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarDoubleArray"><!-- --></A>
+<A NAME="DevVarDoubleArray"><!-- --></A>
+<h2>15 - DevVarDoubleArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_DOUBLEARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_DOUBLEARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarDoubleStringArray"><!-- --></A>
+<A NAME="DevVarDoubleStringArray"><!-- --></A>
+<h2>16 - DevVarDoubleStringArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_DOUBLESTRINGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_DOUBLESTRINGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarFloatArray"><!-- --></A>
+<A NAME="DevVarFloatArray"><!-- --></A>
+<h2>17 - DevVarFloatArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_FLOATARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_FLOATARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarLong64Array"><!-- --></A>
+<A NAME="DevVarLong64Array"><!-- --></A>
+<h2>18 - DevVarLong64Array</h2>
+<ul>
+<Li><Strong>Description: </Strong> <Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_LONG64ARRAY</Strong>
+ : <Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_LONG64ARRAY</Strong>
+ : <Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarLongArray"><!-- --></A>
+<A NAME="DevVarLongArray"><!-- --></A>
+<h2>19 - DevVarLongArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_LONGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_LONGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarLongStringArray"><!-- --></A>
+<A NAME="DevVarLongStringArray"><!-- --></A>
+<h2>20 - DevVarLongStringArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_LONGSTRINGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_LONGSTRINGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarShortArray"><!-- --></A>
+<A NAME="DevVarShortArray"><!-- --></A>
+<h2>21 - DevVarShortArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_SHORTARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_SHORTARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarStringArray"><!-- --></A>
+<A NAME="DevVarStringArray"><!-- --></A>
+<h2>22 - DevVarStringArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_STRINGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_STRINGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarULong64Array"><!-- --></A>
+<A NAME="DevVarULong64Array"><!-- --></A>
+<h2>23 - DevVarULong64Array</h2>
+<ul>
+<Li><Strong>Description: </Strong> <Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_ULONG64ARRAY</Strong>
+ : <Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_ULONG64ARRAY</Strong>
+ : <Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarULongArray"><!-- --></A>
+<A NAME="DevVarULongArray"><!-- --></A>
+<h2>24 - DevVarULongArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_ULONGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_ULONGARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVarUShortArray"><!-- --></A>
+<A NAME="DevVarUShortArray"><!-- --></A>
+<h2>25 - DevVarUShortArray</h2>
+<ul>
+<Li><Strong>Description: </Strong> none<Br>&nbsp
+<Li><Strong>Argin:<Br>DEVVAR_USHORTARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Argout:<Br>DEVVAR_USHORTARRAY</Strong>
+ : -<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="DevVoid"><!-- --></A>
+<A NAME="DevVoid"><!-- --></A>
+<h2>26 - DevVoid</h2>
+<ul>
+<Li><Strong>Description: </Strong> A DevVoid comand example<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : N/A<Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_VOID</Strong>
+ : N/A<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="SwitchStates"><!-- --></A>
+<A NAME="SwitchStates"><!-- --></A>
+<h2>27 - SwitchStates</h2>
+<ul>
+<Li><Strong>Description: </Strong> This command changes the device state from RUNNING to FAULT or from FAULT to RUNNING<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : <Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_VOID</Strong>
+ : <Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::RUNNING</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+
+<!--- html Footer --->
+
+<Center>
+<Font size=-1>
+<br>
+<br>
+<TABLE BORDER="1" WIDTH="100%">
+    <Tr>
+		<!--- Hosted by Sourceforge --->
+        <Td Align="Center">
+			<Font size=-1>
+			<b>TANGO</b> is an open source project hosted by :<br>
+			<A href="http://sourceforge.net" Target="new">
+					<IMG title="Sourceforge logo"
+						alt="Sourceforge logo small"
+						src="http://www.esrf.fr/computing/cs/tango/sourceforge.gif"
+						border=0> </a>
+			</Font>
+		</Td>
+		<!--- 2 Sourceforge Repositories --->
+		<Td Align="Center">
+			<Font size=-1>
+			Core and Tools :
+			<a href="http://tango-cs.cvs.sourceforge.net/tango-cs/" Target="new">
+			CVS repository</a> on
+			<a href="https://sourceforge.net/projects/tango-cs" Target=new>
+			tango-cs project</a>
+
+			<br>
+
+			Device Servers :
+			<a href="http://tango-ds.cvs.sourceforge.net/tango-ds/" Target="new">
+					CVS repository</a> on
+			<a href="https://sourceforge.net/projects/tango-ds" Target=new>
+					tango-ds project</a>
+			</Font>
+		</Td>
+    </Tr>
+</Table>
+</Font>
+</Center>
+</body>
+</html>

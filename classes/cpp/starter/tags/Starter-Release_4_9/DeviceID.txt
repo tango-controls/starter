@@ -1,0 +1,10 @@
+/**
+ * Device Class Identification:
+ * 
+ * Class Name   :	Starter
+ * Contact      :	verdier@esrf.fr
+ * Platform     :	All Platforms
+ * Bus          :	Not Applicable
+ * Manufacturer :	none
+ * Reference    :	
+ */

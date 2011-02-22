@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<Title> Tango Device Server User's Guide </Title>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#7F00FF" ALINK="#FF0000">
+
+<P><!-------TITLE------></P>
+
+<TABLE BORDER="0" WIDTH="100%">
+    <TR>
+        <TD ALIGN="left">
+			<A HREF="http://www.esrf.fr/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0 Height="60"></A>
+		</Td>
+        <TD ALIGN="center">
+			<A HREF="http://www.elettra.trieste.it/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0 Height="60"></A>
+
+		</Td>
+        <TD ALIGN="center">
+			<A HREF="http://www.synchrotron-soleil.fr/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0 Height="60"></A>
+		</Td>
+        <TD ALIGN="right">
+			<A HREF="http://www.cells.es/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/alba.jpg" BORDER=0 Height="54"></A>
+		</Td>
+        <TD ALIGN="right">
+			<A HREF="http://www.desy.de/html/home/index_eng.html" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/desy.gif" BORDER=0 Height="60"></A>
+		</Td>
+    	 <Td>
+			<H2><FONT COLOR="#7F00FF">
+			<Center><A HREF="http://www.tango-controls.org/" TARGET="_top">
+					 TANGO </a> <Br> Device Server
+			</Center></FONT>
+		</Td>
+    </TR>
+</TABLE>
+
+<HR WIDTH="100%"></H5>
+<Br>
+<center>
+<h1>
+TANGO Device Server for testing generic clients		<Br>
+Device Attributes Description 		<Br> <Br>
+TangoTest Class	<Br>
+</h1>
+<b>
+Revision:  - Author: taurel
+</b>
+</center>
+
+
+<Br>
+<Table Border=2 Cellpadding=3 CELLSPACING=0 WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td COLSPAN=5> <Font Size=+2><Center><b>Scalar Attributes</b></td></Font></Center>
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td><Center><b>Attribute name</b></td></Center>
+<Td><Center><b>Data Type</b></td></Center>
+<Td><Center><b>R/W Type</b></td></Center>
+<Td><Center><b>Ass. Attr.</b></td></Center>
+<Td><Center><b>Expert</b></td></Center>
+<Tr><Td><b>ampli</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>boolean_scalar</b>: <Font Size=-1>A boolean scalar attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_BOOLEAN</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_scalar_rww</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>READ_WITH_WRITE</Font></Center></Td><Td><Center><Font Size=-1>double_scalar_w</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_scalar_w</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>float_scalar</b>: <Font Size=-1>A float attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_FLOAT</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long64_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG64</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_scalar_rww</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>READ_WITH_WRITE</Font></Center></Td><Td><Center><Font Size=-1>long_scalar_w</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_scalar_w</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>no_value</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>READ</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_scalar_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>READ</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_scalar_rww</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>READ_WITH_WRITE</Font></Center></Td><Td><Center><Font Size=-1>short_scalar_w</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_scalar_w</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>string_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>throw_exception</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>READ</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>uchar_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_UCHAR</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ulong64_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_ULONG64</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ushort_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_USHORT</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ulong_scalar</b></Td>
+<Td><Center><Font Size=-1>DEV_ULONG</Font></Center></Td><Td><Center><Font Size=-1>READ_WRITE</Font></Center></Td><Td><Center> - </Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+</Table>
+</Center>
+<Br><Br><Br><Br><Br>
+<Table Border=2 Cellpadding=3 CELLSPACING=0 WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td COLSPAN=4> <Font Size=+2><Center><b>Spectrum Attributes</b></td></Font></Center>
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td><Center><b>Attribute name</b></td></Center>
+<Td><Center><b>Data Type</b></td></Center>
+<Td><Center><b>X Data Length</b></td></Center>
+<Td><Center><b>Expert</b></td></Center>
+<Tr><Td><b>boolean_spectrum</b></Td>
+<Td><Center><Font Size=-1>DEV_BOOLEAN</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>boolean_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_BOOLEAN</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_spectrum</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>float_spectrum</b>: <Font Size=-1>A float spectrum attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_FLOAT</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>float_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_FLOAT</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long64_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG64</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_spectrum</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_spectrum</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>string_spectrum</b></Td>
+<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>256</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>string_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>256</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>uchar_spectrum</b>: <Font Size=-1>An unsigned char spectrum attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_UCHAR</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>uchar_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_UCHAR</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ulong64_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_ULONG64</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ulong_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_ULONG</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ushort_spectrum</b>: <Font Size=-1>An unsigned short spectrum attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_USHORT</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ushort_spectrum_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_USHORT</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>wave</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>4096</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+</Table>
+</Center>
+<Br><Br><Br><Br><Br>
+<Table Border=2 Cellpadding=3 CELLSPACING=0 WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td COLSPAN=5> <Font Size=+2><Center><b>Image Attributes</b></td></Font></Center>
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td><Center><b>Attribute name</b></td></Center>
+<Td><Center><b>Data Type</b></td></Center>
+<Td><Center><b>X Data Length</b></td></Center>
+<Td><Center><b>Y Data Length</b></td></Center>
+<Td><Center><b>Expert</b></td></Center>
+<Tr><Td><b>boolean_image</b></Td>
+<Td><Center><Font Size=-1>DEV_BOOLEAN</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>boolean_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_BOOLEAN</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_image</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>double_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_DOUBLE</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>float_image</b></Td>
+<Td><Center><Font Size=-1>DEV_FLOAT</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>float_image_ro</b>: <Font Size=-1>A float image attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_FLOAT</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long64_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG64</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_image</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>long_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_LONG</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_image</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>short_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>string_image</b></Td>
+<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>256</Font></Center></Td><Td><Center><Font Size=-1>256</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>string_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>256</Font></Center></Td><Td><Center><Font Size=-1>256</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>uchar_image</b></Td>
+<Td><Center><Font Size=-1>DEV_UCHAR</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>uchar_image_ro</b>: <Font Size=-1>An unsigned char image attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_UCHAR</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ulong64_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_ULONG64</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ulong_image_ro</b></Td>
+<Td><Center><Font Size=-1>DEV_ULONG</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ushort_image</b></Td>
+<Td><Center><Font Size=-1>DEV_USHORT</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>251</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+<Tr><Td><b>ushort_image_ro</b>: <Font Size=-1>An unsigned short image attribute</Font></Td>
+<Td><Center><Font Size=-1>DEV_USHORT</Font></Center></Td><Td><Center><Font Size=-1>8192</Font></Center></Td><Td><Center><Font Size=-1>8192</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+
+</Table>
+</Center>
+
+<!--- html Footer --->
+
+<Center>
+<Font size=-1>
+<br>
+<br>
+<TABLE BORDER="1" WIDTH="100%">
+    <Tr>
+		<!--- Hosted by Sourceforge --->
+        <Td Align="Center">
+			<Font size=-1>
+			<b>TANGO</b> is an open source project hosted by :<br>
+			<A href="http://sourceforge.net" Target="new">
+					<IMG title="Sourceforge logo"
+						alt="Sourceforge logo small"
+						src="http://www.esrf.fr/computing/cs/tango/sourceforge.gif"
+						border=0> </a>
+			</Font>
+		</Td>
+		<!--- 2 Sourceforge Repositories --->
+		<Td Align="Center">
+			<Font size=-1>
+			Core and Tools :
+			<a href="http://tango-cs.cvs.sourceforge.net/tango-cs/" Target="new">
+			CVS repository</a> on
+			<a href="https://sourceforge.net/projects/tango-cs" Target=new>
+			tango-cs project</a>
+
+			<br>
+
+			Device Servers :
+			<a href="http://tango-ds.cvs.sourceforge.net/tango-ds/" Target="new">
+					CVS repository</a> on
+			<a href="https://sourceforge.net/projects/tango-ds" Target=new>
+					tango-ds project</a>
+			</Font>
+		</Td>
+    </Tr>
+</Table>
+</Font>
+</Center>
+</body>
+</html>

@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tangotest_shared", "tangotest_shared.vcproj", "{570AF151-36FC-4638-A23A-673975792A19}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tangotest_static", "tangotest_static.vcproj", "{A52909BB-E783-4522-BF2D-D9786023881D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{570AF151-36FC-4638-A23A-673975792A19}.Debug|Win32.ActiveCfg = Debug|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Debug|Win32.Build.0 = Debug|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Release|Win32.ActiveCfg = Release|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Release|Win32.Build.0 = Release|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Debug|Win32.Build.0 = Debug|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Release|Win32.ActiveCfg = Release|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

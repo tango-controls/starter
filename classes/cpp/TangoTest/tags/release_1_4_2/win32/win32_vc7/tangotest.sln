@@ -1,0 +1,46 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tangotest_shared", "tangotest_shared.vcproj", "{570AF151-36FC-4638-A23A-673975792A19}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tangotest_static", "tangotest_static.vcproj", "{A52909BB-E783-4522-BF2D-D9786023881D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{570AF151-36FC-4638-A23A-673975792A19}.Debug.ActiveCfg = Debug|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Debug.Build.0 = Debug|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Release.ActiveCfg = Release|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Release.Build.0 = Release|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Debug.ActiveCfg = Debug|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Debug.Build.0 = Debug|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Release.ActiveCfg = Release|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{570AF151-36FC-4638-A23A-673975792A19}.Debug|Win32.ActiveCfg = Debug|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Debug|Win32.Build.0 = Debug|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Release|Win32.ActiveCfg = Release|Win32
+		{570AF151-36FC-4638-A23A-673975792A19}.Release|Win32.Build.0 = Release|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Debug|Win32.Build.0 = Debug|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Release|Win32.ActiveCfg = Release|Win32
+		{A52909BB-E783-4522-BF2D-D9786023881D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+#
+TANGO_HOME=/segfs/tango
+export TANGO_HOME
+#
+MY_OS=`uname`
+export MY_OS
+#
+if [ $MY_OS = "SunOS" ]
+then
+	BIN_DIR=`/csadmin/common/scripts/get_os`_CC
+	LD_LIBRARY_PATH=/usr/dt/lib:/lib:/usr/lib:/usr/X11R5/lib:
+	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/openwin/lib:/usr/local/lib
+	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TANGO_HOME/lib/$BIN_DIR
+	export LD_LIBRARY_PATH
+fi
+#
+if [ $MY_OS = "Linux" ]
+then
+	BIN_DIR=`/csadmin/common/scripts/get_os`
+	LD_LIBRARY_PATH=/usr/dt/lib:/lib:/usr/lib:/usr/X11R5/lib:
+	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/openwin/lib:/usr/local/lib
+	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TANGO_HOME/lib/$BIN_DIR
+	LD_LIBRARY_PATH=$TANGO_HOME/lib/$BIN_DIR:$LD_LIBRARY_PATH
+	LD_LIBRARY_PATH=$TANGO_HOME/contrib/$BIN_DIR/gcc-3.2/lib:$LD_LIBRARY_PATH
+	LD_LIBRARY_PATH=/segfs/dserver/lib/$BIN_DIR:$LD_LIBRARY_PATH
+#	LD_LIBRARY_PATH=$TANGO_HOME/lib/$BIN_DIR_gcc32:$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH
+fi
+#
+echo $LD_LIBRARY_PATH
+HOST=`hostname`;	export HOST
+
+#export ORBtraceLevel=40
+
+echo "$BIN_DIR/Starter $HOST $1"
+
+#./$BIN_DIR/Starter $HOST $1 2>&1 |tee /segfs/tango/tmp/starter_splash
+
+./$BIN_DIR/Starter $HOST $1
+
+
+#$BIN_DIR/Starter splash -v4 >/tmp/pv 2>&1

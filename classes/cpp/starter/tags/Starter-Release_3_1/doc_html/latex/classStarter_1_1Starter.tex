@@ -1,0 +1,504 @@
+\section{Starter::Starter  Class Reference}
+\label{classStarter_1_1Starter}\index{Starter::Starter@{Starter::Starter}}
+Class Description: This device server is able to control {\bf Tango} components (database, device servers, clients...). 
+
+
+{\tt \#include $<$Starter.h$>$}
+
+\subsection*{Public Methods}
+\begin{CompactItemize}
+\item 
+void {\bf manage\_\-Polling\-State\_\-startup} ()
+\begin{CompactList}\small\item\em Manage the {\bf Polling\-State} {\rm (p.\,\pageref{classStarter_1_1PollingState})} object startup.\item\end{CompactList}\end{CompactItemize}
+\begin{Indent}{\bf Constructors}\par
+{\em Miscellaneous constructors}\begin{CompactItemize}
+\item 
+{\bf Starter} (Tango::Device\-Class $\ast$, string \&)
+\begin{CompactList}\small\item\em Constructs a newly allocated Command object.\item\end{CompactList}\item 
+{\bf Starter} (Tango::Device\-Class $\ast$, const char $\ast$)
+\begin{CompactList}\small\item\em Constructs a newly allocated Command object.\item\end{CompactList}\item 
+{\bf Starter} (Tango::Device\-Class $\ast$, const char $\ast$, const char $\ast$)
+\begin{CompactList}\small\item\em Constructs a newly allocated Command object.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Destructor}\par
+{\em Only one desctructor is defined for this class}\begin{CompactItemize}
+\item 
+{\bf $\sim$Starter} ()
+\begin{CompactList}\small\item\em The object desctructor.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Miscellaneous methods}\par
+\begin{CompactItemize}
+\item 
+virtual void {\bf init\_\-device} ()
+\begin{CompactList}\small\item\em Initialize the device.\item\end{CompactList}\item 
+virtual void {\bf always\_\-executed\_\-hook} ()
+\begin{CompactList}\small\item\em Always executed method befor execution command method.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Starter methods prototypes}\par
+\begin{CompactItemize}
+\item 
+virtual Tango::Dev\-State {\bf dev\_\-state} ()
+\begin{CompactList}\small\item\em method: Starter::dev\_\-state.\item\end{CompactList}\item 
+void {\bf dev\_\-start\_\-all} (Tango::Dev\-Short)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-start\_\-all.\item\end{CompactList}\item 
+void {\bf dev\_\-stop\_\-all} (Tango::Dev\-Short)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-stop\_\-all.\item\end{CompactList}\item 
+Tango::Dev\-Var\-String\-Array $\ast$ {\bf dev\_\-get\_\-running\_\-servers} (Tango::Dev\-Boolean)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-get\_\-running\_\-servers.\item\end{CompactList}\item 
+Tango::Dev\-Var\-String\-Array $\ast$ {\bf dev\_\-get\_\-stop\_\-servers} (Tango::Dev\-Boolean)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-get\_\-stop\_\-servers.\item\end{CompactList}\item 
+void {\bf dev\_\-start} (Tango::Dev\-String)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-start.\item\end{CompactList}\item 
+void {\bf dev\_\-stop} (Tango::Dev\-String)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-stop.\item\end{CompactList}\item 
+Tango::Const\-Dev\-String {\bf dev\_\-read\_\-log} (Tango::Dev\-String)
+\begin{CompactList}\small\item\em method: Starter::dev\_\-read\_\-log.\item\end{CompactList}\item 
+void {\bf update\_\-servers\_\-info} ()
+\begin{CompactList}\small\item\em method: Starter::update\_\-servers\_\-info.\item\end{CompactList}\item 
+void {\bf start\_\-polling\_\-thread} ()
+\begin{CompactList}\small\item\em method: Starter::start\_\-polling\_\-thread.\item\end{CompactList}\item 
+void {\bf get\_\-device\_\-property} ()
+\begin{CompactList}\small\item\em Read the device properties from database.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+{\bf Starter\-Util} $\ast$ {\bf util}
+\begin{CompactList}\small\item\em {\bf Starter\-Util} {\rm (p.\,\pageref{classStarter_1_1StarterUtil})} instance to be used everywhere.\item\end{CompactList}\item 
+{\bf Shared\-Data} $\ast$ {\bf shared}
+\begin{CompactList}\small\item\em State polling thread shared data.\item\end{CompactList}\item 
+{\bf Polling\-State} $\ast$ {\bf poller}
+\begin{CompactList}\small\item\em State polling thread.\item\end{CompactList}\item 
+omni\_\-thread $\ast$ {\bf polling\_\-id}
+\begin{CompactList}\small\item\em Polling thread ID.\item\end{CompactList}\item 
+vector$<$ {\bf Server\-Controled} $>$ {\bf servers}
+\begin{CompactList}\small\item\em Structures defining servers to be controlled.\item\end{CompactList}\item 
+Tango::Dev\-Boolean {\bf throwable}
+\begin{CompactList}\small\item\em Exception must be or not thrown.\item\end{CompactList}\item 
+string {\bf returned\_\-str}
+\begin{CompactList}\small\item\em Static string to be returned.\item\end{CompactList}\item 
+Tango::Device\-Proxy $\ast$ {\bf dbase}
+\begin{CompactList}\small\item\em Database device (as Device\-Proxy) for not implemented API commands.\item\end{CompactList}\end{CompactItemize}
+\begin{Indent}{\bf Device properties}\par
+{\em Device properties member data.}\begin{CompactItemize}
+\item 
+vector$<$ string $>$ {\bf start\-Ds\-Path}
+\begin{CompactList}\small\item\em Path to find executable files to start device servers.\item\end{CompactList}\item 
+Tango::Dev\-Short {\bf wait\-For\-Driver\-Startup}
+\begin{CompactList}\small\item\em The {\bf Starter} {\rm (p.\,\pageref{classStarter_1_1Starter})} will wait a bit before starting servers, to be sure than the drivers are started.This time is in seconds.\item\end{CompactList}\item 
+Tango::Dev\-Short {\bf disable\-Notify\-Daemon}
+\end{CompactItemize}
+\end{Indent}
+\subsection*{Protected Methods}
+\begin{Indent}{\bf private methods prototypes}\par
+\begin{CompactItemize}
+\item 
+const bool {\bf is\_\-running} ({\bf Server\-Controled} $\ast$)
+\begin{CompactList}\small\item\em Check if server running.\item\end{CompactList}\item 
+void {\bf get\_\-server\_\-info} ({\bf Server\-Controled} $\ast$)
+\begin{CompactList}\small\item\em Read DS info from database to know if it is controled and it's starting level.\item\end{CompactList}\item 
+void {\bf build\_\-server\_\-ctrl\_\-object} (void)
+\begin{CompactList}\small\item\em Allocate and fill the servers controled object.\item\end{CompactList}\item 
+void {\bf signal\_\-handler} (long)
+\begin{CompactList}\small\item\em signal handler for a server death.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+
+
+\subsection{Detailed Description}
+Class Description: This device server is able to control {\bf Tango} components (database, device servers, clients...).
+
+It is able to start or stop and to report the status of these components. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Starter::Starter@{Starter::Starter}!Starter@{Starter}}
+\index{Starter@{Starter}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Starter::Starter::Starter (Tango::Device\-Class $\ast$ {\em cl}, string \& {\em s})}\label{classStarter_1_1Starter_z2_0}
+
+
+Constructs a newly allocated Command object.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+cl}]Class. \item[{\em 
+s}]Device Name \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!Starter@{Starter}}
+\index{Starter@{Starter}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Starter::Starter::Starter (Tango::Device\-Class $\ast$ {\em cl}, const char $\ast$ {\em s})}\label{classStarter_1_1Starter_z2_1}
+
+
+Constructs a newly allocated Command object.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+cl}]Class. \item[{\em 
+s}]Device Name \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!Starter@{Starter}}
+\index{Starter@{Starter}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Starter::Starter::Starter (Tango::Device\-Class $\ast$ {\em cl}, const char $\ast$ {\em s}, const char $\ast$ {\em d})}\label{classStarter_1_1Starter_z2_2}
+
+
+Constructs a newly allocated Command object.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+cl}]Class. \item[{\em 
+s}]Device name \item[{\em 
+d}]Device description. \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!~Starter@{$\sim$Starter}}
+\index{~Starter@{$\sim$Starter}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Starter::Starter::$\sim$Starter ()\hspace{0.3cm}{\tt  [inline]}}\label{classStarter_1_1Starter_z3_0}
+
+
+The object desctructor.
+
+
+
+\subsection{Member Function Documentation}
+\index{Starter::Starter@{Starter::Starter}!always_executed_hook@{always\_\-executed\_\-hook}}
+\index{always_executed_hook@{always\_\-executed\_\-hook}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::always\_\-executed\_\-hook ()\hspace{0.3cm}{\tt  [virtual]}}\label{classStarter_1_1Starter_z4_1}
+
+
+Always executed method befor execution command method.
+
+\index{Starter::Starter@{Starter::Starter}!build_server_ctrl_object@{build\_\-server\_\-ctrl\_\-object}}
+\index{build_server_ctrl_object@{build\_\-server\_\-ctrl\_\-object}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::build\_\-server\_\-ctrl\_\-object (void)\hspace{0.3cm}{\tt  [protected]}}\label{classStarter_1_1Starter_z6_2}
+
+
+Allocate and fill the servers controled object.
+
+\index{Starter::Starter@{Starter::Starter}!dev_get_running_servers@{dev\_\-get\_\-running\_\-servers}}
+\index{dev_get_running_servers@{dev\_\-get\_\-running\_\-servers}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-String\-Array $\ast$ Starter::Starter::dev\_\-get\_\-running\_\-servers (Tango::Dev\-Boolean {\em all\_\-serv})}\label{classStarter_1_1Starter_z5_3}
+
+
+method: Starter::dev\_\-get\_\-running\_\-servers.
+
+And return the list of the processes which are really running. \begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]True for all servers. False for controled servers only. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+List of the processes which are running. \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_get_stop_servers@{dev\_\-get\_\-stop\_\-servers}}
+\index{dev_get_stop_servers@{dev\_\-get\_\-stop\_\-servers}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-String\-Array $\ast$ Starter::Starter::dev\_\-get\_\-stop\_\-servers (Tango::Dev\-Boolean {\em all\_\-serv})}\label{classStarter_1_1Starter_z5_4}
+
+
+method: Starter::dev\_\-get\_\-stop\_\-servers.
+
+And return the list of the processes which are not running. \begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]True for all servers. False for controled servers only. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+List of the processes which are not running. \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_read_log@{dev\_\-read\_\-log}}
+\index{dev_read_log@{dev\_\-read\_\-log}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Const\-Dev\-String Starter::Starter::dev\_\-read\_\-log (Tango::Dev\-String {\em argin})}\label{classStarter_1_1Starter_z5_7}
+
+
+method: Starter::dev\_\-read\_\-log.
+
+This command will read this file and return the read string from the file. \begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]server name and domain \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+ig {\bf Starter} {\rm (p.\,\pageref{classStarter_1_1Starter})}/corvus) \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_start@{dev\_\-start}}
+\index{dev_start@{dev\_\-start}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::dev\_\-start (Tango::Dev\-String {\em argin})}\label{classStarter_1_1Starter_z5_5}
+
+
+method: Starter::dev\_\-start.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Syntax to start the Tango component \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_start_all@{dev\_\-start\_\-all}}
+\index{dev_start_all@{dev\_\-start\_\-all}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::dev\_\-start\_\-all (Tango::Dev\-Short {\em level})}\label{classStarter_1_1Starter_z5_1}
+
+
+method: Starter::dev\_\-start\_\-all.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Startup level. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_state@{dev\_\-state}}
+\index{dev_state@{dev\_\-state}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-State Starter::Starter::dev\_\-state ()\hspace{0.3cm}{\tt  [virtual]}}\label{classStarter_1_1Starter_z5_0}
+
+
+method: Starter::dev\_\-state.
+
+\begin{Desc}
+\item[Returns: ]\par
+State Code \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_stop@{dev\_\-stop}}
+\index{dev_stop@{dev\_\-stop}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::dev\_\-stop (Tango::Dev\-String {\em argin})}\label{classStarter_1_1Starter_z5_6}
+
+
+method: Starter::dev\_\-stop.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]The Tango component to be stopped. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!dev_stop_all@{dev\_\-stop\_\-all}}
+\index{dev_stop_all@{dev\_\-stop\_\-all}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::dev\_\-stop\_\-all (Tango::Dev\-Short {\em level})}\label{classStarter_1_1Starter_z5_2}
+
+
+method: Starter::dev\_\-stop\_\-all.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Startup Level. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!get_device_property@{get\_\-device\_\-property}}
+\index{get_device_property@{get\_\-device\_\-property}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::get\_\-device\_\-property ()}\label{classStarter_1_1Starter_z5_10}
+
+
+Read the device properties from database.
+
+\index{Starter::Starter@{Starter::Starter}!get_server_info@{get\_\-server\_\-info}}
+\index{get_server_info@{get\_\-server\_\-info}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::get\_\-server\_\-info ({\bf Server\-Controled} $\ast$ {\em server})\hspace{0.3cm}{\tt  [protected]}}\label{classStarter_1_1Starter_z6_1}
+
+
+Read DS info from database to know if it is controled and it's starting level.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+devname}]device to get info. \item[{\em 
+server}]object to be updated from db read. \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!init_device@{init\_\-device}}
+\index{init_device@{init\_\-device}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::init\_\-device ()\hspace{0.3cm}{\tt  [virtual]}}\label{classStarter_1_1Starter_z4_0}
+
+
+Initialize the device.
+
+\index{Starter::Starter@{Starter::Starter}!is_running@{is\_\-running}}
+\index{is_running@{is\_\-running}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const bool Starter::Starter::is\_\-running ({\bf Server\-Controled} $\ast$ {\em server})\hspace{0.3cm}{\tt  [protected]}}\label{classStarter_1_1Starter_z6_0}
+
+
+Check if server running.
+
+Try to import his device administrator.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+devname}]Device name. \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!manage_PollingState_startup@{manage\_\-PollingState\_\-startup}}
+\index{manage_PollingState_startup@{manage\_\-PollingState\_\-startup}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::manage\_\-Polling\-State\_\-startup ()}\label{classStarter_1_1Starter_a0}
+
+
+Manage the {\bf Polling\-State} {\rm (p.\,\pageref{classStarter_1_1PollingState})} object startup.
+
+\index{Starter::Starter@{Starter::Starter}!signal_handler@{signal\_\-handler}}
+\index{signal_handler@{signal\_\-handler}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::signal\_\-handler (long {\em signo})\hspace{0.3cm}{\tt  [protected]}}\label{classStarter_1_1Starter_z6_3}
+
+
+signal handler for a server death.
+
+\index{Starter::Starter@{Starter::Starter}!start_polling_thread@{start\_\-polling\_\-thread}}
+\index{start_polling_thread@{start\_\-polling\_\-thread}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::start\_\-polling\_\-thread ()}\label{classStarter_1_1Starter_z5_9}
+
+
+method: Starter::start\_\-polling\_\-thread.
+
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{Starter::Starter@{Starter::Starter}!update_servers_info@{update\_\-servers\_\-info}}
+\index{update_servers_info@{update\_\-servers\_\-info}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Starter::Starter::update\_\-servers\_\-info ()}\label{classStarter_1_1Starter_z5_8}
+
+
+method: Starter::update\_\-servers\_\-info.
+
+The device server must read the database to update the servers info list. \begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+
+
+\subsection{Member Data Documentation}
+\index{Starter::Starter@{Starter::Starter}!dbase@{dbase}}
+\index{dbase@{dbase}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Device\-Proxy$\ast$ Starter::Starter::dbase}\label{classStarter_1_1Starter_m7}
+
+
+Database device (as Device\-Proxy) for not implemented API commands.
+
+\index{Starter::Starter@{Starter::Starter}!disableNotifyDaemon@{disableNotifyDaemon}}
+\index{disableNotifyDaemon@{disableNotifyDaemon}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short Starter::Starter::disable\-Notify\-Daemon}\label{classStarter_1_1Starter_z1_2}
+
+
+\index{Starter::Starter@{Starter::Starter}!poller@{poller}}
+\index{poller@{poller}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Polling\-State}$\ast$ Starter::Starter::poller}\label{classStarter_1_1Starter_m2}
+
+
+State polling thread.
+
+\index{Starter::Starter@{Starter::Starter}!polling_id@{polling\_\-id}}
+\index{polling_id@{polling\_\-id}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}omni\_\-thread$\ast$ Starter::Starter::polling\_\-id}\label{classStarter_1_1Starter_m3}
+
+
+Polling thread ID.
+
+\index{Starter::Starter@{Starter::Starter}!returned_str@{returned\_\-str}}
+\index{returned_str@{returned\_\-str}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}string Starter::Starter::returned\_\-str}\label{classStarter_1_1Starter_m6}
+
+
+Static string to be returned.
+
+\index{Starter::Starter@{Starter::Starter}!servers@{servers}}
+\index{servers@{servers}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Server\-Controled}$>$ Starter::Starter::servers}\label{classStarter_1_1Starter_m4}
+
+
+Structures defining servers to be controlled.
+
+\index{Starter::Starter@{Starter::Starter}!shared@{shared}}
+\index{shared@{shared}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Shared\-Data}$\ast$ Starter::Starter::shared}\label{classStarter_1_1Starter_m1}
+
+
+State polling thread shared data.
+
+\index{Starter::Starter@{Starter::Starter}!startDsPath@{startDsPath}}
+\index{startDsPath@{startDsPath}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ Starter::Starter::start\-Ds\-Path}\label{classStarter_1_1Starter_z1_0}
+
+
+Path to find executable files to start device servers.
+
+\index{Starter::Starter@{Starter::Starter}!throwable@{throwable}}
+\index{throwable@{throwable}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Boolean Starter::Starter::throwable}\label{classStarter_1_1Starter_m5}
+
+
+Exception must be or not thrown.
+
+\index{Starter::Starter@{Starter::Starter}!util@{util}}
+\index{util@{util}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Starter\-Util}$\ast$ Starter::Starter::util}\label{classStarter_1_1Starter_m0}
+
+
+{\bf Starter\-Util} {\rm (p.\,\pageref{classStarter_1_1StarterUtil})} instance to be used everywhere.
+
+\index{Starter::Starter@{Starter::Starter}!waitForDriverStartup@{waitForDriverStartup}}
+\index{waitForDriverStartup@{waitForDriverStartup}!Starter::Starter@{Starter::Starter}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short Starter::Starter::wait\-For\-Driver\-Startup}\label{classStarter_1_1Starter_z1_1}
+
+
+The {\bf Starter} {\rm (p.\,\pageref{classStarter_1_1Starter})} will wait a bit before starting servers, to be sure than the drivers are started.This time is in seconds.
+
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+{\bf Starter.h}\item 
+{\bf Starter.cpp}\end{CompactItemize}

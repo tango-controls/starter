@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fr.soleil</groupId>
+        <artifactId>super-pom-C-CPP-device</artifactId>
+        <version>RELEASE</version>
+    </parent>
+
+    <groupId>fr.soleil.device</groupId>
+    <artifactId>TangoTest-${aol}-${mode}</artifactId>
+    <version>1.4.4</version>
+
+    <packaging>nar</packaging>
+    <name>TangoTest</name> <!-- use for the name of executable -->
+    <description>TangoTest Device</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.freehep</groupId>
+                <artifactId>freehep-nar-plugin</artifactId>
+                <configuration>
+                    <cpp>
+                        <includePaths>
+                            <includePath>${project.basedir}</includePath>
+                            <!-- <includePath>/home/tango/dist-breakpad-linux/include</includePath> -->
+                            <!-- <includePath>c:\soleil\breakpad\dist-breakpad-win32\include</includePath> -->
+                        </includePaths>
+                        <options>
+                          <!-- linuc-gcc option : modif super pom -->
+                          <!-- <option>-gstabs</option> -->
+                          <!-- visual c++ option: modif super pom -->
+                          <!-- <option>/Zi</option> -->
+                          <!-- visual c++ option: modif super pom -->
+                          <!-- <option>/Fd"${project.basedir}\${project.name}.pdb"</option> -->
+                        </options>
+                        <defines>
+                          <!-- <define>ENABLE_CRASH_REPORT</define> -->
+                        </defines>
+                        <sourceDirectory>${project.basedir}</sourceDirectory>
+                    </cpp>
+                    <linker>
+                      <options>
+                        <!-- visual c++ option: modif super pom -->
+                        <!-- <option>/PDB:"${project.basedir}\${project.name}.pdb"</option> -->
+                      </options>
+                      <libs>
+                        <!-- <lib>
+                          <name>breakpad_client</name>
+                          <type>static</type>
+                          <directory>/home/tango/dist-breakpad-linux/lib</directory>
+                        </lib> -->
+                         <!-- <lib>
+                          <name>breakpad_client</name>
+                          <type>static</type>
+                          <directory>c:\soleil\breakpad\dist-breakpad-win32\lib</directory>
+                        </lib> -->
+                      </libs>
+                    </linker>    
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+<!-- By default
+    <dependencies>
+        <dependency>
+            <groupId>org.tango</groupId>
+            <artifactId>tango-cpp-api-i386-Linux-gcc-shared-release</artifactId>
+        </dependency>
+    </dependencies>
+-->
+    <scm>
+        <connection>${scm.connection.cvs.tango-cs}:tango/cppserver/TangoTest</connection>
+        <developerConnection>${scm.developerConnection.cvs.tango-cs}:tango/cppserver/TangoTest</developerConnection>
+        <url>${scm.url.cvs.tango-cs}/tango/cppserver/TangoTest</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>leclercq</id>
+            <name>leclercq</name>
+            <url>http://controle/</url>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>manager</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+    </developers>
+</project>

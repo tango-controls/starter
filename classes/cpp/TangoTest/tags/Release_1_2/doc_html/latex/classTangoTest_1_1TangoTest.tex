@@ -1,0 +1,835 @@
+\section{Tango\-Test::Tango\-Test  Class Reference}
+\label{classTangoTest_1_1TangoTest}\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+Class Description: A device to test generic clients. 
+
+
+{\tt \#include $<$Tango\-Test.h$>$}
+
+\subsection*{Public Methods}
+\begin{CompactItemize}
+\item 
+void {\bf gen\_\-data} (void)
+\begin{CompactList}\small\item\em Generates dummy attribute values.\item\end{CompactList}\end{CompactItemize}
+\begin{Indent}{\bf Constructors}\par
+{\em Miscellaneous constructors}\begin{CompactItemize}
+\item 
+{\bf Tango\-Test} (Tango::Device\-Class $\ast$, string \&)
+\begin{CompactList}\small\item\em Constructs a newly allocated Command object.\item\end{CompactList}\item 
+{\bf Tango\-Test} (Tango::Device\-Class $\ast$, const char $\ast$)
+\begin{CompactList}\small\item\em Constructs a newly allocated Command object.\item\end{CompactList}\item 
+{\bf Tango\-Test} (Tango::Device\-Class $\ast$, const char $\ast$, const char $\ast$)
+\begin{CompactList}\small\item\em Constructs a newly allocated Command object.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Destructor}\par
+{\em Only one desctructor is defined for this class}\begin{CompactItemize}
+\item 
+{\bf $\sim$Tango\-Test} ()
+\begin{CompactList}\small\item\em The object desctructor.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Miscellaneous methods}\par
+\begin{CompactItemize}
+\item 
+virtual void {\bf init\_\-device} ()
+\begin{CompactList}\small\item\em Initialize the device.\item\end{CompactList}\item 
+virtual void {\bf delete\_\-device} ()
+\begin{CompactList}\small\item\em Initialize the device.\item\end{CompactList}\item 
+virtual void {\bf always\_\-executed\_\-hook} ()
+\begin{CompactList}\small\item\em Always executed method befor execution command method.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Tango\-Test methods prototypes}\par
+\begin{CompactItemize}
+\item 
+virtual void {\bf read\_\-attr\_\-hardware} (vector$<$ long $>$ \&attr\_\-list)
+\begin{CompactList}\small\item\em Hardware acquisition for attributes.\item\end{CompactList}\item 
+virtual void {\bf read\_\-attr} (Tango::Attribute \&attr)
+\begin{CompactList}\small\item\em Extract real attribute values from hardware acquisition result.\item\end{CompactList}\item 
+virtual void {\bf write\_\-attr\_\-hardware} (vector$<$ long $>$ \&attr\_\-list)
+\begin{CompactList}\small\item\em Write attribute values to hardware.\item\end{CompactList}\item 
+void {\bf dev\_\-void} ()
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-void.\item\end{CompactList}\item 
+Tango::Dev\-Boolean {\bf dev\_\-boolean} (Tango::Dev\-Boolean)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-boolean.\item\end{CompactList}\item 
+Tango::Dev\-Short {\bf dev\_\-short} (Tango::Dev\-Short)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-short.\item\end{CompactList}\item 
+Tango::Dev\-UShort {\bf dev\_\-ushort} (Tango::Dev\-UShort)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-ushort.\item\end{CompactList}\item 
+Tango::Dev\-Long {\bf dev\_\-long} (Tango::Dev\-Long)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-long.\item\end{CompactList}\item 
+Tango::Dev\-ULong {\bf dev\_\-ulong} (Tango::Dev\-ULong)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-ulong.\item\end{CompactList}\item 
+Tango::Dev\-Float {\bf dev\_\-float} (Tango::Dev\-Float)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-float.\item\end{CompactList}\item 
+Tango::Dev\-Double {\bf dev\_\-double} (Tango::Dev\-Double)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-double.\item\end{CompactList}\item 
+Tango::Dev\-String {\bf dev\_\-string} (Tango::Dev\-String)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-string.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Char\-Array $\ast$ {\bf dev\_\-var\_\-char\_\-array} (const Tango::Dev\-Var\-Char\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-char\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Short\-Array $\ast$ {\bf dev\_\-var\_\-short\_\-array} (const Tango::Dev\-Var\-Short\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-short\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-UShort\-Array $\ast$ {\bf dev\_\-var\_\-ushort\_\-array} (const Tango::Dev\-Var\-UShort\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-ushort\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Long\-Array $\ast$ {\bf dev\_\-var\_\-long\_\-array} (const Tango::Dev\-Var\-Long\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-long\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-ULong\-Array $\ast$ {\bf dev\_\-var\_\-ulong\_\-array} (const Tango::Dev\-Var\-ULong\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-ulong\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Float\-Array $\ast$ {\bf dev\_\-var\_\-float\_\-array} (const Tango::Dev\-Var\-Float\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-float\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Double\-Array $\ast$ {\bf dev\_\-var\_\-double\_\-array} (const Tango::Dev\-Var\-Double\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-double\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-String\-Array $\ast$ {\bf dev\_\-var\_\-string\_\-array} (const Tango::Dev\-Var\-String\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-string\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Long\-String\-Array $\ast$ {\bf dev\_\-var\_\-long\_\-string\_\-array} (const Tango::Dev\-Var\-Long\-String\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-long\_\-string\_\-array.\item\end{CompactList}\item 
+Tango::Dev\-Var\-Double\-String\-Array $\ast$ {\bf dev\_\-var\_\-double\_\-string\_\-array} (const Tango::Dev\-Var\-Double\-String\-Array $\ast$)
+\begin{CompactList}\small\item\em method: Tango\-Test::dev\_\-var\_\-double\_\-string\_\-array.\item\end{CompactList}\item 
+void {\bf get\_\-device\_\-property} ()
+\begin{CompactList}\small\item\em Read the device properties from database.\item\end{CompactList}\end{CompactItemize}
+\end{Indent}
+\subsection*{Public Attributes}
+\begin{Indent}{\bf attributes}\par
+{\em Attributs member data.}\begin{CompactItemize}
+\item 
+Tango::Dev\-Short $\ast$ {\bf attr\_\-short\_\-scalar\_\-ro\_\-read}
+\item 
+Tango::Dev\-Short $\ast$ {\bf attr\_\-short\_\-scalar\_\-read}
+\item 
+Tango::Dev\-Short {\bf attr\_\-short\_\-scalar\_\-write}
+\item 
+Tango::Dev\-Long $\ast$ {\bf attr\_\-long\_\-scalar\_\-read}
+\item 
+Tango::Dev\-Long {\bf attr\_\-long\_\-scalar\_\-write}
+\item 
+Tango::Dev\-Double $\ast$ {\bf attr\_\-double\_\-scalar\_\-read}
+\item 
+Tango::Dev\-Double {\bf attr\_\-double\_\-scalar\_\-write}
+\item 
+Tango::Dev\-String $\ast$ {\bf attr\_\-string\_\-scalar\_\-read}
+\item 
+Tango::Dev\-String {\bf attr\_\-string\_\-scalar\_\-write}
+\item 
+Tango::Dev\-Short $\ast$ {\bf attr\_\-short\_\-spectrum\_\-read}
+\item 
+Tango::Dev\-Long $\ast$ {\bf attr\_\-long\_\-spectrum\_\-read}
+\item 
+Tango::Dev\-Double $\ast$ {\bf attr\_\-double\_\-spectrum\_\-read}
+\item 
+Tango::Dev\-Short $\ast$ {\bf attr\_\-short\_\-image\_\-read}
+\item 
+Tango::Dev\-Long $\ast$ {\bf attr\_\-long\_\-image\_\-read}
+\item 
+Tango::Dev\-Double $\ast$ {\bf attr\_\-double\_\-image\_\-read}
+\item 
+Tango::Dev\-Short {\bf attr\_\-short\_\-scalar\_\-w\_\-write}
+\item 
+Tango::Dev\-Short $\ast$ {\bf attr\_\-short\_\-scalar\_\-rww\_\-read}
+\item 
+Tango::Dev\-Long {\bf attr\_\-long\_\-scalar\_\-w\_\-write}
+\item 
+Tango::Dev\-Long $\ast$ {\bf attr\_\-long\_\-scalar\_\-rww\_\-read}
+\item 
+Tango::Dev\-Double {\bf attr\_\-double\_\-scalar\_\-w\_\-write}
+\item 
+Tango::Dev\-Double $\ast$ {\bf attr\_\-double\_\-scalar\_\-rww\_\-read}
+\item 
+Tango::Dev\-Double {\bf attr\_\-ampli\_\-write}
+\item 
+Tango::Dev\-Double $\ast$ {\bf attr\_\-wave\_\-read}
+\end{CompactItemize}
+\end{Indent}
+\subsection*{Protected Attributes}
+\begin{CompactItemize}
+\item 
+short {\bf mthreaded\_\-impl}
+\item 
+long {\bf sleep\_\-period}
+\item 
+omni\_\-mutex {\bf lock}
+\item 
+{\bf Data\-Generator} $\ast$ {\bf data\_\-gen}
+\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+class {\bf Data\-Generator}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Class Description: A device to test generic clients.
+
+It offers a \char`\"{}echo\char`\"{} like command for each TANGO data type (i.e. each command returns an exact copy of $<$argin$>$). 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!TangoTest@{TangoTest}}
+\index{TangoTest@{TangoTest}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango\-Test::Tango\-Test::Tango\-Test (Tango::Device\-Class $\ast$ {\em cl}, string \& {\em s})}\label{classTangoTest_1_1TangoTest_z2_0}
+
+
+Constructs a newly allocated Command object.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+cl}]Class. \item[{\em 
+s}]Device Name \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!TangoTest@{TangoTest}}
+\index{TangoTest@{TangoTest}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango\-Test::Tango\-Test::Tango\-Test (Tango::Device\-Class $\ast$ {\em cl}, const char $\ast$ {\em s})}\label{classTangoTest_1_1TangoTest_z2_1}
+
+
+Constructs a newly allocated Command object.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+cl}]Class. \item[{\em 
+s}]Device Name \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!TangoTest@{TangoTest}}
+\index{TangoTest@{TangoTest}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango\-Test::Tango\-Test::Tango\-Test (Tango::Device\-Class $\ast$ {\em cl}, const char $\ast$ {\em s}, const char $\ast$ {\em d})}\label{classTangoTest_1_1TangoTest_z2_2}
+
+
+Constructs a newly allocated Command object.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+cl}]Class. \item[{\em 
+s}]Device name \item[{\em 
+d}]Device description. \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!~TangoTest@{$\sim$TangoTest}}
+\index{~TangoTest@{$\sim$TangoTest}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango\-Test::Tango\-Test::$\sim$Tango\-Test ()}\label{classTangoTest_1_1TangoTest_z3_0}
+
+
+The object desctructor.
+
+
+
+\subsection{Member Function Documentation}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!always_executed_hook@{always\_\-executed\_\-hook}}
+\index{always_executed_hook@{always\_\-executed\_\-hook}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::always\_\-executed\_\-hook ()\hspace{0.3cm}{\tt  [virtual]}}\label{classTangoTest_1_1TangoTest_z4_2}
+
+
+Always executed method befor execution command method.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!delete_device@{delete\_\-device}}
+\index{delete_device@{delete\_\-device}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::delete\_\-device ()\hspace{0.3cm}{\tt  [virtual]}}\label{classTangoTest_1_1TangoTest_z4_1}
+
+
+Initialize the device.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_boolean@{dev\_\-boolean}}
+\index{dev_boolean@{dev\_\-boolean}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Boolean Tango\-Test::Tango\-Test::dev\_\-boolean (Tango::Dev\-Boolean {\em argin})}\label{classTangoTest_1_1TangoTest_z5_4}
+
+
+method: Tango\-Test::dev\_\-boolean.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any boolean value \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_double@{dev\_\-double}}
+\index{dev_double@{dev\_\-double}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double Tango\-Test::Tango\-Test::dev\_\-double (Tango::Dev\-Double {\em argin})}\label{classTangoTest_1_1TangoTest_z5_10}
+
+
+method: Tango\-Test::dev\_\-double.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any Dev\-Double value \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_float@{dev\_\-float}}
+\index{dev_float@{dev\_\-float}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Float Tango\-Test::Tango\-Test::dev\_\-float (Tango::Dev\-Float {\em argin})}\label{classTangoTest_1_1TangoTest_z5_9}
+
+
+method: Tango\-Test::dev\_\-float.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any Dev\-Float value \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_long@{dev\_\-long}}
+\index{dev_long@{dev\_\-long}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long Tango\-Test::Tango\-Test::dev\_\-long (Tango::Dev\-Long {\em argin})}\label{classTangoTest_1_1TangoTest_z5_7}
+
+
+method: Tango\-Test::dev\_\-long.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any Dev\-Long value \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_short@{dev\_\-short}}
+\index{dev_short@{dev\_\-short}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short Tango\-Test::Tango\-Test::dev\_\-short (Tango::Dev\-Short {\em argin})}\label{classTangoTest_1_1TangoTest_z5_5}
+
+
+method: Tango\-Test::dev\_\-short.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any Dev\-Short value \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_string@{dev\_\-string}}
+\index{dev_string@{dev\_\-string}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-String Tango\-Test::Tango\-Test::dev\_\-string (Tango::Dev\-String {\em argin})}\label{classTangoTest_1_1TangoTest_z5_11}
+
+
+method: Tango\-Test::dev\_\-string.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_ulong@{dev\_\-ulong}}
+\index{dev_ulong@{dev\_\-ulong}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-ULong Tango\-Test::Tango\-Test::dev\_\-ulong (Tango::Dev\-ULong {\em argin})}\label{classTangoTest_1_1TangoTest_z5_8}
+
+
+method: Tango\-Test::dev\_\-ulong.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any Dev\-ULong \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_ushort@{dev\_\-ushort}}
+\index{dev_ushort@{dev\_\-ushort}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-UShort Tango\-Test::Tango\-Test::dev\_\-ushort (Tango::Dev\-UShort {\em argin})}\label{classTangoTest_1_1TangoTest_z5_6}
+
+
+method: Tango\-Test::dev\_\-ushort.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]Any Dev\-UShort value \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+Echo of the argin value \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_char_array@{dev\_\-var\_\-char\_\-array}}
+\index{dev_var_char_array@{dev\_\-var\_\-char\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Char\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-char\_\-array (const Tango::Dev\-Var\-Char\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_12}
+
+
+method: Tango\-Test::dev\_\-var\_\-char\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_double_array@{dev\_\-var\_\-double\_\-array}}
+\index{dev_var_double_array@{dev\_\-var\_\-double\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Double\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-double\_\-array (const Tango::Dev\-Var\-Double\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_18}
+
+
+method: Tango\-Test::dev\_\-var\_\-double\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_double_string_array@{dev\_\-var\_\-double\_\-string\_\-array}}
+\index{dev_var_double_string_array@{dev\_\-var\_\-double\_\-string\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Double\-String\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-double\_\-string\_\-array (const Tango::Dev\-Var\-Double\-String\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_21}
+
+
+method: Tango\-Test::dev\_\-var\_\-double\_\-string\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_float_array@{dev\_\-var\_\-float\_\-array}}
+\index{dev_var_float_array@{dev\_\-var\_\-float\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Float\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-float\_\-array (const Tango::Dev\-Var\-Float\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_17}
+
+
+method: Tango\-Test::dev\_\-var\_\-float\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_long_array@{dev\_\-var\_\-long\_\-array}}
+\index{dev_var_long_array@{dev\_\-var\_\-long\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Long\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-long\_\-array (const Tango::Dev\-Var\-Long\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_15}
+
+
+method: Tango\-Test::dev\_\-var\_\-long\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_long_string_array@{dev\_\-var\_\-long\_\-string\_\-array}}
+\index{dev_var_long_string_array@{dev\_\-var\_\-long\_\-string\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Long\-String\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-long\_\-string\_\-array (const Tango::Dev\-Var\-Long\-String\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_20}
+
+
+method: Tango\-Test::dev\_\-var\_\-long\_\-string\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_short_array@{dev\_\-var\_\-short\_\-array}}
+\index{dev_var_short_array@{dev\_\-var\_\-short\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-Short\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-short\_\-array (const Tango::Dev\-Var\-Short\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_13}
+
+
+method: Tango\-Test::dev\_\-var\_\-short\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_string_array@{dev\_\-var\_\-string\_\-array}}
+\index{dev_var_string_array@{dev\_\-var\_\-string\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-String\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-string\_\-array (const Tango::Dev\-Var\-String\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_19}
+
+
+method: Tango\-Test::dev\_\-var\_\-string\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_ulong_array@{dev\_\-var\_\-ulong\_\-array}}
+\index{dev_var_ulong_array@{dev\_\-var\_\-ulong\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-ULong\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-ulong\_\-array (const Tango::Dev\-Var\-ULong\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_16}
+
+
+method: Tango\-Test::dev\_\-var\_\-ulong\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_var_ushort_array@{dev\_\-var\_\-ushort\_\-array}}
+\index{dev_var_ushort_array@{dev\_\-var\_\-ushort\_\-array}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Var\-UShort\-Array $\ast$ Tango\-Test::Tango\-Test::dev\_\-var\_\-ushort\_\-array (const Tango::Dev\-Var\-UShort\-Array $\ast$ {\em argin})}\label{classTangoTest_1_1TangoTest_z5_14}
+
+
+method: Tango\-Test::dev\_\-var\_\-ushort\_\-array.
+
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+argin}]- \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns: ]\par
+- \end{Desc}
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!dev_void@{dev\_\-void}}
+\index{dev_void@{dev\_\-void}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::dev\_\-void ()}\label{classTangoTest_1_1TangoTest_z5_3}
+
+
+method: Tango\-Test::dev\_\-void.
+
+\begin{Desc}
+\item[Exceptions: ]\par
+\begin{description}
+\item[{\em 
+Dev\-Failed}] \end{description}
+\end{Desc}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!gen_data@{gen\_\-data}}
+\index{gen_data@{gen\_\-data}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::gen\_\-data (void)}\label{classTangoTest_1_1TangoTest_a0}
+
+
+Generates dummy attribute values.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!get_device_property@{get\_\-device\_\-property}}
+\index{get_device_property@{get\_\-device\_\-property}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::get\_\-device\_\-property (void)}\label{classTangoTest_1_1TangoTest_z5_22}
+
+
+Read the device properties from database.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!init_device@{init\_\-device}}
+\index{init_device@{init\_\-device}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::init\_\-device ()\hspace{0.3cm}{\tt  [virtual]}}\label{classTangoTest_1_1TangoTest_z4_0}
+
+
+Initialize the device.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!read_attr@{read\_\-attr}}
+\index{read_attr@{read\_\-attr}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::read\_\-attr (Tango::Attribute \& {\em attr})\hspace{0.3cm}{\tt  [virtual]}}\label{classTangoTest_1_1TangoTest_z5_1}
+
+
+Extract real attribute values from hardware acquisition result.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!read_attr_hardware@{read\_\-attr\_\-hardware}}
+\index{read_attr_hardware@{read\_\-attr\_\-hardware}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::read\_\-attr\_\-hardware (vector$<$ long $>$ \& {\em attr\_\-list})\hspace{0.3cm}{\tt  [virtual]}}\label{classTangoTest_1_1TangoTest_z5_0}
+
+
+Hardware acquisition for attributes.
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!write_attr_hardware@{write\_\-attr\_\-hardware}}
+\index{write_attr_hardware@{write\_\-attr\_\-hardware}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Tango\-Test::Tango\-Test::write\_\-attr\_\-hardware (vector$<$ long $>$ \& {\em attr\_\-list})\hspace{0.3cm}{\tt  [virtual]}}\label{classTangoTest_1_1TangoTest_z5_2}
+
+
+Write attribute values to hardware.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!DataGenerator@{DataGenerator}}
+\index{DataGenerator@{DataGenerator}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}friend class Data\-Generator\hspace{0.3cm}{\tt  [friend]}}\label{classTangoTest_1_1TangoTest_l0}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_ampli_write@{attr\_\-ampli\_\-write}}
+\index{attr_ampli_write@{attr\_\-ampli\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double Tango\-Test::Tango\-Test::attr\_\-ampli\_\-write}\label{classTangoTest_1_1TangoTest_z0_21}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_double_image_read@{attr\_\-double\_\-image\_\-read}}
+\index{attr_double_image_read@{attr\_\-double\_\-image\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double$\ast$ Tango\-Test::Tango\-Test::attr\_\-double\_\-image\_\-read}\label{classTangoTest_1_1TangoTest_z0_14}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_double_scalar_read@{attr\_\-double\_\-scalar\_\-read}}
+\index{attr_double_scalar_read@{attr\_\-double\_\-scalar\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double$\ast$ Tango\-Test::Tango\-Test::attr\_\-double\_\-scalar\_\-read}\label{classTangoTest_1_1TangoTest_z0_5}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_double_scalar_rww_read@{attr\_\-double\_\-scalar\_\-rww\_\-read}}
+\index{attr_double_scalar_rww_read@{attr\_\-double\_\-scalar\_\-rww\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double$\ast$ Tango\-Test::Tango\-Test::attr\_\-double\_\-scalar\_\-rww\_\-read}\label{classTangoTest_1_1TangoTest_z0_20}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_double_scalar_w_write@{attr\_\-double\_\-scalar\_\-w\_\-write}}
+\index{attr_double_scalar_w_write@{attr\_\-double\_\-scalar\_\-w\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double Tango\-Test::Tango\-Test::attr\_\-double\_\-scalar\_\-w\_\-write}\label{classTangoTest_1_1TangoTest_z0_19}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_double_scalar_write@{attr\_\-double\_\-scalar\_\-write}}
+\index{attr_double_scalar_write@{attr\_\-double\_\-scalar\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double Tango\-Test::Tango\-Test::attr\_\-double\_\-scalar\_\-write}\label{classTangoTest_1_1TangoTest_z0_6}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_double_spectrum_read@{attr\_\-double\_\-spectrum\_\-read}}
+\index{attr_double_spectrum_read@{attr\_\-double\_\-spectrum\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double$\ast$ Tango\-Test::Tango\-Test::attr\_\-double\_\-spectrum\_\-read}\label{classTangoTest_1_1TangoTest_z0_11}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_long_image_read@{attr\_\-long\_\-image\_\-read}}
+\index{attr_long_image_read@{attr\_\-long\_\-image\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long$\ast$ Tango\-Test::Tango\-Test::attr\_\-long\_\-image\_\-read}\label{classTangoTest_1_1TangoTest_z0_13}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_long_scalar_read@{attr\_\-long\_\-scalar\_\-read}}
+\index{attr_long_scalar_read@{attr\_\-long\_\-scalar\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long$\ast$ Tango\-Test::Tango\-Test::attr\_\-long\_\-scalar\_\-read}\label{classTangoTest_1_1TangoTest_z0_3}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_long_scalar_rww_read@{attr\_\-long\_\-scalar\_\-rww\_\-read}}
+\index{attr_long_scalar_rww_read@{attr\_\-long\_\-scalar\_\-rww\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long$\ast$ Tango\-Test::Tango\-Test::attr\_\-long\_\-scalar\_\-rww\_\-read}\label{classTangoTest_1_1TangoTest_z0_18}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_long_scalar_w_write@{attr\_\-long\_\-scalar\_\-w\_\-write}}
+\index{attr_long_scalar_w_write@{attr\_\-long\_\-scalar\_\-w\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long Tango\-Test::Tango\-Test::attr\_\-long\_\-scalar\_\-w\_\-write}\label{classTangoTest_1_1TangoTest_z0_17}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_long_scalar_write@{attr\_\-long\_\-scalar\_\-write}}
+\index{attr_long_scalar_write@{attr\_\-long\_\-scalar\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long Tango\-Test::Tango\-Test::attr\_\-long\_\-scalar\_\-write}\label{classTangoTest_1_1TangoTest_z0_4}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_long_spectrum_read@{attr\_\-long\_\-spectrum\_\-read}}
+\index{attr_long_spectrum_read@{attr\_\-long\_\-spectrum\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Long$\ast$ Tango\-Test::Tango\-Test::attr\_\-long\_\-spectrum\_\-read}\label{classTangoTest_1_1TangoTest_z0_10}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_image_read@{attr\_\-short\_\-image\_\-read}}
+\index{attr_short_image_read@{attr\_\-short\_\-image\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short$\ast$ Tango\-Test::Tango\-Test::attr\_\-short\_\-image\_\-read}\label{classTangoTest_1_1TangoTest_z0_12}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_scalar_read@{attr\_\-short\_\-scalar\_\-read}}
+\index{attr_short_scalar_read@{attr\_\-short\_\-scalar\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short$\ast$ Tango\-Test::Tango\-Test::attr\_\-short\_\-scalar\_\-read}\label{classTangoTest_1_1TangoTest_z0_1}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_scalar_ro_read@{attr\_\-short\_\-scalar\_\-ro\_\-read}}
+\index{attr_short_scalar_ro_read@{attr\_\-short\_\-scalar\_\-ro\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short$\ast$ Tango\-Test::Tango\-Test::attr\_\-short\_\-scalar\_\-ro\_\-read}\label{classTangoTest_1_1TangoTest_z0_0}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_scalar_rww_read@{attr\_\-short\_\-scalar\_\-rww\_\-read}}
+\index{attr_short_scalar_rww_read@{attr\_\-short\_\-scalar\_\-rww\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short$\ast$ Tango\-Test::Tango\-Test::attr\_\-short\_\-scalar\_\-rww\_\-read}\label{classTangoTest_1_1TangoTest_z0_16}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_scalar_w_write@{attr\_\-short\_\-scalar\_\-w\_\-write}}
+\index{attr_short_scalar_w_write@{attr\_\-short\_\-scalar\_\-w\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short Tango\-Test::Tango\-Test::attr\_\-short\_\-scalar\_\-w\_\-write}\label{classTangoTest_1_1TangoTest_z0_15}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_scalar_write@{attr\_\-short\_\-scalar\_\-write}}
+\index{attr_short_scalar_write@{attr\_\-short\_\-scalar\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short Tango\-Test::Tango\-Test::attr\_\-short\_\-scalar\_\-write}\label{classTangoTest_1_1TangoTest_z0_2}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_short_spectrum_read@{attr\_\-short\_\-spectrum\_\-read}}
+\index{attr_short_spectrum_read@{attr\_\-short\_\-spectrum\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Short$\ast$ Tango\-Test::Tango\-Test::attr\_\-short\_\-spectrum\_\-read}\label{classTangoTest_1_1TangoTest_z0_9}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_string_scalar_read@{attr\_\-string\_\-scalar\_\-read}}
+\index{attr_string_scalar_read@{attr\_\-string\_\-scalar\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-String$\ast$ Tango\-Test::Tango\-Test::attr\_\-string\_\-scalar\_\-read}\label{classTangoTest_1_1TangoTest_z0_7}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_string_scalar_write@{attr\_\-string\_\-scalar\_\-write}}
+\index{attr_string_scalar_write@{attr\_\-string\_\-scalar\_\-write}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-String Tango\-Test::Tango\-Test::attr\_\-string\_\-scalar\_\-write}\label{classTangoTest_1_1TangoTest_z0_8}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!attr_wave_read@{attr\_\-wave\_\-read}}
+\index{attr_wave_read@{attr\_\-wave\_\-read}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Tango::Dev\-Double$\ast$ Tango\-Test::Tango\-Test::attr\_\-wave\_\-read}\label{classTangoTest_1_1TangoTest_z0_22}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!data_gen@{data\_\-gen}}
+\index{data_gen@{data\_\-gen}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Data\-Generator}$\ast$ Tango\-Test::Tango\-Test::data\_\-gen\hspace{0.3cm}{\tt  [protected]}}\label{classTangoTest_1_1TangoTest_n3}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!lock@{lock}}
+\index{lock@{lock}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}omni\_\-mutex Tango\-Test::Tango\-Test::lock\hspace{0.3cm}{\tt  [protected]}}\label{classTangoTest_1_1TangoTest_n2}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!mthreaded_impl@{mthreaded\_\-impl}}
+\index{mthreaded_impl@{mthreaded\_\-impl}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}short Tango\-Test::Tango\-Test::mthreaded\_\-impl\hspace{0.3cm}{\tt  [protected]}}\label{classTangoTest_1_1TangoTest_n0}
+
+
+\index{TangoTest::TangoTest@{Tango\-Test::Tango\-Test}!sleep_period@{sleep\_\-period}}
+\index{sleep_period@{sleep\_\-period}!TangoTest::TangoTest@{Tango\-Test::Tango\-Test}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}long Tango\-Test::Tango\-Test::sleep\_\-period\hspace{0.3cm}{\tt  [protected]}}\label{classTangoTest_1_1TangoTest_n1}
+
+
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+{\bf Tango\-Test.h}\item 
+{\bf Tango\-Test.cpp}\end{CompactItemize}

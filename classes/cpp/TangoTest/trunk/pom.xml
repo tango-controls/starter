@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fr.soleil</groupId>
+        <artifactId>super-pom-C-CPP-device</artifactId>
+        <version>RELEASE</version>
+    </parent>
+
+    <groupId>fr.soleil.device</groupId>
+    <artifactId>TangoTest-${aol}-${mode}</artifactId>
+    <version>1.4.5</version>
+
+    <packaging>nar</packaging>
+    <name>TangoTest</name> <!-- use for the name of executable -->
+    <description>TangoTest Device</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.freehep</groupId>
+                <artifactId>freehep-nar-plugin</artifactId>
+                <configuration>
+                    <output>${project.name}</output>
+                    <cpp>
+                        <includePaths>
+                            <includePath>${project.basedir}</includePath>
+                        </includePaths>
+                        <sourceDirectory>${project.basedir}</sourceDirectory>
+                    </cpp>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>Execute</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.freehep</groupId>
+                        <artifactId>freehep-nar-plugin</artifactId>
+                        <configuration>
+                            <libraries>
+                                <library>
+                                    <type>executable</type>
+                                    <run>true</run>
+                                    <args>
+                                        <arg>2</arg>
+                                    </args>
+                                    <envs>
+                                        <env>TANGO_HOST=${env.TANGO_HOST}</env>
+                                        <env>TANGO_CRASH_PATH=${project.build.directory}\breakpad</env>
+                                    </envs>
+                                </library>
+                            </libraries>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+<!-- By default
+    <dependencies>
+        <dependency>
+            <groupId>org.tango</groupId>
+            <artifactId>tango-cpp-api-i386-Linux-gcc-shared-release</artifactId>
+        </dependency>
+    </dependencies>
+-->
+    <scm>
+        <connection>${scm.connection.cvs.tango-cs}:tango/cppserver/TangoTest</connection>
+        <developerConnection>${scm.developerConnection.cvs.tango-cs}:tango/cppserver/TangoTest</developerConnection>
+        <url>${scm.url.cvs.tango-cs}/tango/cppserver/TangoTest</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>leclercq</id>
+            <name>leclercq</name>
+            <url>http://controle/</url>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>manager</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+    </developers>
+</project>

@@ -1,0 +1,11 @@
+/**
+ * Device Class Identification:
+ * 
+ * Class Name   :	TangoTest
+ * Contact      :	tango@esrf.fr
+ * Class Family :	Miscellaneous
+ * Platform     :	All Platforms
+ * Bus          :	Not Applicable
+ * Manufacturer :	Tango Team
+ * Reference    :	TangoTest
+ */

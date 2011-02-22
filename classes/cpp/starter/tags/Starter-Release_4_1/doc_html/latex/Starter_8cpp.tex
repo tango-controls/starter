@@ -1,0 +1,62 @@
+\section{Starter.cpp File Reference}
+\label{Starter_8cpp}\index{Starter.cpp@{Starter.cpp}}
+{\tt \#include $<$sys/wait.h$>$}\par
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$errno.h$>$}\par
+{\tt \#include $<$sys/types.h$>$}\par
+{\tt \#include $<$sys/stat.h$>$}\par
+{\tt \#include $<$fcntl.h$>$}\par
+{\tt \#include $<$signal.h$>$}\par
+{\tt \#include $<$tango.h$>$}\par
+{\tt \#include $<$Starter\-Util.h$>$}\par
+{\tt \#include $<$Starter.h$>$}\par
+{\tt \#include $<$Starter\-Class.h$>$}\par
+\subsection*{Namespaces}
+\begin{CompactItemize}
+\item 
+namespace {\bf Starter}
+\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define {\bf DECLARE\_\-TIME\_\-VAR}\ struct timeval	before, after;
+\item 
+\#define {\bf GET\_\-TIME}(t)\ gettimeofday(\&t, NULL);
+\item 
+\#define {\bf ELAPSED}(before, after)
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+const char $\ast$ {\bf Rcs\-Id} = \char`\"{}\$Header$\char`\"{}
+\end{CompactItemize}
+
+
+\subsection{Define Documentation}
+\index{Starter.cpp@{Starter.cpp}!DECLARE_TIME_VAR@{DECLARE\_\-TIME\_\-VAR}}
+\index{DECLARE_TIME_VAR@{DECLARE\_\-TIME\_\-VAR}!Starter.cpp@{Starter.cpp}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DECLARE\_\-TIME\_\-VAR\ struct timeval	before, after;}\label{Starter_8cpp_a0}
+
+
+\index{Starter.cpp@{Starter.cpp}!ELAPSED@{ELAPSED}}
+\index{ELAPSED@{ELAPSED}!Starter.cpp@{Starter.cpp}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define ELAPSED(before, after)}\label{Starter_8cpp_a2}
+
+
+{\bf Value:}
+
+\footnotesize\begin{verbatim}1000.0*(after.tv_sec-before.tv_sec) + \
+        (double) (after.tv_usec-before.tv_usec) / 1000;\end{verbatim}\normalsize 
+\index{Starter.cpp@{Starter.cpp}!GET_TIME@{GET\_\-TIME}}
+\index{GET_TIME@{GET\_\-TIME}!Starter.cpp@{Starter.cpp}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define GET\_\-TIME(t)\ gettimeofday(\&t, NULL);}\label{Starter_8cpp_a1}
+
+
+
+
+\subsection{Variable Documentation}
+\index{Starter.cpp@{Starter.cpp}!RcsId@{RcsId}}
+\index{RcsId@{RcsId}!Starter.cpp@{Starter.cpp}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Rcs\-Id = \char`\"{}\$Header$\char`\"{}\hspace{0.3cm}{\tt  [static]}}\label{Starter_8cpp_a3}
+
+

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<Title> Tango Device Server User's Guide </Title>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#7F00FF" ALINK="#FF0000">
+
+<P><!-------TITLE------></P>
+
+<TABLE BORDER="0" WIDTH="100%">
+    <TR>
+        <TD ALIGN="left">
+			<A HREF="http://www.esrf.fr/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0 Height="60"></A>
+		</Td>
+        <TD ALIGN="center">
+			<A HREF="http://www.elettra.trieste.it/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0 Height="60"></A>
+
+		</Td>
+        <TD ALIGN="center">
+			<A HREF="http://www.synchrotron-soleil.fr/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0 Height="60"></A>
+		</Td>
+        <TD ALIGN="right">
+			<A HREF="http://www.cells.es/" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/alba.jpg" BORDER=0 Height="54"></A>
+		</Td>
+        <TD ALIGN="right">
+			<A HREF="http://www.desy.de/html/home/index_eng.html" TARGET=new>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/desy.gif" BORDER=0 Height="60"></A>
+		</Td>
+    	 <Td>
+			<H2><FONT COLOR="#7F00FF">
+			<Center><A HREF="http://www.tango-controls.org/" TARGET="_top">
+					 TANGO </a> <Br> Device Server
+			</Center></FONT>
+		</Td>
+    </TR>
+</TABLE>
+
+<HR WIDTH="100%"></H5>
+<Br>
+<center>
+<h1>
+TANGO Device Server for testing generic clients		<Br>
+Device Commands Description 		<Br> <Br>
+TangoTest Class	<Br>
+</h1>
+<b>
+Revision:  - Author: taurel
+</b>
+</center>
+
+
+<Center>
+<Br><Br>
+<A Href="DevCommandsFrame.html"> More Details on commands.... </a><Br>
+<Br> <Br>
+<Table Border=2 Cellpadding=3 CELLSPACING=0 WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td COLSPAN=3> <Font Size=+2><Center><b>Device Commands for Operator Level</b></td></Font></Center>
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<Td><Center><b>Command name</b></td></Center>
+<Td><Center><b>Argument In</b></td></Center>
+<Td><Center><b>Argument Out</b></td></Center>
+<Tr><Td><b>Init</b></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Tr><Td><b>State</b></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Td><Font Size=-1>DEV_STATE</Font></Td>
+<Tr><Td><b>Status</b></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Td><Font Size=-1>CONST_DEV_STRING</Font></Td>
+<Tr><Td><b>DevBoolean</b></Td>
+<Td><Font Size=-1>DEV_BOOLEAN</Font></Td>
+<Td><Font Size=-1>DEV_BOOLEAN</Font></Td>
+<Tr><Td><b>DevDouble</b></Td>
+<Td><Font Size=-1>DEV_DOUBLE</Font></Td>
+<Td><Font Size=-1>DEV_DOUBLE</Font></Td>
+<Tr><Td><b>DevFloat</b></Td>
+<Td><Font Size=-1>DEV_FLOAT</Font></Td>
+<Td><Font Size=-1>DEV_FLOAT</Font></Td>
+<Tr><Td><b>DevLong</b></Td>
+<Td><Font Size=-1>DEV_LONG</Font></Td>
+<Td><Font Size=-1>DEV_LONG</Font></Td>
+<Tr><Td><b>DevLong64</b></Td>
+<Td><Font Size=-1>DEV_LONG64</Font></Td>
+<Td><Font Size=-1>DEV_LONG64</Font></Td>
+<Tr><Td><b>DevShort</b></Td>
+<Td><Font Size=-1>DEV_SHORT</Font></Td>
+<Td><Font Size=-1>DEV_SHORT</Font></Td>
+<Tr><Td><b>DevString</b></Td>
+<Td><Font Size=-1>DEV_STRING</Font></Td>
+<Td><Font Size=-1>DEV_STRING</Font></Td>
+<Tr><Td><b>DevULong</b></Td>
+<Td><Font Size=-1>DEV_ULONG</Font></Td>
+<Td><Font Size=-1>DEV_ULONG</Font></Td>
+<Tr><Td><b>DevULong64</b></Td>
+<Td><Font Size=-1>DEV_ULONG64</Font></Td>
+<Td><Font Size=-1>DEV_ULONG64</Font></Td>
+<Tr><Td><b>DevUShort</b></Td>
+<Td><Font Size=-1>DEV_USHORT</Font></Td>
+<Td><Font Size=-1>DEV_USHORT</Font></Td>
+<Tr><Td><b>DevVarCharArray</b></Td>
+<Td><Font Size=-1>DEVVAR_CHARARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_CHARARRAY</Font></Td>
+<Tr><Td><b>DevVarDoubleArray</b></Td>
+<Td><Font Size=-1>DEVVAR_DOUBLEARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_DOUBLEARRAY</Font></Td>
+<Tr><Td><b>DevVarDoubleStringArray</b></Td>
+<Td><Font Size=-1>DEVVAR_DOUBLESTRINGARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_DOUBLESTRINGARRAY</Font></Td>
+<Tr><Td><b>DevVarFloatArray</b></Td>
+<Td><Font Size=-1>DEVVAR_FLOATARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_FLOATARRAY</Font></Td>
+<Tr><Td><b>DevVarLong64Array</b></Td>
+<Td><Font Size=-1>DEVVAR_LONG64ARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_LONG64ARRAY</Font></Td>
+<Tr><Td><b>DevVarLongArray</b></Td>
+<Td><Font Size=-1>DEVVAR_LONGARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_LONGARRAY</Font></Td>
+<Tr><Td><b>DevVarLongStringArray</b></Td>
+<Td><Font Size=-1>DEVVAR_LONGSTRINGARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_LONGSTRINGARRAY</Font></Td>
+<Tr><Td><b>DevVarShortArray</b></Td>
+<Td><Font Size=-1>DEVVAR_SHORTARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_SHORTARRAY</Font></Td>
+<Tr><Td><b>DevVarStringArray</b></Td>
+<Td><Font Size=-1>DEVVAR_STRINGARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_STRINGARRAY</Font></Td>
+<Tr><Td><b>DevVarULong64Array</b></Td>
+<Td><Font Size=-1>DEVVAR_ULONG64ARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_ULONG64ARRAY</Font></Td>
+<Tr><Td><b>DevVarULongArray</b></Td>
+<Td><Font Size=-1>DEVVAR_ULONGARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_ULONGARRAY</Font></Td>
+<Tr><Td><b>DevVarUShortArray</b></Td>
+<Td><Font Size=-1>DEVVAR_USHORTARRAY</Font></Td>
+<Td><Font Size=-1>DEVVAR_USHORTARRAY</Font></Td>
+<Tr><Td><b>DevVoid</b></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Tr><Td><b>SwitchStates</b></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+<Td><Font Size=-1>DEV_VOID</Font></Td>
+
+
+
+</Table></Center>
+
+<!--- html Footer --->
+
+<Center>
+<Font size=-1>
+<br>
+<br>
+<TABLE BORDER="1" WIDTH="100%">
+    <Tr>
+		<!--- Hosted by Sourceforge --->
+        <Td Align="Center">
+			<Font size=-1>
+			<b>TANGO</b> is an open source project hosted by :<br>
+			<A href="http://sourceforge.net" Target="new">
+					<IMG title="Sourceforge logo"
+						alt="Sourceforge logo small"
+						src="http://www.esrf.fr/computing/cs/tango/sourceforge.gif"
+						border=0> </a>
+			</Font>
+		</Td>
+		<!--- 2 Sourceforge Repositories --->
+		<Td Align="Center">
+			<Font size=-1>
+			Core and Tools :
+			<a href="http://tango-cs.cvs.sourceforge.net/tango-cs/" Target="new">
+			CVS repository</a> on
+			<a href="https://sourceforge.net/projects/tango-cs" Target=new>
+			tango-cs project</a>
+
+			<br>
+
+			Device Servers :
+			<a href="http://tango-ds.cvs.sourceforge.net/tango-ds/" Target="new">
+					CVS repository</a> on
+			<a href="https://sourceforge.net/projects/tango-ds" Target=new>
+					tango-ds project</a>
+			</Font>
+		</Td>
+    </Tr>
+</Table>
+</Font>
+</Center>
+</body>
+</html>
