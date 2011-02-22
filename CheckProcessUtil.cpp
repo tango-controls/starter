@@ -9,38 +9,9 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 3.15  2010/10/15 06:20:32  pascal_verdier
-// Copyright added.
-//
-// Revision 3.14  2010/09/21 12:18:57  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.13  2010/08/09 06:52:25  pascal_verdier
-// Patch for Python module added (thanks to Tiago).
-//
 // Revision 3.12  2010/02/09 15:09:49  pascal_verdier
 // Define  _TG_WINDOWS_  replace WIN32.
 // LogFileHome property added.
@@ -79,6 +50,11 @@ static const char *RcsId = "$Header$";
 //
 // Revision 3.1  2008/02/29 15:15:05  pascal_verdier
 // Checking running processes by system call added.
+//
+//
+// copyleft :     European Synchrotron Radiation Facility
+//                BP 220, Grenoble 38043
+//                FRANCE
 //
 //-=============================================================================
 
@@ -123,7 +99,7 @@ ProcessData::ProcessData()
 ProcessData::~ProcessData()
 {
 	//	clear previous list
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 		delete proc_list[i];
 	proc_list.clear();
 }
@@ -397,7 +373,7 @@ string ProcessData::errorCodeToString (DWORD err_code,  string src)
 void ProcessData::read_process_list_from_sys()
 {
 	//	clear previous list
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 		delete proc_list[i];
 	proc_list.clear();
 
@@ -619,7 +595,7 @@ void ProcessData::check_cpp_process(Process* process)
 		process->name = name_from_path(process->line_args[0]);
 #endif
 
-	for (unsigned int i=1 ; i<process->line_args.size() ; i++)
+	for (int i=1 ; i<process->line_args.size() ; i++)
 		process->proc_args.push_back(process->line_args[i]);
 }
 //=============================================================
@@ -688,7 +664,7 @@ bool ProcessData::check_python_process(Process* process)
 
 	//	To get python module name
 	bool found_py_module = false;
-	unsigned int args_idx = 1;
+	int args_idx = 1;
 	for (; args_idx < process->line_args.size()-1 ; args_idx++)
 	{
 	    const string &arg = process->line_args[args_idx];
@@ -730,7 +706,7 @@ bool ProcessData::check_python_process(Process* process)
     if (!found_py_module)
         return false;
 
-	for (unsigned int i=args_idx ; i<process->line_args.size() ; i++)
+	for (int i=args_idx ; i<process->line_args.size() ; i++)
 		process->proc_args.push_back(process->line_args[i]);
 	return true;
 }
@@ -794,7 +770,7 @@ void ProcessData::update_process_list()
 	cout << "	Reading process list = " << Elapsed(t0, t1) << " ms" << endl;
 #endif
 
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 #ifdef TRACE
 		GetTime(t2);
@@ -885,7 +861,7 @@ void ProcessData::update_process_list()
 int ProcessData::get_server_pid(string argin)
 {
 	omni_mutex_lock sync(*this);
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
 		// server is a process with at least one arg
@@ -909,7 +885,7 @@ int ProcessData::get_server_pid(string argin)
 bool ProcessData::is_server_running(string argin)
 {
 	omni_mutex_lock sync(*this);
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
 		if (process->servname == argin)
@@ -925,7 +901,7 @@ bool ProcessData::is_server_running(string argin)
 bool ProcessData::is_process_running(string argin)
 {
 	omni_mutex_lock sync(*this);
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
 		if (process->name == argin)
@@ -941,7 +917,7 @@ vector<Process> ProcessData::get_process_list()
 	
 	//	copy list
 	vector<Process>	ret;
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*p_src = proc_list[i];
 		Process	process;
