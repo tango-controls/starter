@@ -6,20 +6,19 @@
 --------------------Configuration: starter - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Temp\RSPB2B.tmp" with contents
+Creating temporary file "C:\Temp\RSP578.tmp" with contents
 [
 tangod.lib log4tangod.lib COS4d.lib omniDynamic4d.lib omniORB4d.lib omnithreadd.lib mswsock.lib ws2_32.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"c:\temp\vcc\starter/starter.pdb" /debug /machine:I386 /out:"c:\temp\vcc\starter/starter.exe" /pdbtype:sept /libpath:"Y:\tango\lib\win32\debug" 
 c:\temp\vcc\starter\ClassFactory.obj
 c:\temp\vcc\starter\main.obj
-c:\temp\vcc\starter\PingThread.obj
 c:\temp\vcc\starter\Starter.obj
 c:\temp\vcc\starter\StarterClass.obj
 c:\temp\vcc\starter\StarterService.obj
 c:\temp\vcc\starter\StarterStateMachine.obj
 c:\temp\vcc\starter\StarterUtil.obj
-c:\temp\vcc\starter\StartProcessThread.obj
+c:\temp\vcc\starter\PingThread.obj
 ]
-Creating command line "link.exe @C:\Temp\RSPB2B.tmp"
+Creating command line "link.exe @C:\Temp\RSP578.tmp"
 <h3>Output Window</h3>
 Linking...
 LINK : warning LNK4049: locally defined symbol ""public: __thiscall omni_thread::init_t::init_t(void)" (??0init_t@omni_thread@@QAE@XZ)" imported
