@@ -8,39 +8,9 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 3.15  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.14  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.13  2008/12/12 13:29:56  pascal_verdier
-// Log in file start and stop for servers and itself.
-//
 // Revision 3.12  2008/09/23 14:19:41  pascal_verdier
 // Log files history added.
 //
@@ -60,8 +30,12 @@
 // Revision 3.7  2006/02/09 11:59:19  pascal_verdier
 // A ping thread is now started for each server.
 //
+//
+// copyleft :    European Synchrotron Radiation Facility
+//               BP 220, Grenoble 38043
+//               FRANCE
+//
 //=============================================================================
-
 #ifndef _STARTER_UTIL_H
 #define _STARTER_UTIL_H
 
@@ -84,7 +58,7 @@ namespace Starter_ns
 
  //	Add your own constants definitions here.
  //-----------------------------------------------
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 typedef unsigned char boolean;
 #endif
 
@@ -102,7 +76,7 @@ ControledServer;
 
 //	Millisecond sleep platform independant.
 //--------------------------------------------
-#	ifdef _TG_WINDOWS_
+#	ifdef WIN32
 #	define		ms_sleep(ms)	_sleep(ms);
 #	else
 #	define		ms_sleep(ms)	{\
@@ -115,15 +89,15 @@ ControledServer;
 
 //	Definitions for separators
 //----------------------------------
-#ifdef _TG_WINDOWS_
+#ifdef WIN32
 #	define	slash	'\\'
 #	define	TmpRoot	"c:\\temp"
 #else
 #	define	slash	'/'
 #	define	TmpRoot	"/var/tmp"
 #endif
-#define	LogPath(s,home)		\
-		s  = home;	\
+#define	LogPath(s)		\
+		s = TmpRoot;	\
 		s += slash;		\
 		s += "ds.log";
 
@@ -136,7 +110,6 @@ class StarterUtil
 {
 public :
 	string				notifyd_name;
-	string				log_home;
 	string				starter_log_file;
 	CheckProcessUtil	*proc_util;
 
@@ -152,7 +125,7 @@ public :
 /**
  *	Default constructor.
  */
-StarterUtil(Tango::DeviceProxy *dev, vector<string> host_name, string logHome);
+StarterUtil(Tango::DeviceProxy *dev, vector<string> host_name);
 //@}
 /**
  *	@name methods
@@ -254,10 +227,10 @@ private:
 	 */
 	Tango::DeviceProxy	*dbase;
 
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 	static struct timeval	before, after;
 #else
-#endif /* _TG_WINDOWS_ */
+#endif /* WIN32 */
 };
 
 
