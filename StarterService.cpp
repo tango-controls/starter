@@ -9,11 +9,6 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
 // This file is part of Tango.
 //
 // Tango is free software: you can redistribute it and/or modify
@@ -32,12 +27,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.12  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
-// Revision 3.11  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
 // Revision 3.10  2010/09/21 12:18:58  pascal_verdier
 // GPL Licence added to header.
 //
