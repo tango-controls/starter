@@ -9,51 +9,9 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 1.10  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 1.9  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 1.8  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 1.7  2008/12/16 10:44:57  pascal_verdier
-// Memory leak fixed.
-//
-// Revision 1.6  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
-// Revision 1.5  2007/09/25 12:12:00  pascal_verdier
-// little memory leaks fixed.
-//
-// Revision 1.4  2006/11/10 14:53:28  pascal_verdier
-// Remove vc8 warnings.
-//
 // Revision 1.3  2006/04/24 07:06:27  pascal_verdier
 // A thread is started for each level when at servers startup.
 //
@@ -63,26 +21,31 @@ static const char *RcsId = "$Header$";
 // Revision 1.1  2006/02/09 12:00:15  pascal_verdier
 // A ping thread is now started for each server.
 //
+//
+// copyleft :     European Synchrotron Radiation Facility
+//                BP 220, Grenoble 38043
+//                FRANCE
+//
 //-=============================================================================
 
-#include <tango.h>
-
 #include <stdio.h>
+
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 #	include <sys/time.h>
 #endif
 
 
+#include <tango.h>
 #include <sstream>
 #include <PingThread.h>
 
 #ifndef	TIME_VAR
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 
 #	define	TimeVal	struct timeval
 #	define	GetTime(t)	gettimeofday(&t, NULL);
@@ -97,7 +60,7 @@ static const char *RcsId = "$Header$";
 #	define	Elapsed(before, after)	\
 		1000*(after.time - before.time) + (after.millitm - before.millitm)
 
-#endif	/*	_TG_WINDOWS_		*/
+#endif	/*	WIN32		*/
 #endif	/*	TIME_VAR	*/
 
 namespace Starter_ns
@@ -197,6 +160,16 @@ void PingThreadData::wake_up()
 
 //+----------------------------------------------------------------------------
 /**
+ *	Create a thread to ping server
+ */
+//+----------------------------------------------------------------------------
+PingThread::PingThread(PingThreadData *sd, string name)
+{
+	shared       = sd;
+	servname     = name;
+}
+//+----------------------------------------------------------------------------
+/**
  *	Execute the thread loop.
  */
 //+----------------------------------------------------------------------------
@@ -213,49 +186,43 @@ void *PingThread::run_undetached(void *ptr)
 	while(!stop_thread)
 	{
 		GetTime(before);
-		//	Check before if server running or failed
-		if (process_util->is_server_running(servname))
+		//	try to build DeviceProxy
+		if (dev==NULL)
 		{
-			//	try to build DeviceProxy
-			if (dev==NULL)
+			try
 			{
-				try
-				{
-					if (dev==NULL)
-						dev = new Tango::DeviceProxy(adm_devname);
-				}
-				catch(Tango::DevFailed &e)
-				{
-					Tango::Except::print_exception(e);
-				}
-				catch(...)
-				{
-					cout << "============================================" << endl;
-					cout << "	Exception catched !!!!!!" << endl;
-					cout << "============================================" << endl;
-				}
+				dev = new Tango::DeviceProxy(adm_devname);
 			}
-			if (dev!=NULL)
+			catch(Tango::DevFailed &e)
 			{
-				try
-				{
-					dev->ping();
-					state = Tango::ON;
-				}
-				catch(Tango::DevFailed &)
-				{
-					cout << servname << " is running but not responding !!!" << endl;
-					//Tango::Except::print_exception(e);
-					state = Tango::MOVING;
-				}
+				Tango::Except::print_exception(e);
+			}
+			catch(...)
+			{
+				cout << "============================================" << endl;
+				cout << "	Exception catched !!!!!!" << endl;
+				cout << "============================================" << endl;
 			}
 		}
-		else
-			state = Tango::FAULT;
+		if (dev!=NULL)
+		{
+			try
+			{
+				dev->ping();
+				state = Tango::ON;
+			}
+			catch(Tango::DevFailed &)
+			{
+				//Tango::Except::print_exception(e);
+				state = Tango::FAULT;
+				delete dev;
+				dev = NULL;
+			}
+		}
 		shared->set_state(state);
 
-		if (trace) cout << "Ping thread:[" << servname << "]	" <<
-				Tango::DevStateName[state]    << endl;
+		if (trace)	cout << "Ping thread:[" << servname << "]	" <<
+				((state==Tango::ON)? "Running" : "Stopped")    << endl;
 		
 		//	Compute time to sleep
 		GetTime(after);
@@ -274,12 +241,7 @@ void *PingThread::run_undetached(void *ptr)
 		}
 		stop_thread = shared->get_stop_thread();
 	}
-
-
-
 	delete shared;
-	if (dev!=NULL)
-		delete dev;
 	if (trace)	cout << "Ping thread:[" << servname << "] - leaving...." << endl;
 	return NULL;
 }

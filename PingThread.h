@@ -8,46 +8,19 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 1.3  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
 //
-// Revision 1.2  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
-// Revision 1.1  2006/02/09 12:00:15  pascal_verdier
-// A ping thread is now started for each server.
+// copyleft :    European Synchrotron Radiation Facility
+//               BP 220, Grenoble 38043
+//               FRANCE
 //
 //=============================================================================
-
-
 #ifndef _PING_THREAD_H
 #define _PING_THREAD_H
 
 #include <tango.h>
-#include <CheckProcessUtil.h>
 
 /**
  * @author	$Author$
@@ -118,8 +91,7 @@ private:
 	/**
 	 *	Shared data
 	 */
-	PingThreadData	*shared;
-	CheckProcessUtil *process_util;
+	PingThreadData		*shared;
 	/**
 	 *	The pinged server name
 	 */
@@ -135,16 +107,13 @@ public:
 	 *	@param	name The pinged server name
 	 *	@param	timeout	timeout value in milliseconds for ping command.
 	 */
-	PingThread(PingThreadData *sd, string name, CheckProcessUtil *proc_util)\
-	{\
-		shared = sd;  servname = name;  process_util = proc_util;\
-	};
+		PingThread(PingThreadData *shared, string name);
 
 	/**
 	 *	Execute the thread loop.
 	 */
-	void *run_undetached(void *);
-	void start() {start_undetached();}
+		void *run_undetached(void *);
+		void start() {start_undetached();}
 };
 
 }	//	namespace
