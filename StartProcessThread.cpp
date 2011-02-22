@@ -1,7 +1,7 @@
 static const char *RcsId = "$Header$";
 //+=============================================================================
 //
-// file :         StartProcessThread.cpp
+// file :         Starter.cpp
 //
 // description :  C++ source for the Starter start process thread.
 //
@@ -9,61 +9,9 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 3.23  2010/10/18 12:58:52  pascal_verdier
-// Pogo-7 compatibility
-//
-// Revision 3.22  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
-// Revision 3.21  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 3.20  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.19  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.18  2010/02/09 10:25:38  pascal_verdier
-// __MACOS__ compiler flag added.
-//
-// Revision 3.17  2008/12/12 13:29:56  pascal_verdier
-// Log in file start and stop for servers and itself.
-//
-// Revision 3.16  2008/09/23 14:19:40  pascal_verdier
-// Log files history added.
-//
-// Revision 3.15  2008/04/04 14:30:51  jensmeyer
-// Added compile option for FreeBSD and MacOSX.
-// They have a different signal handling.
-//
-// Revision 3.14  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
 // Revision 3.13  2007/09/28 06:12:30  pascal_verdier
 // Remove traces
 //
@@ -106,13 +54,12 @@ static const char *RcsId = "$Header$";
 // Revision 3.1  2006/04/24 07:06:27  pascal_verdier
 // A thread is started for each level when at servers startup.
 //
-//+=============================================================================
-
-
-#include <tango.h>
-
-
-#ifdef _TG_WINDOWS_
+//
+// copyleft :     European Synchrotron Radiation Facility
+//                BP 220, Grenoble 38043
+//                FRANCE
+//
+#ifdef WIN32
 #	include <process.h>
 #	include <direct.h>
 #	include <io.h>
@@ -123,6 +70,7 @@ static const char *RcsId = "$Header$";
 
 #include <fcntl.h>
 
+#include <tango.h>
 #include <Starter.h>
 
 namespace Starter_ns
@@ -181,7 +129,7 @@ void *StartProcessThread::run_undetached(void *ptr)
 		Tango::DeviceProxy	*serv;
 		while (failed==false && started==false && (t1-t0)<starter->serverStartupTimeout)
 		{
-#		ifdef _TG_WINDOWS_
+#		ifdef WIN32
 			_sleep(1000);
 #		else
 			sleep(1);
@@ -217,13 +165,7 @@ void *StartProcessThread::run_undetached(void *ptr)
 			}
 		}
 		if (started)
-		{
-			TangoSys_OMemStream out_stream;
-			out_stream << servname << " started";
-			starter->util->log_starter_info(out_stream.str());
-
 			cout << "----- " << servname << " started in " << (t1-t0) << " sec." << endl;
-		}
 		else
 		if (failed)
 			cout << "----- " << servname << " failed in " << (t1-t0) << " sec." << endl;
@@ -256,7 +198,7 @@ void *StartProcessThread::run_undetached(void *ptr)
 	starter->start_proc_data->remove_current_level();
 	return NULL;
 }
-#ifndef	_TG_WINDOWS_
+#ifndef	WIN32
 //+------------------------------------------------------------------
 /**
  *	Start one process
@@ -287,28 +229,16 @@ void StartProcessThread::start_process(NewProcess *process)
 		case 0:
 			{
 				// Change process group and close control tty
-#if defined(__darwin__) || defined( __MACOS__)
-
-				setpgrp();
-
-#elif defined (__freebsd__)
-
-				setpgrp(0,setsid());
-
-#else										
 				setpgrp();
 
 				//	Call setsid() to do NOT stop children if Starter is killed.
 				//--------------------------------------------------------------
 				setsid();
-#endif
 
 				//	Close the stderr and re-open it on a log file.
 				//-------------------------------------------------
 				close(2);
-				starter->util->manage_log_file_history(
-						process->logfile, starter->keepLogFiles);
-				//remove(process->logfile);
+				remove(process->logfile);
 				open(process->logfile, O_RDWR | O_CREAT, 0664);
 
 				//	Start the execution of the device server
@@ -338,7 +268,7 @@ void StartProcessThread::start_process(NewProcess *process)
 }
 
 
-#else	//	_TG_WINDOWS_
+#else	//	WIN32
 
 
 //+----------------------------------------------------------
@@ -346,48 +276,10 @@ void StartProcessThread::start_process(NewProcess *process)
 //+----------------------------------------------------------
 void StartProcessThread::start_process(NewProcess *process)
 {
-	/*****
-	On Win32 problem with permission denied !
-	It seems that this not necessary because there is nothing in file.
-	
-	starter->util->manage_log_file_history(
-			process->logfile, starter->keepLogFiles);
-	*/
-	StartWinThread	*win_thread = new StartWinThread(process, starter);
+	StartWinThread	*win_thread = new StartWinThread(process);
 	win_thread->start();
 }
 
-//+------------------------------------------------------------------
-/**
- *	Set the path between cotes for windows.
- *
- *      @param  servname	server name
- */
-//+------------------------------------------------------------------
-string StartWinThread::get_server_name_with_cotes(string servname)
-{
-	string::size_type	pos = servname.find_last_of("/\\");
-	if (pos!=string::npos)
-	{
-		string	str("\"");
-		str += servname.substr(0, pos);
-		str += "\"";
-		str += servname.substr(pos);
-		
-		return str;
-		
-		/*
-		string	str("\"");
-		str += servname;
-		str += "\"";
-
-		string	str("c:\\\"Program Files\"\\Tango\\notify_daemon.bat");
-		return str;
-		*/
-	}
-	else
-		return servname;
-}
 //+----------------------------------------------------------
 //	WIN 32 Thread to fork a sub process
 //		If batch file, the spawnv is blocking !!!
@@ -396,27 +288,16 @@ void *StartWinThread::run_undetached(void *ptr)
 {
 	//	Check if batch file
 	string	str_server(process->servname);
-	string	str_with_cotes = get_server_name_with_cotes(process->servname);
-	char	*servname = new char[str_with_cotes.length()+1];
-	strcpy(servname, str_with_cotes.c_str());
 	
-	string cmd(servname);
-	cmd += "  ";
-	cmd += process->instancename;
-	cout << "system(" << cmd << ");" << endl;
-	system(cmd.c_str());
-	return NULL;
-
 	if (str_server.find(".bat") != string::npos)
 	{
 		char	*argv[3];
 		int		i = 0;
-
-		argv[i++] = servname;
+		argv[i++] = process->servname;
 		argv[i++] = process->instancename;
 		argv[i++] = NULL;
 
-		cout << "Forking "   << servname << endl;
+		cout << "Forking "   << process->servname << endl;
 		cout << "log file: " << process->logfile << endl;
 
 		//	Write a starting message in log file
@@ -435,10 +316,8 @@ void *StartWinThread::run_undetached(void *ptr)
 			ofs1 << "Exec(" << argv[0] << ") failed " << endl;
 			ofs1 << "_spawnv has returned " << ret << endl;
 			DWORD	errcode = GetLastError();
-		    LPTSTR	lp_err;
-			if (::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-								FORMAT_MESSAGE_FROM_SYSTEM     |
-								FORMAT_MESSAGE_ARGUMENT_ARRAY,
+		    LPTSTR lp_err;
+			if (::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ARGUMENT_ARRAY,
 							NULL,
 							errcode,
 							LANG_NEUTRAL,
@@ -452,10 +331,6 @@ void *StartWinThread::run_undetached(void *ptr)
 					*p++ = lp_err[i];
 				*p = '\0';
 				ofs1 << str << " errcode = " << errcode << endl;
-				cout << "===============================================" << endl
-					 << servname << "  " << process->instancename<< endl
-					 << str << " errcode = " << errcode                   << endl
-					 << "===============================================" << endl;
 				::LocalFree(lp_err);
 			}
 			ofs1.close();
@@ -471,7 +346,7 @@ void *StartWinThread::run_undetached(void *ptr)
 		PROCESS_INFORMATION pi;
 		STARTUPINFO si;
 
-		string	cmd_line(servname);
+		string	cmd_line(process->servname);
 		cmd_line += " ";
 		cmd_line += process->instancename;
 
@@ -555,11 +430,10 @@ void *StartWinThread::run_undetached(void *ptr)
 		delete lpw_logfile;
 		ofs.close();
 	}
-	delete[] servname;
 	return NULL;
 }
 
-#endif	//	_TG_WINDOWS_
+#endif	//	WIN32
 
 //+------------------------------------------------------------------
 //+------------------------------------------------------------------
