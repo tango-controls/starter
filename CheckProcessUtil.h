@@ -8,36 +8,9 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 3.10  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.9  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
 // Revision 3.8  2008/09/23 14:19:40  pascal_verdier
 // Log files history added.
 //
@@ -63,6 +36,11 @@
 //
 // Revision 3.1  2008/02/29 15:15:05  pascal_verdier
 // Checking running processes by system call added.
+//
+//
+// copyleft :    European Synchrotron Radiation Facility
+//               BP 220, Grenoble 38043
+//               FRANCE
 //
 //=============================================================================
 #ifndef _CHECKPROCESS_UTIL_H
