@@ -9,11 +9,6 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
 // This file is part of Tango.
 //
 // Tango is free software: you can redistribute it and/or modify
@@ -32,12 +27,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 1.10  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 1.9  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
 // Revision 1.8  2010/02/09 15:09:49  pascal_verdier
 // Define  _TG_WINDOWS_  replace WIN32.
 // LogFileHome property added.
@@ -65,9 +54,8 @@ static const char *RcsId = "$Header$";
 //
 //-=============================================================================
 
-#include <tango.h>
-
 #include <stdio.h>
+
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -78,6 +66,7 @@ static const char *RcsId = "$Header$";
 #endif
 
 
+#include <tango.h>
 #include <sstream>
 #include <PingThread.h>
 

@@ -1,4 +1,3 @@
-/*----- PROTECTED REGION ID(ClassFactory.cpp) ENABLED START -----*/
 static const char *RcsId = "$Header$";
 //+=============================================================================
 //
@@ -12,11 +11,6 @@ static const char *RcsId = "$Header$";
 // project :     TANGO Device Server
 //
 // $Author$
-//
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
 //
 // This file is part of Tango.
 //
@@ -36,12 +30,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.5  2010/10/15 06:21:07  pascal_verdier
-// Copyright added.
-//
-// Revision 3.4  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
 // Revision 3.3  2005/04/21 07:18:48  pascal_verdier
 // Add a little timeout for ping.
 // Fix a bug for windows (SIGCHLD).
@@ -103,4 +91,3 @@ void Tango::DServer::class_factory()
 	add_class(Starter_ns::StarterClass::init("Starter"));
 
 }
-/*----- PROTECTED REGION END -----*/

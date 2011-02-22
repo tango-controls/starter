@@ -8,11 +8,6 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
 // This file is part of Tango.
 //
 // Tango is free software: you can redistribute it and/or modify
@@ -31,9 +26,6 @@
 // $Revision$
 //
 // $Log$
-// Revision 1.3  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
 // Revision 1.2  2008/02/29 15:15:05  pascal_verdier
 // Checking running processes by system call added.
 //

@@ -1,18 +1,13 @@
 static const char *RcsId = "$Header$";
 //+=============================================================================
 //
-// file :         StartProcessThread.cpp
+// file :         Starter.cpp
 //
 // description :  C++ source for the Starter start process thread.
 //
 // project :      TANGO Device Server
 //
 // $Author$
-//
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
 //
 // This file is part of Tango.
 //
@@ -32,18 +27,6 @@ static const char *RcsId = "$Header$";
 // $Revision$
 //
 // $Log$
-// Revision 3.23  2010/10/18 12:58:52  pascal_verdier
-// Pogo-7 compatibility
-//
-// Revision 3.22  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
-// Revision 3.21  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 3.20  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
 // Revision 3.19  2010/02/09 15:09:49  pascal_verdier
 // Define  _TG_WINDOWS_  replace WIN32.
 // LogFileHome property added.
@@ -109,9 +92,6 @@ static const char *RcsId = "$Header$";
 //+=============================================================================
 
 
-#include <tango.h>
-
-
 #ifdef _TG_WINDOWS_
 #	include <process.h>
 #	include <direct.h>
@@ -123,6 +103,7 @@ static const char *RcsId = "$Header$";
 
 #include <fcntl.h>
 
+#include <tango.h>
 #include <Starter.h>
 
 namespace Starter_ns
@@ -369,21 +350,19 @@ string StartWinThread::get_server_name_with_cotes(string servname)
 	string::size_type	pos = servname.find_last_of("/\\");
 	if (pos!=string::npos)
 	{
+		/*
 		string	str("\"");
 		str += servname.substr(0, pos);
 		str += "\"";
 		str += servname.substr(pos);
 		
-		return str;
-		
-		/*
 		string	str("\"");
 		str += servname;
 		str += "\"";
-
-		string	str("c:\\\"Program Files\"\\Tango\\notify_daemon.bat");
 		return str;
 		*/
+		string	str("c:\\\"Program Files\"\\Tango\\notify_daemon.bat");
+		return str;
 	}
 	else
 		return servname;
