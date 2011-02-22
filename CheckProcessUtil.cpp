@@ -9,76 +9,16 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 3.15  2010/10/15 06:20:32  pascal_verdier
-// Copyright added.
-//
-// Revision 3.14  2010/09/21 12:18:57  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.13  2010/08/09 06:52:25  pascal_verdier
-// Patch for Python module added (thanks to Tiago).
-//
-// Revision 3.12  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.11  2008/12/12 13:30:44  pascal_verdier
-// Problem on python server options fixed.
-//
-// Revision 3.10  2008/06/18 08:17:03  pascal_verdier
-// Pb with case unsensitive on win32 fixed.
-//
-// Revision 3.9  2008/06/06 07:56:50  pascal_verdier
-// Case unsensitive on instance name added.
-//
-// Revision 3.8  2008/06/04 09:08:03  pascal_verdier
-// javaw process control added.
-// Java -cp classpath parsing mmodified.
-//
-// Revision 3.7  2008/05/15 08:07:18  pascal_verdier
-// TangoSys_MemStream replaced by TangoSys_OMemStream
-// (for leaking problem under win32)
-//
-// Revision 3.6  2008/04/28 12:36:09  pascal_verdier
-// Eception in solaris modified.
-//
-// Revision 3.5  2008/04/24 06:33:52  pascal_verdier
-// Bug in solaris management fixed.
-//
-// Revision 3.4  2008/04/10 12:15:05  jensmeyer
-// Added compile options for MacOSX and FreeBSD
-//
-// Revision 3.3  2008/04/09 14:39:57  pascal_verdier
-// Better trace on pread failed
-//
-// Revision 3.2  2008/03/03 13:26:15  pascal_verdier
-// is_process_running() method added.
-//
 // Revision 3.1  2008/02/29 15:15:05  pascal_verdier
 // Checking running processes by system call added.
+//
+//
+// copyleft :     European Synchrotron Radiation Facility
+//                BP 220, Grenoble 38043
+//                FRANCE
 //
 //-=============================================================================
 
@@ -87,7 +27,7 @@ static const char *RcsId = "$Header$";
 #include <CheckProcessUtil.h>
 
 #ifndef	TIME_VAR
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 
 #	define	TimeVal	struct timeval
 #	define	GetTime(t)	gettimeofday(&t, NULL);
@@ -102,85 +42,14 @@ static const char *RcsId = "$Header$";
 #	define	Elapsed(before, after)	\
 		1000*(after.time - before.time) + (after.millitm - before.millitm)
 
-#endif	/*	_TG_WINDOWS_		*/
+#endif	/*	WIN32		*/
 #endif	/*	TIME_VAR	*/
 
 
 namespace Starter_ns
 {
-//=============================================================
-//=============================================================
-ProcessData::ProcessData()
-{
-#ifdef _TG_WINDOWS_
-	//	Under win 2000 or before the process name is shorted to 15 char
-	//	If win 2000, take it from command line.
-	win2000 = isWin2000();
-#endif	/*	_TG_WINDOWS_		*/
-}
-//=============================================================
-//=============================================================
-ProcessData::~ProcessData()
-{
-	//	clear previous list
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
-		delete proc_list[i];
-	proc_list.clear();
-}
 
-#ifdef _TG_WINDOWS_
-//=============================================================
-//=============================================================
-string  ProcessData::parseNameFromCmdLine(string name, string cmdline)
-{
-	//	Search last position of name
-	string::size_type	pos = 0;
-	string::size_type	tmp;
-	while ((tmp=cmdline.find(name, pos+1))!=string::npos)
-		pos = tmp;
-
-	//	Get name before sppace char
-	string::size_type	end = cmdline.find(" ", pos);
-	if (end==string::npos)
-		end = cmdline.find("\t", pos);
-	string	full_name = cmdline.substr(pos, end-pos);
-
-	//	Take off extention if any
-	end = full_name.find(".");
-	if (end==string::npos)
-		return full_name;
-	else
-		return full_name.substr(0, end);
-}
-//=============================================================
-//=============================================================
-bool ProcessData::isWin2000(void)
-{
-	OSVERSIONINFOEX osvi;
-	BOOL bOsVersionInfoEx;
-
-	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	if(!(bOsVersionInfoEx=GetVersionEx((OSVERSIONINFO *)&osvi)))
-	{
-		osvi.dwOSVersionInfoSize=sizeof(OSVERSIONINFO);
-		if (!GetVersionEx((OSVERSIONINFO *)&osvi) )
-			return true;
-	}
-	double	osversion = osvi.dwMajorVersion + (1.0*osvi.dwMinorVersion/10);
-	if (osversion<5.1)
-	{
-		cout << "/=======================================" << endl;
-		cout << "	Windows 2000 or before !!!" << endl;
-		cout << "/=======================================" << endl;
-		return true;
-	}
-	else
-	{
-		cout << "Windows XP or later" << endl;
-		return false;
-	}
-}
+#ifdef WIN32
 //=============================================================
 //=============================================================
 string ProcessData::wchar2string(WCHAR *wch, int size)
@@ -305,10 +174,12 @@ void ProcessData::read_process_list_from_sys()
 									buff, 
 									block.wMaxLength, 
 									&dwSize))
+					{
 						cmdline = wchar2string(buff, dwSize);
+						delete buff;
+					}
 					else
 						errorCodeToString(GetLastError(), "3-ReadProcessMemory()" );
-					delete buff;
 				}
 				else
 					errorCodeToString(GetLastError(), "2-ReadProcessMemory()" );
@@ -328,15 +199,6 @@ void ProcessData::read_process_list_from_sys()
 				process->name = full_name.substr(0, pos);
 			else
 				process->name = full_name;
-
-			//	Parse name frome cmd line because file manager truncate it at 15 chars
-			if (win2000 && process->name.length()>13)
-				process->name = parseNameFromCmdLine(process->name, cmdline);
-
-			//	On win32 -> exe file is case unsesitive
-			transform(process->name.begin(), process->name.end(),
-				process->name.begin(), ::tolower);
-
 
 			//	add pid and cmd line
 			process->pid  = pe32.th32ProcessID;
@@ -387,7 +249,7 @@ string ProcessData::errorCodeToString (DWORD err_code,  string src)
 
 
 
-#else	//	_TG_WINDOWS_
+#else	//	WIN32
 
 
 
@@ -397,7 +259,7 @@ string ProcessData::errorCodeToString (DWORD err_code,  string src)
 void ProcessData::read_process_list_from_sys()
 {
 	//	clear previous list
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 		delete proc_list[i];
 	proc_list.clear();
 
@@ -437,27 +299,20 @@ void ProcessData::read_process_list_from_sys()
 			//	Get PID
 			Process	*process = new Process();
 			process->pid = atoi(ent->d_name);
+
 			try
 			{
-				//	if process can be read, add process object to vector
-				if (manageProcFiles(process))
-					proc_list.push_back(process);
-				else
-					delete process;
-			}
-			catch(Tango::DevFailed &e)
-			{
-				cout << "Excepion catch during manageProcFiles for pid = "
-					<< process->pid << endl;
-				cout << e.errors[0].desc;
-				delete process;
+				manageProcFiles(process);
 			}
 			catch(...)
 			{
 				cout << "Excepion catch during manageProcFiles for pid = "
 					<< process->pid << endl;
-				delete process;
 			}
+
+			//	Add process object to vector
+			proc_list.push_back(process);
+
 		}
 	}
 	closedir(proc);
@@ -469,19 +324,19 @@ void ProcessData::read_process_list_from_sys()
  *	Manage the /proc files
  */
 //=============================================================
-bool  ProcessData::manageProcFiles(Process *process)
+void  ProcessData::manageProcFiles(Process *process)
 {
-#if (defined linux) || (defined __darwin__) || (defined __freebsd__)
+#ifdef linux
 
 	//	Read command line file
-	TangoSys_OMemStream	fname;
+	TangoSys_MemStream	fname;
 	fname << "/proc/" << process->pid <<"/cmdline";
 
 	//	Read file
 	ifstream	ifs((char *)fname.str().c_str());
 	if (ifs)
 	{
-		TangoSys_OMemStream	sstr;
+		TangoSys_MemStream	sstr;
 		sstr << ifs.rdbuf() << ends;
 		ifs.close();
 
@@ -491,17 +346,15 @@ bool  ProcessData::manageProcFiles(Process *process)
 		string::size_type	pos;
 		while ((pos=process->line.find('\0'))!=string::npos)
 			process->line.replace(pos, 1, " ");
-		return true;
 	}
 	else
-	{
 		cerr << fname.str() << ":	" << strerror(errno) << endl;
-		return false;
-	}
+
+
 #else	//	solaris
 
 	//	Read psinfo file		
-	TangoSys_OMemStream	fname;
+	TangoSys_MemStream	fname;
 	fname << "/proc/" << process->pid <<"/psinfo";
 
 	int				fid;
@@ -511,12 +364,6 @@ bool  ProcessData::manageProcFiles(Process *process)
 		read(fid, (void *) &ps, sizeof(struct psinfo));
 		close(fid);
 		process->name = ps.pr_fname;
-		
-		//	Check if a real process or a shell (cannot be a server)
-		if (process->name=="ssh" ||
-			process->name=="bash" ||
-			process->name=="sh")
-			return false;
 
 		uid_t	euid = geteuid();
 		if ((euid==0) || (euid == ps.pr_euid))
@@ -527,20 +374,14 @@ bool  ProcessData::manageProcFiles(Process *process)
 			 * Otherwise you will not be able to open the processes memory.
 			 */
 			int fdesc;
-			TangoSys_OMemStream	filepath;
+			TangoSys_MemStream	filepath;
 			filepath << "/proc/" << process->pid <<"/as";
 			if ( (fdesc = open(filepath.str().c_str(), O_RDONLY|O_NONBLOCK)) < 0 )
 			{
-				TangoSys_OMemStream	tms;
-				tms << "Cannot open " << filepath.str() << ":	" <<
-					strerror(errno) << endl;
 #ifdef TRACE
-				cerr << tms.str();
+				cerr << "Cannot open " << filepath.str() << ":	" <<
+					strerror(errno) << endl;
 #endif
-				Tango::Except::throw_exception(
-						(const char *)"PROCESS_READ_FAILED",
-						(const char *) tms.str().c_str(),
-						(const char *)"Starter::manageProcFiles()");
 			}
 			else
 			{
@@ -551,7 +392,7 @@ bool  ProcessData::manageProcFiles(Process *process)
 				//	And initialize
 				if (pread(fdesc, argvp, size, ps.pr_argv)>0)
 				{
-					TangoSys_OMemStream	line;
+					TangoSys_MemStream	line;
 
 					//	If argv[n] read -> append to command line
 					char	buff[0x100];
@@ -562,19 +403,8 @@ bool  ProcessData::manageProcFiles(Process *process)
 					process->line = line.str();
 				}
 				else
-				{
-					free(argvp);
-					close(fdesc);
-					TangoSys_OMemStream	tms;
-					tms << "pread failed when getting command line arguments " <<
-						" from memory for process  " << process->name  << " (" <<
-						filepath.str() << ")\n" << strerror(errno) << endl;
-					cerr << tms.str();
-					Tango::Except::throw_exception(
-							(const char *)"PROCESS_READ_FAILED",
-							(const char *) tms.str().c_str(),
-							(const char *)"Starter::manageProcFiles()");
-				}
+					cerr << "pread failed when getting command line arguments" <<
+						" from memory for process\n" << strerror(errno) << endl;
 				free(argvp);
 				close(fdesc);
 			}
@@ -586,20 +416,9 @@ bool  ProcessData::manageProcFiles(Process *process)
 			close(fid);
 		}
 	}
-	else
-	{
-		TangoSys_OMemStream	tms;
-		tms << "open(" << fname.str() << ")  failed\n" <<  strerror(errno) << endl;
-		cerr << tms.str();
-		Tango::Except::throw_exception(
-						(const char *)"PROCESS_READ_FAILED",
-						(const char *) tms.str().c_str(),
-						(const char *)"Starter::manageProcFiles()");
-	}
-	return true;
 #endif
 }
-#endif	//	_TG_WINDOWS_
+#endif	//	WIN32
 
 
 
@@ -612,14 +431,11 @@ bool  ProcessData::manageProcFiles(Process *process)
 void ProcessData::check_cpp_process(Process* process)
 {
 	//	Remove path
-#ifndef _TG_WINDOWS_
-	if (process->line_args.size()==0)
-		process->name = "";
-	else
-		process->name = name_from_path(process->line_args[0]);
+#ifndef WIN32
+	process->name = name_from_path(process->line_args[0]);
 #endif
 
-	for (unsigned int i=1 ; i<process->line_args.size() ; i++)
+	for (int i=1 ; i<process->line_args.size() ; i++)
 		process->proc_args.push_back(process->line_args[i]);
 }
 //=============================================================
@@ -629,40 +445,33 @@ void ProcessData::check_cpp_process(Process* process)
 //=============================================================
 bool ProcessData::check_java_process(Process* process)
 {
-	if (process->line_args.size()==0)
-		return false;
-#ifdef _TG_WINDOWS_
-	if (process->name!="java" &&
-		process->name!="javaw")
+#ifdef WIN32
+	if (process->name!="java")
 		return false;
 #else
 	if (name_from_path(process->line_args[0])!="java")
 		return false;
 #endif
-
-	//	Parse class and instance name
-	bool	found=false;
-	for (int i=process->line_args.size()-1 ; !found && i>0 ; i--)
+	//	Check for class name
+	bool	jvm_arg = true;
+	for (int i=1 ; i<process->line_args.size() ; i++)
 	{
-		if (process->line_args[i]!="" && process->line_args[i].c_str()[0]!='-')
+		if (jvm_arg && process->line_args[i].c_str()[0]!='-')
 		{
-			if (i>1)	
-			{
-
-				//	To get class name, remove package name of previous arg
-				string	full_name(process->line_args[i-1]);
-				string::size_type	start = 0;
-				string::size_type	end;
-				while ((end=full_name.find('.', start))!=string::npos)
-					start = end+1;
-				//	Get last one
-				process->name = full_name.substr(start);
-				
-				//	and take this one as instance 
-				process->proc_args.push_back(process->line_args[i]);
-				found = true;
-			}
+			jvm_arg = false;	//	end of jvm args
+			
+			//	To get class name, remove package name
+			string	full_name(process->line_args[i]);
+			string::size_type	start = 0;
+			string::size_type	end;
+			while ((end=full_name.find('.', start))!=string::npos)
+				start = end+1;
+			//	Get last one
+			process->name = full_name.substr(start);
 		}
+		else
+		if (jvm_arg==false)
+			process->proc_args.push_back(process->line_args[i]);
 	}
 	return true;
 }
@@ -673,9 +482,7 @@ bool ProcessData::check_java_process(Process* process)
 //=============================================================
 bool ProcessData::check_python_process(Process* process)
 {
-	if (process->line_args.size()==0)
-		return false;
-#ifdef _TG_WINDOWS_
+#ifdef WIN32
 	if (process->name!="python")
 		return false;
 #else
@@ -683,54 +490,20 @@ bool ProcessData::check_python_process(Process* process)
 		return false;
 #endif
 
-	if (process->line_args.size()<2)
-		return false;	//	No module loaded
-
 	//	To get python module name
-	bool found_py_module = false;
-	unsigned int args_idx = 1;
-	for (; args_idx < process->line_args.size()-1 ; args_idx++)
-	{
-	    const string &arg = process->line_args[args_idx];
-	    
-	    if (arg.size() == 0)
-	        continue;
-	    
-	    if (arg[0] == '-')
-	    {
-	        // special python arguments that receive and additional parameter
-	        if (arg.size() > 1 && (arg[1] == 'Q' || arg[1] == 'W'))
-	            args_idx++; 
-	        continue;
-	    }
-	    
-	    // we reached the python file in execution
-        found_py_module = true;
-	    
-        string::size_type start = arg.rfind('/');
-        if (start == string::npos)
-            start = arg.rfind('\\');
-        
-        if (start == string::npos)
-            start = 0;
-        else
-            start++;
+	string	full_name(process->line_args[1]);
+	string::size_type	start = 0;
+	string::size_type	end;
+	while ((end=full_name.find('/', start))!=string::npos)
+		start = end+1;
+	while ((end=full_name.find('\\', start))!=string::npos)
+		start = end+1;
 
-	    string::size_type end = arg.rfind(".py");
-        
-        if (end == string::npos)
-            process->name = arg.substr(start);
-        else
-            process->name = arg.substr(start, end-start);
-        // everything from now on is an argument
-        args_idx++;
-        break;
-	}
+	//	Get last one
+	end = full_name.find(".py", start);
+	process->name = full_name.substr(start, (end-start));
 
-    if (!found_py_module)
-        return false;
-
-	for (unsigned int i=args_idx ; i<process->line_args.size() ; i++)
+	for (int i=2 ; i<process->line_args.size() ; i++)
 		process->proc_args.push_back(process->line_args[i]);
 	return true;
 }
@@ -747,28 +520,6 @@ string ProcessData::name_from_path(string full_name)
 }
 //=============================================================
 //=============================================================
-void ProcessData::build_server_names(Process* process)
-{
-	// server is a process with at least one arg
-	if (process->proc_args.size()>0)
-	{
-		process->servname  = process->name;
-		process->servname += "/";
-		string	instance(process->proc_args[0]);
-		transform(instance.begin(), instance.end(),
-				instance.begin(), ::tolower);
-		process->servname += instance;
-#ifdef _TG_WINDOWS_
-	//	Wain32 is case unsensitive
-	transform(process->servname.begin(), process->servname.end(),
-					process->servname.begin(), ::tolower);
-#endif
-}
-	else
-		process->servname  = "";
-}
-//=============================================================
-//=============================================================
 
 
 
@@ -778,7 +529,6 @@ void ProcessData::build_server_names(Process* process)
  *	Public method to update and build process process 
  */
 //=============================================================
-//#define TRACE
 void ProcessData::update_process_list()
 {
 	omni_mutex_lock sync(*this);
@@ -788,17 +538,11 @@ void ProcessData::update_process_list()
 	read_process_list_from_sys();
 	GetTime(t1);
 #ifdef TRACE
-	TimeVal	t2, t3;
-	double max_t = 0;
-	Process	*max_t_proc;
 	cout << "	Reading process list = " << Elapsed(t0, t1) << " ms" << endl;
 #endif
 
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
-#ifdef TRACE
-		GetTime(t2);
-#endif
 		Process	*process = proc_list[i];
 
 		//	Split on Space char
@@ -821,7 +565,7 @@ void ProcessData::update_process_list()
 				else
 				if (in_cotes==true) // inside
 				{
-					//	Get last arg and concat with new one
+					//	et last arg and concat with new one
 					string	arg = process->line_args.back();
 					arg += " " + s;
 					//	And replace
@@ -837,47 +581,24 @@ void ProcessData::update_process_list()
 		}
 		//	Get last one
 		string	s = process->line.substr(start);
-		if (s!="")
-			process->line_args.push_back(s);
+		process->line_args.push_back(s);
 
 
-#ifndef _TG_WINDOWS_
-		if (process->line_args.size()>0)
-			process->name = process->line_args[0];
-		else
-			process->name = "";
-			
+#ifndef WIN32
+		process->name = process->line_args[0];
 #endif
 
 		//	Check if java or python process
 		if (check_java_process(process)==false)
 			if(check_python_process(process)==false)
 				check_cpp_process(process);
-		build_server_names(process);
 #ifdef TRACE2
 		cout << process->pid << "	" << process->name;
 		if (process->proc_args.size()>0)
 			cout << " " << process->proc_args[0];
 		cout << endl;
 #endif
-
-#ifdef TRACE
-		GetTime(t3);
-		double	t = Elapsed(t2, t3);
-		if (t>max_t)
-		{
-			max_t = t;
-			max_t_proc = process;
-		}
-#endif
-
 	}
-#ifdef TRACE
-	GetTime(t1);
-	cout << "		total = " << Elapsed(t0, t1) << " ms" << endl;
-	cout << "	max:	" << max_t << "  for " << max_t_proc->name << " (" <<
-				 max_t_proc->pid << ")" << endl;
-#endif
 
 }
 //=============================================================
@@ -885,7 +606,7 @@ void ProcessData::update_process_list()
 int ProcessData::get_server_pid(string argin)
 {
 	omni_mutex_lock sync(*this);
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
 		// server is a process with at least one arg
@@ -909,11 +630,19 @@ int ProcessData::get_server_pid(string argin)
 bool ProcessData::is_server_running(string argin)
 {
 	omni_mutex_lock sync(*this);
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
-		if (process->servname == argin)
-			return true;
+		// server is a process with at least one arg
+		if (process->proc_args.size()>0)
+		{
+			string	servname(process->name);
+			servname += "/";
+			servname += process->proc_args[0];
+			//cout << servname << "==" << argin << endl;
+			if (servname == argin)
+				return true;
+		}
 	}
 	return false;
 }
@@ -925,7 +654,7 @@ bool ProcessData::is_server_running(string argin)
 bool ProcessData::is_process_running(string argin)
 {
 	omni_mutex_lock sync(*this);
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
 		if (process->name == argin)
@@ -941,7 +670,7 @@ vector<Process> ProcessData::get_process_list()
 	
 	//	copy list
 	vector<Process>	ret;
-	for (unsigned int i=0 ; i<proc_list.size() ; i++)
+	for (int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*p_src = proc_list[i];
 		Process	process;
@@ -973,22 +702,7 @@ int CheckProcessUtil::get_server_pid(string argin)
 //=============================================================
 bool CheckProcessUtil::is_server_running(string argin)
 {
-	//	Make sure instance is lower case
-	string::size_type	pos = argin.find('/');
-	if (pos==string::npos)
-		return false;	//	Not a server name
-	pos++;
-	string	dsname(argin.substr(0, pos));
-#ifdef _TG_WINDOWS_
-	//	Wain32 is case unsensitive
-	transform(dsname.begin(), dsname.end(),
-					dsname.begin(), ::tolower);
-#endif
-	string	instance(argin.substr(pos));
-	transform(instance.begin(), instance.end(),
-					instance.begin(), ::tolower);
-	dsname += instance;
-	return data->is_server_running(dsname);
+	return data->is_server_running(argin);
 }
 //=============================================================
 /**
@@ -1009,7 +723,7 @@ vector<Process> CheckProcessUtil::get_process_list()
 //=============================================================
 void *CheckProcessUtil::run_undetached(void *ptr)
 {
-	while (stop_thread==false)
+	while (true)
 	{
 		try
 		{
@@ -1021,14 +735,12 @@ void *CheckProcessUtil::run_undetached(void *ptr)
 		}
 		
 
-		//	And wait n times for next loop
-		for (int i=0 ; i<2 && stop_thread==false ; i++)
+		//	And wait for next loop
 		{
 			omni_mutex_lock sync(*data);
-			data->wait(1000);
+			data->wait(2000);
 		}
 	}
-	delete data;
 	return NULL;
 }
 //=============================================================
@@ -1036,6 +748,3 @@ void *CheckProcessUtil::run_undetached(void *ptr)
 
 
 }	//	namespace
-
-
- 	  	 
