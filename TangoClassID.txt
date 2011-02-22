@@ -3,7 +3,6 @@
  * 
  * Class Name   :	Starter
  * Contact      :	verdier@esrf.fr
- * Class Family :	System
  * Platform     :	All Platforms
  * Bus          :	Not Applicable
  * Manufacturer :	none
