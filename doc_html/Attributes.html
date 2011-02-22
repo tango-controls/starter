@@ -11,31 +11,24 @@
     <TR>
         <TD ALIGN="left">
 			<A HREF="http://www.esrf.fr/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0 Height="60"></A>
+			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0></A>
 		</Td>
         <TD ALIGN="center">
 			<A HREF="http://www.elettra.trieste.it/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0 Height="60"></A>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0></A>
 
 		</Td>
-        <TD ALIGN="center">
+        <TD ALIGN="right">
 			<A HREF="http://www.synchrotron-soleil.fr/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0 Height="60"></A>
-		</Td>
-        <TD ALIGN="right">
-			<A HREF="http://www.cells.es/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/alba.jpg" BORDER=0 Height="54"></A>
-		</Td>
-        <TD ALIGN="right">
-			<A HREF="http://www.desy.de/html/home/index_eng.html" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/desy.gif" BORDER=0 Height="60"></A>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0></A>
 		</Td>
     	 <Td>
+    	 <Td>
 			<H2><FONT COLOR="#7F00FF">
-			<Center><A HREF="http://www.tango-controls.org/" TARGET="_top">
+			<Center><A HREF="http://www.esrf.fr/Infrastructure/Computing/tango/" TARGET="_top">
 					 TANGO </a> <Br> Device Server
 			</Center></FONT>
-		</Td>
+    	</Td>
     </TR>
 </TABLE>
 
@@ -48,7 +41,7 @@ Device Attributes Description 		<Br> <Br>
 Starter Class	<Br>
 </h1>
 <b>
-Revision:  - Author: verdier
+Revision: 3.11 - Author: pascal_verdier
 </b>
 </center>
 
@@ -62,11 +55,8 @@ Revision:  - Author: verdier
 <Td><Center><b>Data Type</b></td></Center>
 <Td><Center><b>R/W Type</b></td></Center>
 <Td><Center><b>Expert</b></td></Center>
-<Tr><Td><b>NotifdState</b>: <Font Size=-1>return ON or FAULT if notify daemon is running or not.</Font></Td>
-<Td><Center><Font Size=-1>DEV_STATE</Font></Center></Td><Td><Center><Font Size=-1>READ</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
-
-<Tr><Td><b>HostState</b></Td>
-<Td><Center><Font Size=-1>DEV_SHORT</Font></Center></Td><Td><Center><Font Size=-1>READ</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+<Tr><Td><b><Center>HostState</b></Center></Td>
+<Td><Center>DEV_SHORT</Center></Td><Td><Center>READ</Center></Td><Td><Center>No</Center></Td></Tr>
 
 </Table>
 </Center>
@@ -79,59 +69,20 @@ Revision:  - Author: verdier
 <Td><Center><b>Data Type</b></td></Center>
 <Td><Center><b>X Data Length</b></td></Center>
 <Td><Center><b>Expert</b></td></Center>
-<Tr><Td><b>RunningServers</b></Td>
-<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>200</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+<Tr><Td><b><Center>RunningServers</b></Center></Td>
+<Td><Center>DEV_STRING</Center></Td><Td><Center>50</Center></Td><Td><Center>No</Center></Td></Tr>
 
-<Tr><Td><b>StoppedServers</b>: <Font Size=-1>Return all the Stopped servers. </Font></Td>
-<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>200</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
-
-<Tr><Td><b>Servers</b>: <Font Size=-1>Return all registred servers for this host. Server names are followed by their states and controls</Font></Td>
-<Td><Center><Font Size=-1>DEV_STRING</Font></Center></Td><Td><Center><Font Size=-1>1024</Font></Center></Td><Td><Center><Font Size=-1>No</Font></Center></Td></Tr>
+<Tr><Td><b><Center>StoppedServers</b><Br>( Return all the Stopped servers.  )</Center></Td>
+<Td><Center>DEV_STRING</Center></Td><Td><Center>50</Center></Td><Td><Center>No</Center></Td></Tr>
 
 </Table>
 </Center>
 <Br><Br><Br><Br><Br>
 
-<!--- html Footer --->
-
 <Center>
-<Font size=-1>
-<br>
-<br>
-<TABLE BORDER="1" WIDTH="100%">
-    <Tr>
-		<!--- Hosted by Sourceforge --->
-        <Td Align="Center">
-			<Font size=-1>
-			<b>TANGO</b> is an open source project hosted by :<br>
-			<A href="http://sourceforge.net" Target="new">
-					<IMG title="Sourceforge logo"
-						alt="Sourceforge logo small"
-						src="http://www.esrf.fr/computing/cs/tango/sourceforge.gif"
-						border=0> </a>
-			</Font>
-		</Td>
-		<!--- 2 Sourceforge Repositories --->
-		<Td Align="Center">
-			<Font size=-1>
-			Core and Tools :
-			<a href="http://tango-cs.cvs.sourceforge.net/tango-cs/" Target="new">
-			CVS repository</a> on
-			<a href="https://sourceforge.net/projects/tango-cs" Target=new>
-			tango-cs project</a>
-
-			<br>
-
-			Device Servers :
-			<a href="http://tango-ds.cvs.sourceforge.net/tango-ds/" Target="new">
-					CVS repository</a> on
-			<a href="https://sourceforge.net/projects/tango-ds" Target=new>
-					tango-ds project</a>
-			</Font>
-		</Td>
-    </Tr>
-</Table>
-</Font>
+<Br>
+<HR WIDTH="100%"></H5>
+<H3> ESRF - Software Engineering Group </H33>
 </Center>
 </body>
 </html>

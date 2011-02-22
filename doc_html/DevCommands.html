@@ -11,31 +11,24 @@
     <TR>
         <TD ALIGN="left">
 			<A HREF="http://www.esrf.fr/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0 Height="60"></A>
+			<IMG SRC="http://www.esrf.fr/gifs/logo/80.gif" BORDER=0></A>
 		</Td>
         <TD ALIGN="center">
 			<A HREF="http://www.elettra.trieste.it/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0 Height="60"></A>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/elettra_logo.gif" BORDER=0></A>
 
 		</Td>
-        <TD ALIGN="center">
+        <TD ALIGN="right">
 			<A HREF="http://www.synchrotron-soleil.fr/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0 Height="60"></A>
-		</Td>
-        <TD ALIGN="right">
-			<A HREF="http://www.cells.es/" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/alba.jpg" BORDER=0 Height="54"></A>
-		</Td>
-        <TD ALIGN="right">
-			<A HREF="http://www.desy.de/html/home/index_eng.html" TARGET=new>
-			<IMG SRC="http://www.esrf.fr/computing/cs/tango/desy.gif" BORDER=0 Height="60"></A>
+			<IMG SRC="http://www.esrf.fr/computing/cs/tango/soleil_logo.gif" BORDER=0></A>
 		</Td>
     	 <Td>
+    	 <Td>
 			<H2><FONT COLOR="#7F00FF">
-			<Center><A HREF="http://www.tango-controls.org/" TARGET="_top">
+			<Center><A HREF="http://www.esrf.fr/Infrastructure/Computing/tango/" TARGET="_top">
 					 TANGO </a> <Br> Device Server
 			</Center></FONT>
-		</Td>
+    	</Td>
     </TR>
 </TABLE>
 
@@ -48,7 +41,7 @@ Device Commands Description 		<Br> <Br>
 Starter Class	<Br>
 </h1>
 <b>
-Revision:  - Author: verdier
+Revision: 3.11 - Author: pascal_verdier
 </b>
 </center>
 
@@ -70,7 +63,7 @@ The language device desctructor automatically calls the <i> delete_device() </i>
 <Li><Strong>Argout:<Br>DEV_VOID</Strong>
  : none.<Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -84,7 +77,7 @@ The language device desctructor automatically calls the <i> delete_device() </i>
 <Li><Strong>Argout:<Br>DEV_STATE</Strong>
  : State Code<Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -96,9 +89,9 @@ The language device desctructor automatically calls the <i> delete_device() </i>
 <Li><Strong>Argin:<Br>DEV_VOID</Strong>
  : none.<Br>&nbsp
 <Li><Strong>Argout:<Br>CONST_DEV_STRING</Strong>
- : Status description<Br>&nbsp
+ : Status descrition<Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -112,7 +105,7 @@ The language device desctructor automatically calls the <i> delete_device() </i>
 <Li><Strong>Argout:<Br>DEV_VOID</Strong>
  : <Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -126,7 +119,7 @@ The language device desctructor automatically calls the <i> delete_device() </i>
 <Li><Strong>Argout:<Br>DEV_VOID</Strong>
  : <Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -141,7 +134,7 @@ And return the list of the processes which are really running.<Br>&nbsp
 <Li><Strong>Argout:<Br>DEVVAR_STRINGARRAY</Strong>
  : List of the processes which are running.<Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -156,7 +149,7 @@ And return the list of the processes which are not running.<Br>&nbsp
 <Li><Strong>Argout:<Br>DEVVAR_STRINGARRAY</Strong>
  : List of the processes which are not running.<Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -170,7 +163,7 @@ And return the list of the processes which are not running.<Br>&nbsp
 <Li><Strong>Argout:<Br>DEV_VOID</Strong>
  : <Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -184,7 +177,7 @@ And return the list of the processes which are not running.<Br>&nbsp
 <Li><Strong>Argout:<Br>DEV_VOID</Strong>
  : <Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
@@ -199,41 +192,13 @@ This command will read this file and return the read string from the file.<Br>&n
 <Li><Strong>Argout:<Br>CONST_DEV_STRING</Strong>
  : ig Starter/corvus)<Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
-<Br>&nbsp
-</ul><Br>
-<Br>
-<A NAME="HardKillServer"><!-- --></A>
-<A NAME="HardKillServer"><!-- --></A>
-<h2>11 - HardKillServer</h2>
-<ul>
-<Li><Strong>Description: </Strong> Hard kill a server (kill -9)<Br>&nbsp
-<Li><Strong>Argin:<Br>DEV_STRING</Strong>
- : Server name<Br>&nbsp
-<Li><Strong>Argout:<Br>DEV_VOID</Strong>
- : <Br>&nbsp
-<Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
-<Br>&nbsp
-</ul><Br>
-<Br>
-<A NAME="NotifyDaemonState"><!-- --></A>
-<A NAME="NotifyDaemonState"><!-- --></A>
-<h2>12 - NotifyDaemonState</h2>
-<ul>
-<Li><Strong>Description: </Strong> Returns the Notify Daemon state.<Br>&nbsp
-<Li><Strong>Argin:<Br>DEV_VOID</Strong>
- : <Br>&nbsp
-<Li><Strong>Argout:<Br>DEV_STATE</Strong>
- : Tango::ON if Notify daemon is running else Tango::FAULT.<Br>&nbsp
-<Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
 <A NAME="UpdateServersInfo"><!-- --></A>
 <A NAME="UpdateServersInfo"><!-- --></A>
-<h2>13 - UpdateServersInfo</h2>
+<h2>11 - UpdateServersInfo</h2>
 <ul>
 <Li><Strong>Description: </Strong> Indicate to the device server than the information about servers to be controlled has been modified.
 The device server must read the database to update the servers info list.
@@ -243,51 +208,43 @@ If the default case, this command is sent by Database server itself.<Br>&nbsp
 <Li><Strong>Argout:<Br>DEV_VOID</Strong>
  : <Br>&nbsp
 <Li><Strong>Command allowed for: </Strong><Ul>
-<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM<Li>Tango::MOVING</Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="StartPollingThread"><!-- --></A>
+<A NAME="StartPollingThread"><!-- --></A>
+<h2>12 - StartPollingThread</h2>
+<ul>
+<Li><Strong>Description: </Strong> Start the polling thread for DevState command.<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : <Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_VOID</Strong>
+ : <Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
+<Br>&nbsp
+</ul><Br>
+<Br>
+<A NAME="NotifyDaemonState"><!-- --></A>
+<A NAME="NotifyDaemonState"><!-- --></A>
+<h2>13 - NotifyDaemonState</h2>
+<ul>
+<Li><Strong>Description: </Strong> Returns the Notify Daemon state.<Br>&nbsp
+<Li><Strong>Argin:<Br>DEV_VOID</Strong>
+ : <Br>&nbsp
+<Li><Strong>Argout:<Br>DEV_STATE</Strong>
+ : Tango::ON if Notify daemon is running else Tango::FAULT.<Br>&nbsp
+<Li><Strong>Command allowed for: </Strong><Ul>
+<Li>Tango::UNKNOWN<Li>Tango::ON<Li>Tango::ALARM</Ul>
 <Br>&nbsp
 </ul><Br>
 <Br>
 
-<!--- html Footer --->
-
 <Center>
-<Font size=-1>
-<br>
-<br>
-<TABLE BORDER="1" WIDTH="100%">
-    <Tr>
-		<!--- Hosted by Sourceforge --->
-        <Td Align="Center">
-			<Font size=-1>
-			<b>TANGO</b> is an open source project hosted by :<br>
-			<A href="http://sourceforge.net" Target="new">
-					<IMG title="Sourceforge logo"
-						alt="Sourceforge logo small"
-						src="http://www.esrf.fr/computing/cs/tango/sourceforge.gif"
-						border=0> </a>
-			</Font>
-		</Td>
-		<!--- 2 Sourceforge Repositories --->
-		<Td Align="Center">
-			<Font size=-1>
-			Core and Tools :
-			<a href="http://tango-cs.cvs.sourceforge.net/tango-cs/" Target="new">
-			CVS repository</a> on
-			<a href="https://sourceforge.net/projects/tango-cs" Target=new>
-			tango-cs project</a>
-
-			<br>
-
-			Device Servers :
-			<a href="http://tango-ds.cvs.sourceforge.net/tango-ds/" Target="new">
-					CVS repository</a> on
-			<a href="https://sourceforge.net/projects/tango-ds" Target=new>
-					tango-ds project</a>
-			</Font>
-		</Td>
-    </Tr>
-</Table>
-</Font>
+<Br>
+<HR WIDTH="100%"></H5>
+<H3> ESRF - Software Engineering Group </H33>
 </Center>
 </body>
 </html>
