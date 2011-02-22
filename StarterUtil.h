@@ -8,66 +8,26 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
-//						European Synchrotron Radiation Facility
-//                      BP 220, Grenoble 38043
-//                      FRANCE
-//
-// This file is part of Tango.
-//
-// Tango is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Tango is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Tango.  If not, see <http://www.gnu.org/licenses/>.
-//
 // $Revision$
 //
 // $Log$
-// Revision 3.15  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.14  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.13  2008/12/12 13:29:56  pascal_verdier
-// Log in file start and stop for servers and itself.
-//
-// Revision 3.12  2008/09/23 14:19:41  pascal_verdier
-// Log files history added.
-//
-// Revision 3.11  2008/05/15 08:07:18  pascal_verdier
-// TangoSys_MemStream replaced by TangoSys_OMemStream
-// (for leaking problem under win32)
-//
-// Revision 3.10  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
-// Revision 3.9  2007/05/03 06:54:59  pascal_verdier
-// Re-try on DServer exported added before polling startup added.
-//
 // Revision 3.8  2006/04/24 07:06:28  pascal_verdier
 // A thread is started for each level when at servers startup.
 //
 // Revision 3.7  2006/02/09 11:59:19  pascal_verdier
 // A ping thread is now started for each server.
 //
+//
+// copyleft :    European Synchrotron Radiation Facility
+//               BP 220, Grenoble 38043
+//               FRANCE
+//
 //=============================================================================
-
 #ifndef _STARTER_UTIL_H
 #define _STARTER_UTIL_H
 
 #include <tango.h>
 #include <PingThread.h>
-#include <CheckProcessUtil.h>
 
 /**
  * @author	$Author$
@@ -84,7 +44,7 @@ namespace Starter_ns
 
  //	Add your own constants definitions here.
  //-----------------------------------------------
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 typedef unsigned char boolean;
 #endif
 
@@ -92,17 +52,17 @@ typedef struct {
 	string	name;
 	string	admin_name;
 	bool	controled;
+	bool	running;
 	short	startup_level;
 	PingThreadData	*thread_data;
 	PingThread		*thread;
 	Tango::DeviceProxy	*dev;
-	Tango::DevState		state;
 }
 ControledServer;
 
 //	Millisecond sleep platform independant.
 //--------------------------------------------
-#	ifdef _TG_WINDOWS_
+#	ifdef WIN32
 #	define		ms_sleep(ms)	_sleep(ms);
 #	else
 #	define		ms_sleep(ms)	{\
@@ -115,30 +75,24 @@ ControledServer;
 
 //	Definitions for separators
 //----------------------------------
-#ifdef _TG_WINDOWS_
+#ifdef WIN32
 #	define	slash	'\\'
 #	define	TmpRoot	"c:\\temp"
 #else
 #	define	slash	'/'
-#	define	TmpRoot	"/var/tmp"
+#	define	TmpRoot	"/tmp"
 #endif
-#define	LogPath(s,home)		\
-		s  = home;	\
+#define	LogPath(s)		\
+		s = TmpRoot;	\
 		s += slash;		\
 		s += "ds.log";
-
-#define STARTER_LOG_DEPTH	400
-
 
 class Starter;
 
 class StarterUtil
 {
 public :
-	string				notifyd_name;
-	string				log_home;
-	string				starter_log_file;
-	CheckProcessUtil	*proc_util;
+	string	notifyd_name;
 
 	/**
 	 *	the event channel factory used to test if notifd is alive.
@@ -152,7 +106,7 @@ public :
 /**
  *	Default constructor.
  */
-StarterUtil(Tango::DeviceProxy *dev, vector<string> host_name, string logHome);
+StarterUtil(Tango::DeviceProxy *dev, vector<string> host_name);
 //@}
 /**
  *	@name methods
@@ -191,24 +145,10 @@ char *check_exe_file(string filename);
  */
 string build_log_file_name(char *);
 /**
- *	Rename log file list
- *	@param	filename	log file name
- */
-vector<string> get_log_file_list(string filename);
-/**
- *	returns log file
- *	@param	filename	file's name to get the date and rename.
- */
-void manage_log_file_history(char *filename, int nb_max);
-/**
  *	Get the last modification on a file and return it in a string.
  *	@param	filename	file's name to get the date.
  */
 char *get_file_date(char *filename);
-/**
- *	Log info for starter.
- */
-void log_starter_info(string message);
 /**
  *	Format the date and time in the argin value (Ux format) as string.
  */
@@ -245,6 +185,22 @@ void build_server_ctrl_object(vector<ControledServer> *servers);
 Tango::DevState is_notifyd_alive();
 void import_notifyd();
 
+#ifdef WIN32
+/**
+ *	This method does not exist in visual cpp
+ *
+ *    The  strcasecmp()  and  strncasecmp()  functions  are  case-
+ *    insensitive  versions  of   strcmp()  and  strncmp() respec-
+ *    tively, described below.  They assume  the  ASCII  character
+ *    set  and ignore differences in case when comparing lower and
+ *    upper case characters.
+ */
+int StarterUtil::strcasecmp(const char *s1, const char *s2);
+#endif
+
+void start_timer();
+int	get_timer_value();
+
 //@}
 private:
 	static int		elapsed;
@@ -254,10 +210,10 @@ private:
 	 */
 	Tango::DeviceProxy	*dbase;
 
-#ifndef _TG_WINDOWS_
+#ifndef WIN32
 	static struct timeval	before, after;
 #else
-#endif /* _TG_WINDOWS_ */
+#endif /* WIN32 */
 };
 
 
