@@ -85,13 +85,13 @@ static const char *RcsId = "$Id$";
 //  Command name          |  Method name
 //----------------------------------------------------------------
 //  State                 |  dev_state
-//  Status                |  dev_status
+//  Status                |  Inherited (no method)
+//  DevStart              |  dev_start
+//  DevStop               |  dev_stop
 //  DevStartAll           |  dev_start_all
 //  DevStopAll            |  dev_stop_all
 //  DevGetRunningServers  |  dev_get_running_servers
 //  DevGetStopServers     |  dev_get_stop_servers
-//  DevStart              |  dev_start
-//  DevStop               |  dev_stop
 //  DevReadLog            |  dev_read_log
 //  HardKillServer        |  hard_kill_server
 //  NotifyDaemonState     |  notify_daemon_state
@@ -112,7 +112,7 @@ namespace Starter_ns
 /**
  *	Method      : Starter::Starter()
  *	Description : Constructors for a Tango device
- *	              implementing the classStarter
+ *	              implementing the class Starter
  */
 //--------------------------------------------------------
 Starter::Starter(Tango::DeviceClass *cl, string &s)
@@ -160,6 +160,9 @@ void Starter::delete_device()
 	/*----- PROTECTED REGION ID(Starter::delete_device) ENABLED START -----*/
 
 	util->log_starter_info("Starter shutdown");
+
+	/* Do not not stop threads and free objects 
+
 	//	Stop ping threads
 	vector<ControledServer>::iterator it;
 	for (it=servers.begin() ; it<servers.end() ; it++)
@@ -175,6 +178,10 @@ void Starter::delete_device()
 	delete attr_NotifdState_read;
 	delete start_proc_data;
 
+	*/
+	
+	//	But do not recreate at init
+	starting = false;
 	/*----- PROTECTED REGION END -----*/	//	Starter::delete_device
 	
 }
@@ -202,12 +209,22 @@ void Starter::init_device()
 	
 	
 	/*----- PROTECTED REGION ID(Starter::init_device) ENABLED START -----*/
-
+	
+	debug = false;
+	char	*dbg = (char *)getenv("DEBUG");
+	cout << "dbg=" << dbg << endl;
+	if (dbg!=NULL)
+		if (strcmp(dbg, "true")==0)
+		{
+			debug = true;
+			cout << "!!! Debug mode is set !!!" << endl;
+		}
 	if (serverStartupTimeout<SERVER_TIMEOUT)
 		serverStartupTimeout = SERVER_TIMEOUT;
 
 	//	First time, check if instance and host name are coherent
-	check_host();
+	if (!debug)
+		check_host();
 
 	//	Do it only at startup and not at Init command
 	//----------------------------------------------------
@@ -838,6 +855,119 @@ Tango::DevState Starter::dev_state()
 
 //--------------------------------------------------------
 /**
+ *	Execute the DevStart command:
+ *	Description: Start the specified server.
+ *
+ *	@param argin Server to be started.
+ *	@returns 
+ */
+//--------------------------------------------------------
+void Starter::dev_start(Tango::DevString argin)
+{
+	DEBUG_STREAM << "Starter::DevStart()  - " << device_name << endl;
+	/*----- PROTECTED REGION ID(Starter::dev_start) ENABLED START -----*/
+
+	//	Add your own code
+	//INFO_STREAM 
+	cout << "Starter::dev_start(\""<< argin << "\"): entering... !" << endl;
+
+	NewProcess	*np = processCouldStart(argin);
+	if (np==NULL)
+		return;
+
+	//	Build a vector to start process
+	vector<NewProcess *>	processes;
+	processes.push_back(np);
+	startProcesses(processes, 0);
+
+	/*----- PROTECTED REGION END -----*/	//	Starter::dev_start
+
+}
+
+//--------------------------------------------------------
+/**
+ *	Execute the DevStop command:
+ *	Description: Stop the specified server.
+ *
+ *	@param argin Servero be stopped.
+ *	@returns 
+ */
+//--------------------------------------------------------
+void Starter::dev_stop(Tango::DevString argin)
+{
+	DEBUG_STREAM << "Starter::DevStop()  - " << device_name << endl;
+	/*----- PROTECTED REGION ID(Starter::dev_stop) ENABLED START -----*/
+
+	//	Add your own code
+	//	Check if servers object initilized
+	//---------------------------------------
+	if (servers.size()==0)
+	{
+		TangoSys_OMemStream out_stream;
+		out_stream << argin << ": Server  not controlled !" << ends;
+		Tango::Except::throw_exception(out_stream.str(),
+				out_stream.str(),
+				(const char *)"Starter::dev_stop()");
+		return;
+	}
+
+	//	Check Argin as server name
+	//----------------------------------
+	string	name(argin);
+	ControledServer	*server = util->get_server_by_name(name, servers);
+	if (server==NULL)
+	{
+		TangoSys_OMemStream out_stream;
+		out_stream << argin << ": Unkown Server !" << ends;
+		Tango::Except::throw_exception(out_stream.str(),
+				out_stream.str(),
+				(const char *)"Starter::dev_stop()");
+		return;
+	}
+
+	//	Make shure that it's  running.
+	//---------------------------------------
+	if (server->state==Tango::ON)
+	{
+		//	And Kill it with kill signal
+		if (server->dev==NULL)
+			server->dev =  new Tango::DeviceProxy(server->admin_name);
+		server->dev->command_inout("Kill");
+
+		TangoSys_OMemStream out_stream;
+		out_stream << argin << " stopped";
+		WARN_STREAM << out_stream.str() << endl;
+		cout << out_stream.str() << endl;
+		util->log_starter_info(out_stream.str());
+	}
+	else
+	if (server->state==Tango::MOVING)
+	{
+		TangoSys_OMemStream out_stream;
+		out_stream << argin << " is running but not responding !" << ends;
+		Tango::Except::throw_exception(
+				(const char *)"SERVER_NOT_RESPONDING",
+				out_stream.str(),
+				(const char *)"Starter::dev_stop()");
+		return;
+	}
+	else
+	{
+		TangoSys_OMemStream out_stream;
+		out_stream << argin << " is NOT running !" << ends;
+		Tango::Except::throw_exception(
+				(const char *)"SERVER_NOT_RUNNING",
+				out_stream.str(),
+				(const char *)"Starter::dev_stop()");
+		return;
+	}
+
+	/*----- PROTECTED REGION END -----*/	//	Starter::dev_stop
+
+}
+
+//--------------------------------------------------------
+/**
  *	Execute the DevStartAll command:
  *	Description: Start all device servers controled on the host for the argin level.
  *
@@ -1058,119 +1188,6 @@ Tango::DevVarStringArray *Starter::dev_get_stop_servers(Tango::DevBoolean argin)
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_get_stop_servers
 
 	return argout;
-}
-
-//--------------------------------------------------------
-/**
- *	Execute the DevStart command:
- *	Description: Start the specified server.
- *
- *	@param argin Server to be started.
- *	@returns 
- */
-//--------------------------------------------------------
-void Starter::dev_start(Tango::DevString argin)
-{
-	DEBUG_STREAM << "Starter::DevStart()  - " << device_name << endl;
-	/*----- PROTECTED REGION ID(Starter::dev_start) ENABLED START -----*/
-
-	//	Add your own code
-	//INFO_STREAM 
-	cout << "Starter::dev_start(\""<< argin << "\"): entering... !" << endl;
-
-	NewProcess	*np = processCouldStart(argin);
-	if (np==NULL)
-		return;
-
-	//	Build a vector to start process
-	vector<NewProcess *>	processes;
-	processes.push_back(np);
-	startProcesses(processes, 0);
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::dev_start
-
-}
-
-//--------------------------------------------------------
-/**
- *	Execute the DevStop command:
- *	Description: Stop the specified server.
- *
- *	@param argin Servero be stopped.
- *	@returns 
- */
-//--------------------------------------------------------
-void Starter::dev_stop(Tango::DevString argin)
-{
-	DEBUG_STREAM << "Starter::DevStop()  - " << device_name << endl;
-	/*----- PROTECTED REGION ID(Starter::dev_stop) ENABLED START -----*/
-
-	//	Add your own code
-	//	Check if servers object initilized
-	//---------------------------------------
-	if (servers.size()==0)
-	{
-		TangoSys_OMemStream out_stream;
-		out_stream << argin << ": Server  not controlled !" << ends;
-		Tango::Except::throw_exception(out_stream.str(),
-				out_stream.str(),
-				(const char *)"Starter::dev_stop()");
-		return;
-	}
-
-	//	Check Argin as server name
-	//----------------------------------
-	string	name(argin);
-	ControledServer	*server = util->get_server_by_name(name, servers);
-	if (server==NULL)
-	{
-		TangoSys_OMemStream out_stream;
-		out_stream << argin << ": Unkown Server !" << ends;
-		Tango::Except::throw_exception(out_stream.str(),
-				out_stream.str(),
-				(const char *)"Starter::dev_stop()");
-		return;
-	}
-
-	//	Make shure that it's  running.
-	//---------------------------------------
-	if (server->state==Tango::ON)
-	{
-		//	And Kill it with kill signal
-		if (server->dev==NULL)
-			server->dev =  new Tango::DeviceProxy(server->admin_name);
-		server->dev->command_inout("Kill");
-
-		TangoSys_OMemStream out_stream;
-		out_stream << argin << " stopped";
-		WARN_STREAM << out_stream.str() << endl;
-		cout << out_stream.str() << endl;
-		util->log_starter_info(out_stream.str());
-	}
-	else
-	if (server->state==Tango::MOVING)
-	{
-		TangoSys_OMemStream out_stream;
-		out_stream << argin << " is running but not responding !" << ends;
-		Tango::Except::throw_exception(
-				(const char *)"SERVER_NOT_RESPONDING",
-				out_stream.str(),
-				(const char *)"Starter::dev_stop()");
-		return;
-	}
-	else
-	{
-		TangoSys_OMemStream out_stream;
-		out_stream << argin << " is NOT running !" << ends;
-		Tango::Except::throw_exception(
-				(const char *)"SERVER_NOT_RUNNING",
-				out_stream.str(),
-				(const char *)"Starter::dev_stop()");
-		return;
-	}
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::dev_stop
-
 }
 
 //--------------------------------------------------------

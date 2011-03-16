@@ -1,7 +1,7 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name$";
-static const char *CvsPath    = "$Source$";
+static const char *TagName    = "$Name: Starter-Release-5.2 $";
+static const char *CvsPath    = "$Source: $";
 static const char *SvnPath    = "$HeadURL:  $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
 //=============================================================================
@@ -180,6 +180,46 @@ StarterClass *StarterClass::instance()
 //===================================================================
 //--------------------------------------------------------
 /**
+ * method : 		DevStartClass::execute()
+ * description : 	method to trigger the execution of the command.
+ *
+ * @param	device	The device on which the command must be executed
+ * @param	in_any	The command input data
+ *
+ *	returns The command output data (packed in the Any object)
+ */
+//--------------------------------------------------------
+CORBA::Any *DevStartClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
+{
+	cout2 << "DevStartClass::execute(): arrived" << endl;
+
+	Tango::DevString	argin;
+	extract(in_any, argin);
+	((static_cast<Starter *>(device))->dev_start(argin));
+	return new CORBA::Any();
+}
+//--------------------------------------------------------
+/**
+ * method : 		DevStopClass::execute()
+ * description : 	method to trigger the execution of the command.
+ *
+ * @param	device	The device on which the command must be executed
+ * @param	in_any	The command input data
+ *
+ *	returns The command output data (packed in the Any object)
+ */
+//--------------------------------------------------------
+CORBA::Any *DevStopClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
+{
+	cout2 << "DevStopClass::execute(): arrived" << endl;
+
+	Tango::DevString	argin;
+	extract(in_any, argin);
+	((static_cast<Starter *>(device))->dev_stop(argin));
+	return new CORBA::Any();
+}
+//--------------------------------------------------------
+/**
  * method : 		DevStartAllClass::execute()
  * description : 	method to trigger the execution of the command.
  *
@@ -255,46 +295,6 @@ CORBA::Any *DevGetStopServersClass::execute(Tango::DeviceImpl *device, const COR
 	Tango::DevBoolean	argin;
 	extract(in_any, argin);
 	return insert((static_cast<Starter *>(device))->dev_get_stop_servers(argin));
-}
-//--------------------------------------------------------
-/**
- * method : 		DevStartClass::execute()
- * description : 	method to trigger the execution of the command.
- *
- * @param	device	The device on which the command must be executed
- * @param	in_any	The command input data
- *
- *	returns The command output data (packed in the Any object)
- */
-//--------------------------------------------------------
-CORBA::Any *DevStartClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
-{
-	cout2 << "DevStartClass::execute(): arrived" << endl;
-
-	Tango::DevString	argin;
-	extract(in_any, argin);
-	((static_cast<Starter *>(device))->dev_start(argin));
-	return new CORBA::Any();
-}
-//--------------------------------------------------------
-/**
- * method : 		DevStopClass::execute()
- * description : 	method to trigger the execution of the command.
- *
- * @param	device	The device on which the command must be executed
- * @param	in_any	The command input data
- *
- *	returns The command output data (packed in the Any object)
- */
-//--------------------------------------------------------
-CORBA::Any *DevStopClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
-{
-	cout2 << "DevStopClass::execute(): arrived" << endl;
-
-	Tango::DevString	argin;
-	extract(in_any, argin);
-	((static_cast<Starter *>(device))->dev_stop(argin));
-	return new CORBA::Any();
 }
 //--------------------------------------------------------
 /**
@@ -443,14 +443,12 @@ void StarterClass::get_class_property()
 	//	Initialize class property data members
 	readInfoDbPeriod  = 4;
 	nbStartupLevels   = 5;
-	cmdPollingTimeout = 60;
 	useEvents   = false;
 	logFileHome = LOG_HOME;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Class::get_class_property_before
 
 	//	Read class properties from database.
-	cl_prop.push_back(Tango::DbDatum("CmdPollingTimeout"));
 	cl_prop.push_back(Tango::DbDatum("LogFileHome"));
 	cl_prop.push_back(Tango::DbDatum("NbStartupLevels"));
 	cl_prop.push_back(Tango::DbDatum("ReadInfoDbPeriod"));
@@ -467,18 +465,6 @@ void StarterClass::get_class_property()
 	Tango::DbDatum	def_prop;
 	int	i = -1;
 
-	//	Try to extract CmdPollingTimeout value
-	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  cmdPollingTimeout;
-	else
-	{
-		//	Check default value for CmdPollingTimeout
-		def_prop = get_default_class_property(cl_prop[i].name);
-		if (def_prop.is_empty()==false)
-		{
-			def_prop    >>  cmdPollingTimeout;
-			cl_prop[i]  <<  cmdPollingTimeout;
-		}
-	}
 	//	Try to extract LogFileHome value
 	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  logFileHome;
 	else
@@ -557,11 +543,10 @@ void StarterClass::get_class_property()
 	//	Check class property data members init
 	cout2 << "readInfoDbPeriod  = " << readInfoDbPeriod << endl;
 	cout2 << "nbStartupLevels   = " << nbStartupLevels << endl;
-	cout2 << "cmdPollingTimeout = " << cmdPollingTimeout << endl;
 	cout2 << "useEvents         = " << ((useEvents)? "True":"False") << endl;
-	cout2 << "logFileHome    = " << logFileHome   << endl;
+	cout2 << "logFileHome       = " << logFileHome   << endl;
 
-	//	Put the value (depends on OS) in cl_prop.
+	//	Put the value (depends on OS) in cl_prop to be set as default value for device property..
 	for (unsigned int i=0 ; i<cl_prop.size() ; i++)
 		if (cl_prop[i].name == "LogFileHome")
 			cl_prop[i]  <<  logFileHome;
@@ -588,19 +573,6 @@ void StarterClass::set_default_property()
 	vector<string>	vect_data;
 	
 	//	Set Default Class Properties
-	prop_name = "CmdPollingTimeout";
-	prop_desc = "Timeout value in seconds to stop polling if no command has been received.";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		cl_def_prop.push_back(data);
-		add_wiz_class_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "LogFileHome";
 	prop_desc = "The home directory to log servers traces.  For Linux the default value is /var/tmp  For Win32 it is c:\temp";
 	prop_def  = "";
@@ -656,7 +628,7 @@ void StarterClass::set_default_property()
 	else
 		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "StartServersAtStartup";
-	prop_desc = "Skip starting servers at startup if false.";
+	prop_desc = "Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.";
 	prop_def  = "true`\n";
 	vect_data.clear();
 	vect_data.push_back("true");
@@ -1047,6 +1019,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 
 	//	NotifdState does not fire change event
 	//	NotifdState does not fire archive event
+	//	NotifdState does not fire data_ready event
 	att_list.push_back(notifdstate);
 
 	//	Attribute : HostState
@@ -1073,6 +1046,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 
 	//	HostState does not fire change event
 	//	HostState does not fire archive event
+	//	HostState does not fire data_ready event
 	att_list.push_back(hoststate);
 
 	//	Attribute : RunningServers
@@ -1099,6 +1073,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 
 	//	RunningServers does not fire change event
 	//	RunningServers does not fire archive event
+	//	RunningServers does not fire data_ready event
 	att_list.push_back(runningservers);
 
 	//	Attribute : StoppedServers
@@ -1125,6 +1100,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 
 	//	StoppedServers does not fire change event
 	//	StoppedServers does not fire archive event
+	//	StoppedServers does not fire data_ready event
 	att_list.push_back(stoppedservers);
 
 	//	Attribute : Servers
@@ -1151,6 +1127,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 
 	//	Servers does not fire change event
 	//	Servers does not fire archive event
+	//	Servers does not fire data_ready event
 	att_list.push_back(servers);
 
 
@@ -1179,6 +1156,20 @@ void StarterClass::command_factory()
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Class::command_factory_before
 
+	DevStartClass	*pDevStartCmd =
+		new DevStartClass("DevStart",
+			Tango::DEV_STRING, Tango::DEV_VOID,
+			"Server to be started.",
+			"",
+			Tango::OPERATOR);
+	command_list.push_back(pDevStartCmd);
+	DevStopClass	*pDevStopCmd =
+		new DevStopClass("DevStop",
+			Tango::DEV_STRING, Tango::DEV_VOID,
+			"Servero be stopped.",
+			"",
+			Tango::OPERATOR);
+	command_list.push_back(pDevStopCmd);
 	DevStartAllClass	*pDevStartAllCmd =
 		new DevStartAllClass("DevStartAll",
 			Tango::DEV_SHORT, Tango::DEV_VOID,
@@ -1207,20 +1198,6 @@ void StarterClass::command_factory()
 			"List of the processes which are not running.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevGetStopServersCmd);
-	DevStartClass	*pDevStartCmd =
-		new DevStartClass("DevStart",
-			Tango::DEV_STRING, Tango::DEV_VOID,
-			"Server to be started.",
-			"",
-			Tango::OPERATOR);
-	command_list.push_back(pDevStartCmd);
-	DevStopClass	*pDevStopCmd =
-		new DevStopClass("DevStop",
-			Tango::DEV_STRING, Tango::DEV_VOID,
-			"Servero be stopped.",
-			"",
-			Tango::OPERATOR);
-	command_list.push_back(pDevStopCmd);
 	DevReadLogClass	*pDevReadLogCmd =
 		new DevReadLogClass("DevReadLog",
 			Tango::DEV_STRING, Tango::CONST_DEV_STRING,

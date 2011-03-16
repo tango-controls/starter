@@ -157,7 +157,7 @@ public:
 	Tango::DevVarStringArray	stringArrayStopped;
 	Tango::DevVarStringArray	stringArrayServers;
 
-
+	bool debug;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Data Members
 
@@ -330,6 +330,18 @@ public:
 
 
 	/**
+	 *	Command DevStart related methods.
+	 */
+	void dev_start(Tango::DevString argin);
+	virtual bool is_DevStart_allowed(const CORBA::Any &any);
+
+	/**
+	 *	Command DevStop related methods.
+	 */
+	void dev_stop(Tango::DevString argin);
+	virtual bool is_DevStop_allowed(const CORBA::Any &any);
+
+	/**
 	 *	Command DevStartAll related methods.
 	 */
 	void dev_start_all(Tango::DevShort argin);
@@ -352,18 +364,6 @@ public:
 	 */
 	Tango::DevVarStringArray *dev_get_stop_servers(Tango::DevBoolean argin);
 	virtual bool is_DevGetStopServers_allowed(const CORBA::Any &any);
-
-	/**
-	 *	Command DevStart related methods.
-	 */
-	void dev_start(Tango::DevString argin);
-	virtual bool is_DevStart_allowed(const CORBA::Any &any);
-
-	/**
-	 *	Command DevStop related methods.
-	 */
-	void dev_stop(Tango::DevString argin);
-	virtual bool is_DevStop_allowed(const CORBA::Any &any);
 
 	/**
 	 *	Command DevReadLog related methods.

@@ -148,6 +148,52 @@ public:
 //=========================================
 //	Define classes for commands
 //=========================================
+//	Command DevStart class definition
+class DevStartClass : public Tango::Command
+{
+public:
+	DevStartClass(const char   *name,
+	               Tango::CmdArgType in,
+				   Tango::CmdArgType out,
+				   const char        *in_desc,
+				   const char        *out_desc,
+				   Tango::DispLevel  level)
+	:Command(name,in,out,in_desc,out_desc, level)	{};
+
+	DevStartClass(const char   *name,
+	               Tango::CmdArgType in,
+				   Tango::CmdArgType out)
+	:Command(name,in,out)	{};
+	~DevStartClass() {};
+	
+	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
+	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
+	{return (static_cast<Starter *>(dev))->is_DevStart_allowed(any);}
+};
+
+//	Command DevStop class definition
+class DevStopClass : public Tango::Command
+{
+public:
+	DevStopClass(const char   *name,
+	               Tango::CmdArgType in,
+				   Tango::CmdArgType out,
+				   const char        *in_desc,
+				   const char        *out_desc,
+				   Tango::DispLevel  level)
+	:Command(name,in,out,in_desc,out_desc, level)	{};
+
+	DevStopClass(const char   *name,
+	               Tango::CmdArgType in,
+				   Tango::CmdArgType out)
+	:Command(name,in,out)	{};
+	~DevStopClass() {};
+	
+	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
+	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
+	{return (static_cast<Starter *>(dev))->is_DevStop_allowed(any);}
+};
+
 //	Command DevStartAll class definition
 class DevStartAllClass : public Tango::Command
 {
@@ -238,52 +284,6 @@ public:
 	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
 	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
 	{return (static_cast<Starter *>(dev))->is_DevGetStopServers_allowed(any);}
-};
-
-//	Command DevStart class definition
-class DevStartClass : public Tango::Command
-{
-public:
-	DevStartClass(const char   *name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out,
-				   const char        *in_desc,
-				   const char        *out_desc,
-				   Tango::DispLevel  level)
-	:Command(name,in,out,in_desc,out_desc, level)	{};
-
-	DevStartClass(const char   *name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out)
-	:Command(name,in,out)	{};
-	~DevStartClass() {};
-	
-	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
-	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
-	{return (static_cast<Starter *>(dev))->is_DevStart_allowed(any);}
-};
-
-//	Command DevStop class definition
-class DevStopClass : public Tango::Command
-{
-public:
-	DevStopClass(const char   *name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out,
-				   const char        *in_desc,
-				   const char        *out_desc,
-				   Tango::DispLevel  level)
-	:Command(name,in,out,in_desc,out_desc, level)	{};
-
-	DevStopClass(const char   *name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out)
-	:Command(name,in,out)	{};
-	~DevStopClass() {};
-	
-	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
-	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
-	{return (static_cast<Starter *>(dev))->is_DevStop_allowed(any);}
 };
 
 //	Command DevReadLog class definition
@@ -403,8 +403,6 @@ public:
 
 //	Class properties data members
 public:
-	//	CmdPollingTimeout:	Timeout value in seconds to stop polling if no command has been received.
-	Tango::DevLong	cmdPollingTimeout;
 	//	LogFileHome:	The home directory to log servers traces.
 	 //	For Linux the default value is /var/tmp
 	 //	For Win32 it is c:\temp
@@ -415,7 +413,7 @@ public:
 	Tango::DevShort	readInfoDbPeriod;
 	//	ServerStartupTimeout:	Timeout on device server startup in seconds.
 	Tango::DevLong	serverStartupTimeout;
-	//	StartServersAtStartup:	Skip starting servers at startup if false.
+	//	StartServersAtStartup:	Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.
 	Tango::DevBoolean	startServersAtStartup;
 	//	UseEvents:	Use events if not null.
 	Tango::DevShort	useEvents;

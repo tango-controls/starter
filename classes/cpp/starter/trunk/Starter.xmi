@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Starter">
-    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter/trunk" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
-      <comments htmlInheritance="" commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name          |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                 |  dev_state&#xA;//  Status                |  dev_status&#xA;//  DevStartAll           |  dev_start_all&#xA;//  DevStopAll            |  dev_stop_all&#xA;//  DevGetRunningServers  |  dev_get_running_servers&#xA;//  DevGetStopServers     |  dev_get_stop_servers&#xA;//  DevStart              |  dev_start&#xA;//  DevStop               |  dev_stop&#xA;//  DevReadLog            |  dev_read_log&#xA;//  HardKillServer        |  hard_kill_server&#xA;//  NotifyDaemonState     |  notify_daemon_state&#xA;//  UpdateServersInfo     |  update_servers_info&#xA;//================================================================"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name          |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                 |  dev_state&#xA;//  Status                |  Inherited (no method)&#xA;//  DevStart              |  dev_start&#xA;//  DevStop               |  dev_stop&#xA;//  DevStartAll           |  dev_start_all&#xA;//  DevStopAll            |  dev_stop_all&#xA;//  DevGetRunningServers  |  dev_get_running_servers&#xA;//  DevGetStopServers     |  dev_get_stop_servers&#xA;//  DevReadLog            |  dev_read_log&#xA;//  HardKillServer        |  hard_kill_server&#xA;//  NotifyDaemonState     |  notify_daemon_state&#xA;//  UpdateServersInfo     |  update_servers_info&#xA;//================================================================"/>
     </description>
-    <classProperties name="CmdPollingTimeout" description="Timeout value in seconds to stop polling if no command has been received.">
-      <type xsi:type="pogoDsl:IntType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </classProperties>
     <classProperties name="LogFileHome" description="The home directory to log servers traces.&#xA;For Linux the default value is /var/tmp&#xA;For Win32 it is c:\temp">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -94,6 +90,24 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
+    <commands name="DevStart" description="Start the specified server." execMethod="dev_start" displayLevel="OPERATOR">
+      <argin description="Server to be started.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevStop" description="Stop the specified server." execMethod="dev_stop" displayLevel="OPERATOR">
+      <argin description="Servero be stopped.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
     <commands name="DevStartAll" description="Start all device servers controled on the host for the argin level." execMethod="dev_start_all" displayLevel="OPERATOR">
       <argin description="Startup level.">
         <type xsi:type="pogoDsl:ShortType"/>
@@ -127,24 +141,6 @@
       </argin>
       <argout description="List of the processes which are not running.">
         <type xsi:type="pogoDsl:StringArrayType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
-    <commands name="DevStart" description="Start the specified server." execMethod="dev_start" displayLevel="OPERATOR">
-      <argin description="Server to be started.">
-        <type xsi:type="pogoDsl:StringType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
-    <commands name="DevStop" description="Stop the specified server." execMethod="dev_stop" displayLevel="OPERATOR">
-      <argin description="Servero be stopped.">
-        <type xsi:type="pogoDsl:StringType"/>
-      </argin>
-      <argout description="">
-        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
