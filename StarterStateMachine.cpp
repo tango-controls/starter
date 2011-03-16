@@ -175,6 +175,42 @@ bool Starter::is_Servers_allowed(Tango::AttReqType type)
 
 //--------------------------------------------------------
 /**
+ *	Method      : Starter::is_DevStartState_allowed()
+ *	Description : Execution allowed for DevStart command.
+ */
+//--------------------------------------------------------
+
+bool Starter::is_DevStart_allowed(const CORBA::Any &any)
+{
+	//	Not any excluded states for DevStart command.
+
+	/*----- PROTECTED REGION ID(Starter::DevStartStateAllowed) ENABLED START -----*/
+
+	/*----- PROTECTED REGION END -----*/	//	Starter::DevStartStateAllowed
+
+	return true;
+}
+
+//--------------------------------------------------------
+/**
+ *	Method      : Starter::is_DevStopState_allowed()
+ *	Description : Execution allowed for DevStop command.
+ */
+//--------------------------------------------------------
+
+bool Starter::is_DevStop_allowed(const CORBA::Any &any)
+{
+	//	Not any excluded states for DevStop command.
+
+	/*----- PROTECTED REGION ID(Starter::DevStopStateAllowed) ENABLED START -----*/
+
+	/*----- PROTECTED REGION END -----*/	//	Starter::DevStopStateAllowed
+
+	return true;
+}
+
+//--------------------------------------------------------
+/**
  *	Method      : Starter::is_DevStartAllState_allowed()
  *	Description : Execution allowed for DevStartAll command.
  */
@@ -241,42 +277,6 @@ bool Starter::is_DevGetStopServers_allowed(const CORBA::Any &any)
 	/*----- PROTECTED REGION ID(Starter::DevGetStopServersStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevGetStopServersStateAllowed
-
-	return true;
-}
-
-//--------------------------------------------------------
-/**
- *	Method      : Starter::is_DevStartState_allowed()
- *	Description : Execution allowed for DevStart command.
- */
-//--------------------------------------------------------
-
-bool Starter::is_DevStart_allowed(const CORBA::Any &any)
-{
-	//	Not any excluded states for DevStart command.
-
-	/*----- PROTECTED REGION ID(Starter::DevStartStateAllowed) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::DevStartStateAllowed
-
-	return true;
-}
-
-//--------------------------------------------------------
-/**
- *	Method      : Starter::is_DevStopState_allowed()
- *	Description : Execution allowed for DevStop command.
- */
-//--------------------------------------------------------
-
-bool Starter::is_DevStop_allowed(const CORBA::Any &any)
-{
-	//	Not any excluded states for DevStop command.
-
-	/*----- PROTECTED REGION ID(Starter::DevStopStateAllowed) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::DevStopStateAllowed
 
 	return true;
 }
