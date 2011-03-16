@@ -160,28 +160,10 @@ void Starter::delete_device()
 	/*----- PROTECTED REGION ID(Starter::delete_device) ENABLED START -----*/
 
 	util->log_starter_info("Starter shutdown");
-
-	/* Do not not stop threads and free objects 
-
-	//	Stop ping threads
-	vector<ControledServer>::iterator it;
-	for (it=servers.begin() ; it<servers.end() ; it++)
-	{
-		it->thread_data->set_stop_thread();
-	}
-	util->proc_util->stop_it();
-	ms_sleep(1000);
-	//	Delete device allocated objects
-	delete dbase;
-	delete util;
-	delete attr_HostState_read;
-	delete attr_NotifdState_read;
-	delete start_proc_data;
-
-	*/
 	
-	//	But do not recreate at init
+	//	Do not re-create object at init command
 	starting = false;
+
 	/*----- PROTECTED REGION END -----*/	//	Starter::delete_device
 	
 }
@@ -230,6 +212,8 @@ void Starter::init_device()
 	//----------------------------------------------------
 	if (starting==true)
 	{
+		state_polling_started = false;
+
 		//	Get database server name
 		//--------------------------------------
 		Tango::Util *tg = Tango::Util::instance();
@@ -365,16 +349,10 @@ void Starter::init_device()
 		//	Set the default state
 		//-------------------------------
 		set_state(Tango::MOVING);
-		//set_status("Tango::MOVING");
 		*attr_HostState_read = get_state();
 
 		//	Update Loggs
 		WARN_STREAM << "Starter Server Started !" << endl;
-		cout << "Starter Server Started !" << endl;
-
-		//	Start a thread to start polling
-		PollingState	*poller = new PollingState(get_name());
-		poller->start();
 	}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::init_device
@@ -560,7 +538,21 @@ void Starter::always_executed_hook()
 	/*----- PROTECTED REGION ID(Starter::always_executed_hook) ENABLED START -----*/
 
 	//	code always executed before all requests
-	
+	if (state_polling_started==false)
+	{
+		try
+		{
+			cout << "Try if DServer exported " << endl;
+			Tango::DServer	*adm_dev = Tango::Util::instance()->get_dserver_device();
+			adm_dev->ping();
+			set_state_polled();
+			state_polling_started = true;
+		}
+		catch(Tango::DevFailed &e)
+		{
+			Tango::Except::print_exception(e);
+		}
+	}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::always_executed_hook
 }
@@ -1587,7 +1579,48 @@ void Starter::check_host()
 				(const char *)"Starter::check_host()");
 	}
 }
+//=================================================================
+//=================================================================
+void Starter::set_state_polled()
+{
+	Tango::DevVarLongStringArray	*lsa = new Tango::DevVarLongStringArray();
+	lsa->lvalue.length(1);
+	lsa->svalue.length(3);
+	lsa->lvalue[0] = 1000;
+	lsa->svalue[0] = CORBA::string_dup(device_name.c_str());
+	lsa->svalue[1] = CORBA::string_dup("attribute");
+	lsa->svalue[2] = CORBA::string_dup("State");
 
+	Tango::DeviceData	argin;
+	argin << lsa;
+
+	//	Device proxy on Starter server itself (admin device)
+	Tango::DeviceProxy	*adm_dev = new Tango::DeviceProxy(
+				Tango::Util::instance()->get_dserver_device()->name());
+	try {
+		adm_dev->command_inout("AddObjPolling", argin);
+		cout << "State attribute in polled." << endl;
+	}
+	catch (Tango::DevFailed &e) {
+
+		string	reason(e.errors[0].reason);
+		if (reason=="API_AlreadyPolled")
+		{
+			//	If already polled -> just update period.
+			try {
+				adm_dev->command_inout("UpdObjPollingPeriod", argin);
+				cout << "State attribute in polled." << endl;
+			}
+			catch (Tango::DevFailed &e) {
+				Tango::Except::print_exception(e);
+			}
+		}
+		else
+			Tango::Except::print_exception(e);
+	}
+	if (adm_dev!=NULL)
+		delete adm_dev;
+}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::namespace_ending
 } //	namespace

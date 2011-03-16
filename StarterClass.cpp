@@ -1040,7 +1040,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	delta_t	not set for	HostState
 	//	delta_val	not set for	HostState
 	hoststate->set_default_properties(hoststate_prop);
-	//	Not Polled
+	hoststate->set_polling_period(1000);
 	hoststate->set_disp_level(Tango::OPERATOR);
 	//	Not memorized
 
