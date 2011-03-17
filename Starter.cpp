@@ -212,7 +212,6 @@ void Starter::init_device()
 	
 	debug = false;
 	char	*dbg = (char *)getenv("DEBUG");
-	cout << "dbg=" << dbg << endl;
 	if (dbg!=NULL)
 		if (strcmp(dbg, "true")==0)
 		{
