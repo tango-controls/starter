@@ -1,6 +1,6 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-5.2 $";
+static const char *TagName    = "$Name: Starter-Release-5.3 $";
 static const char *CvsPath    = "$Source: $";
 static const char *SvnPath    = "$HeadURL:  $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
@@ -1040,7 +1040,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	delta_t	not set for	HostState
 	//	delta_val	not set for	HostState
 	hoststate->set_default_properties(hoststate_prop);
-	hoststate->set_polling_period(1000);
+	//	Not Polled
 	hoststate->set_disp_level(Tango::OPERATOR);
 	//	Not memorized
 

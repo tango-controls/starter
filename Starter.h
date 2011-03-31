@@ -158,7 +158,6 @@ public:
 	Tango::DevVarStringArray	stringArrayServers;
 
 	bool debug;
-	bool state_polling_started;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Data Members
 
@@ -421,10 +420,6 @@ void startProcesses(vector<NewProcess *>, int level);
  *	check if instance and host name are coherent
  */
 void check_host();
-/**
- *	Starte polling on State
- */
-void set_state_polled();
 //@}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Additional Method prototypes

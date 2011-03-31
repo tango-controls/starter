@@ -290,6 +290,42 @@ time_t get_timer();
 void set_timer();
 };
 
+
+
+//=========================================================
+/**
+ *	Create a thread to start or stop state polling.
+ *	Start will be done from astor.
+ *	Stop will be done from astor or from a timeout without command.
+ */
+//=========================================================
+class PollingState: public omni_thread
+{
+private:
+	string	device_name;
+
+	/**
+	 *	Add the object to polling list.
+ 	 */
+	void add_obj_polling(Tango::DServer *adm_dev, string type, string name, int period);
+
+public:
+/**
+ *	Create a thread to start  polling.
+ */
+	PollingState(string);
+
+/**
+ *	Execute the thread loop.
+ *	This thread is awaken when a command has been received 
+ *	and falled asleep when no command has been received from a long time.
+ */
+	//virtual void run();
+
+	void *run_undetached(void *);
+	void start() {start_undetached();}
+};
+
 }	//	namespace
 
 #endif	// _STARTER_UTIL_H
