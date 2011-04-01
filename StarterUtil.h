@@ -91,14 +91,17 @@ typedef unsigned char boolean;
 typedef struct {
 	string	name;
 	string	admin_name;
-	bool	controled;
+	bool	controlled;
 	short	startup_level;
-	PingThreadData	*thread_data;
-	PingThread		*thread;
+	PingThreadData		*thread_data;
+	PingThread			*thread;
 	Tango::DeviceProxy	*dev;
 	Tango::DevState		state;
+	bool		stopped;
+	time_t		started_time;		
+	time_t		failure_time;
 }
-ControledServer;
+ControlledServer;
 
 //	Millisecond sleep platform independant.
 //--------------------------------------------
@@ -128,6 +131,7 @@ ControledServer;
 		s += "ds.log";
 
 #define STARTER_LOG_DEPTH	400
+#define STARTER_STAT_DEPTH	2000
 
 
 class Starter;
@@ -137,13 +141,14 @@ class StarterUtil
 public :
 	string				notifyd_name;
 	string				log_home;
-	string				starter_log_file;
+	string				starter_log_file;	//	History log file
+	string				starter_stat_file;	//	Statistics file
 	CheckProcessUtil	*proc_util;
 
-	/**
-	 *	the event channel factory used to test if notifd is alive.
-	 */
-	CosNotifyChannelAdmin::EventChannelFactory_var	ch_factory;
+/**
+ *	the event channel factory used to test if notifd is alive.
+ */
+CosNotifyChannelAdmin::EventChannelFactory_var	ch_factory;
 /**
  *	@Constructor methods
  *	Constructor methods
@@ -210,16 +215,24 @@ char *get_file_date(char *filename);
  */
 void log_starter_info(string message);
 /**
+ *	Log statistics for specified server obsevrved by starter..
+ */
+void log_starter_statistics(ControlledServer *);
+/**
+ *	Resetstatistics for all servers.
+ */
+void reset_starter_stat_file(vector<ControlledServer> *servers);
+/**
  *	Format the date and time in the argin value (Ux format) as string.
  */
 char *strtime(time_t t);
 /**
- *	search a server in ControledServer array by it's name in an array.
+ *	search a server in ControlledServer array by it's name in an array.
  *
  *	@param servname	Server searched name.
  *	@param servers	Array of structure to search name.
  */
-ControledServer *get_server_by_name(string&, vector<ControledServer>&);
+ControlledServer *get_server_by_name(string&, vector<ControlledServer>&);
 /**
  *	Get host device servers list from database.
  *
@@ -228,17 +241,17 @@ ControledServer *get_server_by_name(string&, vector<ControledServer>&);
  */
 vector<string>	get_host_ds_list();
 /**
- *	Read DS info from database to know if it is controled
+ *	Read DS info from database to know if it is controlled
  *		and it's starting level.
  *
  *	@param	devname	device to get info.
  *	@param	server	object to be updated from db read.
  */
-void get_server_info(ControledServer *);
+void get_server_info(ControlledServer *);
 /**
- *	Allocate and fill the servers controled object
+ *	Allocate and fill the servers controlled object
  */
-void build_server_ctrl_object(vector<ControledServer> *servers);
+void build_server_ctrl_object(vector<ControlledServer> *servers);
 /**
  *	check if Notify Daemon is alive.
  */

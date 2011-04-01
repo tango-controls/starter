@@ -4,8 +4,13 @@
     <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
-      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name          |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                 |  dev_state&#xA;//  Status                |  Inherited (no method)&#xA;//  DevStart              |  dev_start&#xA;//  DevStop               |  dev_stop&#xA;//  DevStartAll           |  dev_start_all&#xA;//  DevStopAll            |  dev_stop_all&#xA;//  DevGetRunningServers  |  dev_get_running_servers&#xA;//  DevGetStopServers     |  dev_get_stop_servers&#xA;//  DevReadLog            |  dev_read_log&#xA;//  HardKillServer        |  hard_kill_server&#xA;//  NotifyDaemonState     |  notify_daemon_state&#xA;//  UpdateServersInfo     |  update_servers_info&#xA;//================================================================"/>
+      <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name          |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                 |  dev_state&#xA;//  Status                |  Inherited (no method)&#xA;//  DevStart              |  dev_start&#xA;//  DevStop               |  dev_stop&#xA;//  DevStartAll           |  dev_start_all&#xA;//  DevStopAll            |  dev_stop_all&#xA;//  DevGetRunningServers  |  dev_get_running_servers&#xA;//  DevGetStopServers     |  dev_get_stop_servers&#xA;//  DevReadLog            |  dev_read_log&#xA;//  HardKillServer        |  hard_kill_server&#xA;//  NotifyDaemonState     |  notify_daemon_state&#xA;//  ResetStatistics       |  reset_statistics&#xA;//  UpdateServersInfo     |  update_servers_info&#xA;//================================================================"/>
     </description>
+    <classProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </classProperties>
     <classProperties name="LogFileHome" description="The home directory to log servers traces.&#xA;For Linux the default value is /var/tmp&#xA;For Win32 it is c:\temp">
       <type xsi:type="pogoDsl:StringType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -34,6 +39,11 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
     </classProperties>
+    <deviceProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
     <deviceProperties name="InterStartupLevelWait" description="Time to wait before two startup levels in seconds.">
       <type xsi:type="pogoDsl:IntType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -145,10 +155,10 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="DevReadLog" description="At server startup, its standard error is redirected to a log file.&#xA;This command will read this file and return the read string from the file." execMethod="dev_read_log" displayLevel="OPERATOR">
-      <argin description="server name and domain">
+      <argin description="server name and domain (e.g. Starter/corvus)&#xA;If argin ==``Starter``     -> return Starter logg file content.&#xA;If argin ==``Statistics``  -> return Starter statistics file content.">
         <type xsi:type="pogoDsl:StringType"/>
       </argin>
-      <argout description="ig Starter/corvus)">
+      <argout description="String found in log file.">
         <type xsi:type="pogoDsl:ConstStringType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -168,6 +178,15 @@
       </argin>
       <argout description="Tango::ON if Notify daemon is running else Tango::FAULT.">
         <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetStatistics" description="Reset statistics file." execMethod="reset_statistics" displayLevel="EXPERT">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>

@@ -355,6 +355,25 @@ CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, const COR
 }
 //--------------------------------------------------------
 /**
+ * method : 		ResetStatisticsClass::execute()
+ * description : 	method to trigger the execution of the command.
+ *
+ * @param	device	The device on which the command must be executed
+ * @param	in_any	The command input data
+ *
+ *	returns The command output data (packed in the Any object)
+ */
+//--------------------------------------------------------
+CORBA::Any *ResetStatisticsClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
+{
+	cout2 << "ResetStatisticsClass::execute(): arrived" << endl;
+
+	
+	((static_cast<Starter *>(device))->reset_statistics());
+	return new CORBA::Any();
+}
+//--------------------------------------------------------
+/**
  * method : 		UpdateServersInfoClass::execute()
  * description : 	method to trigger the execution of the command.
  *
@@ -449,6 +468,7 @@ void StarterClass::get_class_property()
 	/*----- PROTECTED REGION END -----*/	//	Starter::Class::get_class_property_before
 
 	//	Read class properties from database.
+	cl_prop.push_back(Tango::DbDatum("AutoRestartDuration"));
 	cl_prop.push_back(Tango::DbDatum("LogFileHome"));
 	cl_prop.push_back(Tango::DbDatum("NbStartupLevels"));
 	cl_prop.push_back(Tango::DbDatum("ReadInfoDbPeriod"));
@@ -465,6 +485,18 @@ void StarterClass::get_class_property()
 	Tango::DbDatum	def_prop;
 	int	i = -1;
 
+	//	Try to extract AutoRestartDuration value
+	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  autoRestartDuration;
+	else
+	{
+		//	Check default value for AutoRestartDuration
+		def_prop = get_default_class_property(cl_prop[i].name);
+		if (def_prop.is_empty()==false)
+		{
+			def_prop    >>  autoRestartDuration;
+			cl_prop[i]  <<  autoRestartDuration;
+		}
+	}
 	//	Try to extract LogFileHome value
 	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  logFileHome;
 	else
@@ -573,6 +605,20 @@ void StarterClass::set_default_property()
 	vector<string>	vect_data;
 	
 	//	Set Default Class Properties
+	prop_name = "AutoRestartDuration";
+	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.";
+	prop_def  = "0`\n";
+	vect_data.clear();
+	vect_data.push_back("0");
+	if (prop_def.length()>0)
+	{
+		Tango::DbDatum	data(prop_name);
+		data << vect_data ;
+		cl_def_prop.push_back(data);
+		add_wiz_class_prop(prop_name, prop_desc,  prop_def);
+	}
+	else
+		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "LogFileHome";
 	prop_desc = "The home directory to log servers traces.  For Linux the default value is /var/tmp  For Win32 it is c:\temp";
 	prop_def  = "";
@@ -657,6 +703,21 @@ void StarterClass::set_default_property()
 		add_wiz_class_prop(prop_name, prop_desc);
 
 	//	Set Default Device Properties
+
+	prop_name = "AutoRestartDuration";
+	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.";
+	prop_def  = "0\n";
+	vect_data.clear();
+	vect_data.push_back("0");
+	if (prop_def.length()>0)
+	{
+		Tango::DbDatum	data(prop_name);
+		data << vect_data ;
+		dev_def_prop.push_back(data);
+		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
+	}
+	else
+		add_wiz_dev_prop(prop_name, prop_desc);
 
 	prop_name = "InterStartupLevelWait";
 	prop_desc = "Time to wait before two startup levels in seconds.";
@@ -1201,8 +1262,8 @@ void StarterClass::command_factory()
 	DevReadLogClass	*pDevReadLogCmd =
 		new DevReadLogClass("DevReadLog",
 			Tango::DEV_STRING, Tango::CONST_DEV_STRING,
-			"server name and domain",
-			"ig Starter/corvus)",
+			"server name and domain (e.g. Starter/corvus)\nIf argin ==``Starter``     -> return Starter logg file content.\nIf argin ==``Statistics``  -> return Starter statistics file content.",
+			"String found in log file.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevReadLogCmd);
 	HardKillServerClass	*pHardKillServerCmd =
@@ -1219,6 +1280,13 @@ void StarterClass::command_factory()
 			"Tango::ON if Notify daemon is running else Tango::FAULT.",
 			Tango::OPERATOR);
 	command_list.push_back(pNotifyDaemonStateCmd);
+	ResetStatisticsClass	*pResetStatisticsCmd =
+		new ResetStatisticsClass("ResetStatistics",
+			Tango::DEV_VOID, Tango::DEV_VOID,
+			"",
+			"",
+			Tango::EXPERT);
+	command_list.push_back(pResetStatisticsCmd);
 	UpdateServersInfoClass	*pUpdateServersInfoCmd =
 		new UpdateServersInfoClass("UpdateServersInfo",
 			Tango::DEV_VOID, Tango::DEV_VOID,
