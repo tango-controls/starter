@@ -216,7 +216,11 @@ StarterUtil::StarterUtil(Tango::DeviceProxy *database, vector<string> host_names
 	LogPath(starter_log_file, logHome);
 	starter_log_file += "/Starter.log";
 
-	cout << "---->  starter_log_file = " << starter_log_file << endl;
+	LogPath(starter_stat_file, logHome);
+	starter_stat_file += "/Starter.stat";
+
+	cout << "---->  starter_log_file  = " << starter_log_file << endl;
+	cout << "---->  starter_stat_file = " << starter_stat_file << endl;
 }
 //+------------------------------------------------------------------
 /**
@@ -387,7 +391,6 @@ char *StarterUtil::get_file_date(char *filename)
 //+------------------------------------------------------------------
 void StarterUtil::log_starter_info(string message)
 {
-
 	stringstream	strlog;
 	strlog << strtime(time(NULL)) << "\t" << message  << endl;
 
@@ -395,7 +398,7 @@ void StarterUtil::log_starter_info(string message)
 	ifstream	ifs((char *)starter_log_file.c_str());
 	if (ifs)
 	{
-		strlog << ifs.rdbuf() << ends;
+		strlog << ifs.rdbuf();
 		ifs.close();
 	}
 	//	Check for nb lines
@@ -410,12 +413,74 @@ void StarterUtil::log_starter_info(string message)
 
 	//	Write to log file
 	ofstream	ofs((char *)starter_log_file.c_str());
-	ofs << str << ends;
+	ofs << str;
 	ofs.close();
 }
 //+------------------------------------------------------------------
 /**
- *	check if there is no to much log file and rename last one
+ *	Reset statistics for starter.
+ */
+//+------------------------------------------------------------------
+void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers)
+{
+	//	build present situation log
+	stringstream	strlog;
+	vector<ControlledServer>::iterator it;
+	for (it=servers->begin() ; it<servers->end() ; it++)
+	{
+		if (it->controlled && it->startup_level>0)
+		{
+			strlog << it->name           << "\t" <<
+	                ((it->state==Tango::ON)? "ON\t" : "FAULT\t") <<
+	                it->started_time << "\t" <<
+					it->failure_time  << endl;
+		}
+	}
+
+	//	Write an empty statistics file
+	ofstream	ofs((char *)starter_stat_file.c_str());
+	ofs << strlog.str();
+	ofs.close();
+}
+//+------------------------------------------------------------------
+/**
+ *	Log statistica for starter.
+ *	@param	message	 mesage to be logged
+ */
+//+------------------------------------------------------------------
+void StarterUtil::log_starter_statistics(ControlledServer *server)
+{
+	stringstream	strlog;
+	strlog << server->name           << "\t" <<
+	                ((server->state==Tango::ON)? "ON\t" : "FAULT\t") <<
+	                server->started_time << "\t" <<
+					server->failure_time  << endl;
+
+	//	Read and close log file.
+	ifstream	ifs((char *)starter_stat_file.c_str());
+	if (ifs)
+	{
+		strlog << ifs.rdbuf();
+		ifs.close();
+	}
+	//	Check for nb lines
+	string	str(strlog.str());
+	string::size_type	pos = 0;
+	int nb = 0;
+	while (nb<STARTER_STAT_DEPTH && (pos=str.find('\n', pos+1))!=string::npos)
+		nb++;
+
+	if (pos!=string::npos)
+		str = str.substr(0, pos);
+
+	//	Write to log file
+	ofstream	ofs((char *)starter_stat_file.c_str());
+	ofs << str;
+	ofs.close();
+}
+//+------------------------------------------------------------------
+/**
+ *	check if there is not to much log file and rename last one
  *	@param	filename	file's name to get the date and rename.
  */
 //+------------------------------------------------------------------
@@ -430,13 +495,13 @@ void StarterUtil::manage_log_file_history(char *filename, int nb_max)
 	
 	//	Get the log file list
 	vector<string>	list =  get_log_file_list(log_file);
-	for (unsigned int i=0 ; i<list.size() ; i++)
-		cout << list[i] << endl;
+	//for (unsigned int i=0 ; i<list.size() ; i++)
+	//	cout << list[i] << endl;
 	
 	//	Check if too much files -> delete
 	while (list.size()>((unsigned int)nb_max-1))	//	-1 because a new one will exist bellow
 	{
-		cout << "Removing " << list[0] << endl;
+		//cout << "Removing " << list[0] << endl;
 		if (remove(list[0].c_str())<0)
 			cerr << "remove failed : " << strerror(errno) << endl;
 		list.erase(list.begin());
@@ -464,11 +529,10 @@ void StarterUtil::manage_log_file_history(char *filename, int nb_max)
 	strcat(new_filename, strdate);
 	strcat(new_filename, ".log");
 	int ret = rename(filename, new_filename);
-	cout << "Renaming " << filename << " to " << new_filename;
 	if (ret<0)
-		cout << " failed : " << strerror(errno) << endl;
-	else
-		cout << "  done: " << ret << endl;
+		cerr << "Renaming " << filename << " to " << new_filename << " failed : " << strerror(errno) << endl;
+	//else
+	//	cout << "Renaming " << filename << " to " << new_filename << "  done." << endl;
 	delete new_filename;
 }
 //-----------------------------------------------------------------------------
@@ -677,14 +741,14 @@ vector<string>	StarterUtil::get_host_ds_list()
 }
 //+------------------------------------------------------------------
 /**
- *	Read DS info from database to know if it is controled
+ *	Read DS info from database to know if it is controlled
  *		and it's starting level.
  *
  *	@param	devname	device to get info.
  *	@param	server	object to be updated from db read.
  */
 //+------------------------------------------------------------------
-void StarterUtil::get_server_info(ControledServer *server)
+void StarterUtil::get_server_info(ControlledServer *server)
 {
 	try
 	{
@@ -694,24 +758,24 @@ void StarterUtil::get_server_info(ControledServer *server)
 		Tango::DeviceData	argout = dbase->command_inout("DbGetServerInfo", argin);
 		vector<string>	result;
 		argout >> result;
-		server->controled     = (atoi(result[2].c_str())==0)? false: true;
+		server->controlled     = (atoi(result[2].c_str())==0)? false: true;
 		server->startup_level =  atoi(result[3].c_str());
 	}
 	catch(Tango::DevFailed &e)
 	{
 		Tango::Except::print_exception(e);
-		server->controled = false;
+		server->controlled = false;
 		server->startup_level = 0;
 	}
-	//cout << server->name << " - " << ((server->controled)? "true": "false");
+	//cout << server->name << " - " << ((server->controlled)? "true": "false");
 	//cout << " ----> Startup level " << server->startup_level <<endl;
 }
 //+------------------------------------------------------------------
 /**
- *	Allocate and fill the servers controled object
+ *	Allocate and fill the servers controlled object
  */
 //+------------------------------------------------------------------
-void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
+void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 {
 	bool trace = false;
 	if (trace)	cout << "build_server_ctrl_object()" << endl;
@@ -729,7 +793,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
 
 	if (trace)	cout << "--------------  Check if list of servers modified  --------------" << endl;
 	
-	//	Check servers really used (erase this one and database server
+	//	Check servers really used (erase this one and database server)
 	vector<string>::iterator pos;
 	vector<string>	result;
 	for (pos=result_from_db.begin() ; pos<result_from_db.end() ; pos+=3)
@@ -753,7 +817,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
 	}
 
 	//	Check if some servers have disappeared
-	vector<ControledServer>::iterator it;
+	vector<ControlledServer>::iterator it;
 	bool	redo = true;	//	Iterators management seems to have changed
 	                        //	between vc6 and vc8  (??)
 	while (redo)
@@ -781,19 +845,22 @@ void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
 	for (pos=result.begin() ; pos<result.end() ; )
 	{
 		string	name(*pos++);
-		ControledServer	*p_serv = get_server_by_name(name, *servers);
+		ControlledServer	*p_serv = get_server_by_name(name, *servers);
 		if (p_serv==NULL)
 		{
 			if (trace)	cout << name << " appeared " << endl;
 			//	Create a new server instance
-			ControledServer	server;
+			ControlledServer	server;
 
 			server.name = name;
 			server.admin_name = "dserver/" + server.name;
 			server.dev = NULL;
-			server.controled = (atoi((*pos++).c_str())==0)? false: true;
+			server.controlled = (atoi((*pos++).c_str())==0)? false: true;
 			server.startup_level =  atoi((*pos++).c_str());
 			server.state   = Tango::FAULT;
+			server.stopped = false;
+			server.started_time = time(NULL);
+			server.failure_time  = -1;
 
 			//	Add a thread to ping server
 			server.thread_data = new PingThreadData(server.name);
@@ -807,7 +874,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
 		else
 		{
 			//	Update levels
-			p_serv->controled     = (atoi((*pos++).c_str())==0)? false: true;
+			p_serv->controlled     = (atoi((*pos++).c_str())==0)? false: true;
 			p_serv->startup_level =  atoi((*pos++).c_str());
 		}
 	}
@@ -815,16 +882,16 @@ void StarterUtil::build_server_ctrl_object(vector<ControledServer> *servers)
 
 //+------------------------------------------------------------------
 /**
- *	search a server in ControledServer array by it's name .
+ *	search a server in ControlledServer array by it's name .
  *
  *	@param servname	Server searched name.
  */
 //+------------------------------------------------------------------
-ControledServer *StarterUtil::get_server_by_name(string &servname, vector<ControledServer> &servers)
+ControlledServer *StarterUtil::get_server_by_name(string &servname, vector<ControlledServer> &servers)
 {
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 	{
-		ControledServer	*server = &servers[i];
+		ControlledServer	*server = &servers[i];
 		if (server->name == servname)
 			return server;
 	}

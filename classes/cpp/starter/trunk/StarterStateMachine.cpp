@@ -4,7 +4,7 @@ static const char *RcsId = "$Id$";
 //
 // file :        StarterStateMachine.cpp
 //
-// description : C++ source for the «name» and its alowed
+// description : C++ source for the ï¿½nameï¿½ and its alowed
 //               methods for commands and attributes
 //
 // project :     Starter for Tango Administration.
@@ -331,6 +331,24 @@ bool Starter::is_NotifyDaemonState_allowed(const CORBA::Any &any)
 	/*----- PROTECTED REGION ID(Starter::NotifyDaemonStateStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::NotifyDaemonStateStateAllowed
+
+	return true;
+}
+
+//--------------------------------------------------------
+/**
+ *	Method      : Starter::is_ResetStatisticsState_allowed()
+ *	Description : Execution allowed for ResetStatistics command.
+ */
+//--------------------------------------------------------
+
+bool Starter::is_ResetStatistics_allowed(const CORBA::Any &any)
+{
+	//	Not any excluded states for ResetStatistics command.
+
+	/*----- PROTECTED REGION ID(Starter::ResetStatisticsStateAllowed) ENABLED START -----*/
+
+	/*----- PROTECTED REGION END -----*/	//	Starter::ResetStatisticsStateAllowed
 
 	return true;
 }

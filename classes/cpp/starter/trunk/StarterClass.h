@@ -355,6 +355,29 @@ public:
 	{return (static_cast<Starter *>(dev))->is_NotifyDaemonState_allowed(any);}
 };
 
+//	Command ResetStatistics class definition
+class ResetStatisticsClass : public Tango::Command
+{
+public:
+	ResetStatisticsClass(const char   *name,
+	               Tango::CmdArgType in,
+				   Tango::CmdArgType out,
+				   const char        *in_desc,
+				   const char        *out_desc,
+				   Tango::DispLevel  level)
+	:Command(name,in,out,in_desc,out_desc, level)	{};
+
+	ResetStatisticsClass(const char   *name,
+	               Tango::CmdArgType in,
+				   Tango::CmdArgType out)
+	:Command(name,in,out)	{};
+	~ResetStatisticsClass() {};
+	
+	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
+	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
+	{return (static_cast<Starter *>(dev))->is_ResetStatistics_allowed(any);}
+};
+
 //	Command UpdateServersInfo class definition
 class UpdateServersInfoClass : public Tango::Command
 {
@@ -403,6 +426,8 @@ public:
 
 //	Class properties data members
 public:
+	//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.
+	Tango::DevLong	autoRestartDuration;
 	//	LogFileHome:	The home directory to log servers traces.
 	 //	For Linux the default value is /var/tmp
 	 //	For Win32 it is c:\temp
