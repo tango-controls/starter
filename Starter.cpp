@@ -817,49 +817,44 @@ Tango::DevState Starter::dev_state()
 	{
 		INFO_STREAM << "Exiting dev_state() with servers.size() null" << endl;
 		if (notifyd_state==Tango::ON)
-			set_state(Tango::ON);
+			argout = Tango::ON;
 		else
-			set_state(Tango::ALARM);
-		return DeviceImpl::dev_state();
+			argout = Tango::ALARM;
 	}
-
-	//	Check hown many servers are running
-	//-----------------------------------------------------------
-	ControlledServer		*p_serv;
-	int		nb_running   = 0;
-	int		nb_controlled = 0;
-	int		nb_starting  = 0;
-	for (unsigned int i=0 ; i<servers.size() ; i++)
+	else
 	{
-		p_serv = &servers[i];
-		//	Count how many are controlled
-		if (p_serv->controlled)
+		//	Check hown many servers are running
+		//-----------------------------------------------------------
+		ControlledServer		*p_serv;
+		int		nb_running   = 0;
+		int		nb_controlled = 0;
+		int		nb_starting  = 0;
+		for (unsigned int i=0 ; i<servers.size() ; i++)
 		{
-			nb_controlled++;
+			p_serv = &servers[i];
+			//	Count how many are controlled
+			if (p_serv->controlled)
+			{
+				nb_controlled++;
 
-			//	Fixe witch one is running and count how many controlled are running
-			if ((p_serv->state==Tango::ON))
-				nb_running ++;
-			else
-			if (p_serv->state==Tango::MOVING)
-				nb_starting ++;
+				//	Fixe witch one is running and count how many controlled are running
+				if ((p_serv->state==Tango::ON))
+					nb_running ++;
+				else
+				if (p_serv->state==Tango::MOVING)
+					nb_starting ++;
+			}
 		}
+
+		//	compare nb running with nb_controlled to set state
+		if (nb_starting>0 || start_proc_data->get_starting_processes()>0)
+			argout = Tango::MOVING;
+		else
+		if (nb_running==nb_controlled && notifyd_state==Tango::ON)
+			argout = Tango::ON;
+		else
+			argout = Tango::ALARM;
 	}
-
-	//	compare nb running with nb_controlled to set state
-	if (nb_starting>0 || start_proc_data->get_starting_processes()>0)
-		set_state(Tango::MOVING);
-	else
-	if (nb_running==nb_controlled && notifyd_state==Tango::ON)
-		set_state(Tango::ON);
-	else
-		set_state(Tango::ALARM);
-
-	//cout << DeviceImpl::dev_state() << endl;
-//time_t 	t2 = time(NULL);
-//cout << "------------------------------------> " << (t2-t1) << " seconds" << endl;
-
-	return DeviceImpl::dev_state();
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_state
 
@@ -894,6 +889,11 @@ void Starter::dev_start(Tango::DevString argin)
 	vector<NewProcess *>	processes;
 	processes.push_back(np);
 	startProcesses(processes, 0);
+
+	//	Started with starter -> stopped switched to false.
+	string servname(argin);
+	ControlledServer	*server = util->get_server_by_name(servname, servers);
+	server->stopped = false;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_start
 
@@ -1672,7 +1672,6 @@ void Starter::manage_changing_state(ControlledServer *server, Tango::DevState pr
 	switch(state)
 	{
 	case Tango::ON:
-		server->stopped = false;
 		server->started_time = time(NULL);
 		//	Log statistics
 		util->log_starter_statistics(server);
@@ -1695,7 +1694,7 @@ void Starter::manage_changing_state(ControlledServer *server, Tango::DevState pr
 			if (autoRestartDuration>0) {
 				int	minDuration = autoRestartDuration;
 
-//				if (debug==false)
+				if (debug==false)
 					minDuration *= 60;	//	minutes to seconds
 				int	runDuration = server->failure_time -  server->started_time;
 				cout << "Has run " << runDuration << " sec.  (> " << minDuration << " ?)" << endl;
@@ -1703,6 +1702,7 @@ void Starter::manage_changing_state(ControlledServer *server, Tango::DevState pr
 					try {
 						//	Restart it
 						cout << "	YES:  Restart it !!" << endl;
+						server->auto_start = true;
 						dev_start((char *)server->name.c_str());
 					}
 					catch(Tango::DevFailed &e) {
