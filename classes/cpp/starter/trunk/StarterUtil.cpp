@@ -433,7 +433,8 @@ void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers)
 			strlog << it->name           << "\t" <<
 	                ((it->state==Tango::ON)? "ON\t" : "FAULT\t") <<
 	                it->started_time << "\t" <<
-					it->failure_time  << endl;
+					it->failure_time << "\t" <<
+					"false" << endl;
 		}
 	}
 
@@ -453,8 +454,10 @@ void StarterUtil::log_starter_statistics(ControlledServer *server)
 	stringstream	strlog;
 	strlog << server->name           << "\t" <<
 	                ((server->state==Tango::ON)? "ON\t" : "FAULT\t") <<
-	                server->started_time << "\t" <<
-					server->failure_time  << endl;
+	                server->started_time  << "\t" <<
+					server->failure_time  << "\t" <<
+					((server->auto_start)? "true" : "false") << endl;
+	server->auto_start = false;
 
 	//	Read and close log file.
 	ifstream	ifs((char *)starter_stat_file.c_str());
@@ -857,9 +860,10 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 			server.dev = NULL;
 			server.controlled = (atoi((*pos++).c_str())==0)? false: true;
 			server.startup_level =  atoi((*pos++).c_str());
-			server.state   = Tango::FAULT;
-			server.stopped = false;
-			server.started_time = time(NULL);
+			server.state         = Tango::FAULT;
+			server.stopped       = false;
+			server.auto_start    = false;
+			server.started_time  = time(NULL);
 			server.failure_time  = -1;
 
 			//	Add a thread to ping server
@@ -874,7 +878,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 		else
 		{
 			//	Update levels
-			p_serv->controlled     = (atoi((*pos++).c_str())==0)? false: true;
+			p_serv->controlled    = (atoi((*pos++).c_str())==0)? false: true;
 			p_serv->startup_level =  atoi((*pos++).c_str());
 		}
 	}

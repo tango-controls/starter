@@ -98,6 +98,7 @@ typedef struct {
 	Tango::DeviceProxy	*dev;
 	Tango::DevState		state;
 	bool		stopped;
+	bool		auto_start;
 	time_t		started_time;		
 	time_t		failure_time;
 }
