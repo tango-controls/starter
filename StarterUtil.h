@@ -70,8 +70,8 @@
 #include <CheckProcessUtil.h>
 
 /**
- * @author	$Author$
- * @version	$Revision$
+ * $Author$
+ * $Revision$
  */
 
 /**

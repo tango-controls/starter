@@ -893,7 +893,8 @@ void Starter::dev_start(Tango::DevString argin)
 	//	Started with starter -> stopped switched to false.
 	string servname(argin);
 	ControlledServer	*server = util->get_server_by_name(servname, servers);
-	server->stopped = false;
+	if (server!=NULL)
+		server->stopped = false;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_start
 
