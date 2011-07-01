@@ -144,6 +144,7 @@ Starter::Starter(Tango::DeviceClass *cl, const char *s, const char *d)
 //--------------------------------------------------------
 void Starter::delete_device()
 {
+	DEBUG_STREAM << "Starter::delete_device()  entering " << endl;
 	/*----- PROTECTED REGION ID(Starter::delete_device) ENABLED START -----*/
 
 	
@@ -173,6 +174,7 @@ void Starter::delete_device()
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::delete_device
 	
+	DEBUG_STREAM << "Starter::delete_device()  exiting " << endl;
 }
 
 
@@ -893,8 +895,10 @@ void Starter::dev_start(Tango::DevString argin)
 	//	Started with starter -> stopped switched to false.
 	string servname(argin);
 	ControlledServer	*server = util->get_server_by_name(servname, servers);
-	if (server!=NULL)
+	if (server!=NULL) {
 		server->stopped = false;
+		server->started_time = time(NULL);
+	}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_start
 
