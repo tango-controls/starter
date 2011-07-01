@@ -430,10 +430,14 @@ void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers)
 	{
 		if (it->controlled && it->startup_level>0)
 		{
+			time_t	failure_time = it->failure_time;
+			if (failure_time<0)
+				failure_time = time(NULL);
+
 			strlog << it->name           << "\t" <<
 	                ((it->state==Tango::ON)? "ON\t" : "FAULT\t") <<
 	                it->started_time << "\t" <<
-					it->failure_time << "\t" <<
+						failure_time << "\t" <<
 					"false" << endl;
 		}
 	}
