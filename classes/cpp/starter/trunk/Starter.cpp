@@ -880,24 +880,45 @@ void Starter::dev_start(Tango::DevString argin)
 	/*----- PROTECTED REGION ID(Starter::dev_start) ENABLED START -----*/
 
 	//	Add your own code
-	//INFO_STREAM 
-	cout << "Starter::dev_start(\""<< argin << "\"): entering... !" << endl;
+	try {
+		NewProcess	*np = processCouldStart(argin);
+		if (np==NULL)
+			return;
+		//	Build a vector to start process
+		vector<NewProcess *>	processes;
+		processes.push_back(np);
+		startProcesses(processes, 0);
 
-	NewProcess	*np = processCouldStart(argin);
-	if (np==NULL)
-		return;
-
-	//	Build a vector to start process
-	vector<NewProcess *>	processes;
-	processes.push_back(np);
-	startProcesses(processes, 0);
-
-	//	Started with starter -> stopped switched to false.
-	string servname(argin);
-	ControlledServer	*server = util->get_server_by_name(servname, servers);
-	if (server!=NULL) {
-		server->stopped = false;
-		server->started_time = time(NULL);
+		//	Started with starter -> stopped switched to false.
+		string servname(argin);
+		ControlledServer	*server = util->get_server_by_name(servname, servers);
+		if (server!=NULL) {
+			server->stopped = false;
+			server->started_time = time(NULL);
+		}
+	}
+	catch (Tango::DevFailed &e) {
+		throw e;
+	}
+	catch (exception &e) {
+		cerr << "================================" << endl;
+		cerr << e.what() << endl;
+		cerr <<	"================================" << endl;
+		TangoSys_OMemStream tms;
+		tms << "Starting process failed:   " << e.what();
+		Tango::Except::throw_exception(
+			   (const char *)"START_PROCASS_FAILDE",
+			   tms.str().c_str(),
+			   (const char *)"Starter::dev_start()");
+	}
+	catch (...) {
+		cerr << "================================" << endl <<
+				"    Unknown exception catched"    << endl <<
+				"================================" << endl;
+		Tango::Except::throw_exception(
+			   (const char *)"START_PROCASS_FAILDE",
+			   (const char *)"Starting process failed:    Unknown exception catched",
+			   (const char *)"Starter::dev_start()");
 	}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_start
@@ -1503,10 +1524,36 @@ void Starter::startProcesses(vector<NewProcess *> v_np, int level)
 {
 	//	Start process to start processes
 	//-------------------------------------
-	start_proc_data->push_back_level(level);
-	StartProcessThread	*pt =
+	try {
+		start_proc_data->push_back_level(level);
+		StartProcessThread	*pt =
 		new StartProcessThread(v_np, level, this);
-	pt->start();
+		pt->start();
+	}
+	catch(omni_thread_fatal &e) {
+		TangoSys_OMemStream tms;
+		tms << "Starting process thread failed: " << e.error;
+		Tango::Except::throw_exception(
+			   (const char *)"THREAD_FAILDE",
+			   tms.str().c_str(),
+			   (const char *)"Starter::startProcesses()");
+	}
+	catch(omni_thread_invalid &e) {
+		TangoSys_OMemStream tms;
+		tms << "Starting process thread failed: omni_thread_invalid";
+		Tango::Except::throw_exception(
+			   (const char *)"THREAD_FAILDE",
+			   tms.str().c_str(),
+			   (const char *)"Starter::startProcesses()");
+	}
+	catch(...) {
+		TangoSys_OMemStream tms;
+		tms << "Starting process thread failed";
+		Tango::Except::throw_exception(
+			   (const char *)"THREAD_FAILDE",
+			   tms.str().c_str(),
+			   (const char *)"Starter::startProcesses()");
+	}
 }
 //+------------------------------------------------------------------
 /**

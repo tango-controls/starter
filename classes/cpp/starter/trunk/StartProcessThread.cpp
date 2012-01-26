@@ -138,14 +138,13 @@ StartProcessThread::StartProcessThread(vector<NewProcess *> v_np, int level, Sta
 		processes.push_back(v_np[i]);
 	thread_level = level;
 	starter      = st;
-
 }
 //+------------------------------------------------------------------
 /**
  * Execute the fork of the sub process in a thread.
  */
 //+------------------------------------------------------------------
-void *StartProcessThread::run_undetached(void *ptr)
+void StartProcessThread::run(void *ptr)
 {
 	unsigned int	i;
 	CheckProcessUtil	*process_util = starter->util->proc_util;
@@ -163,9 +162,6 @@ void *StartProcessThread::run_undetached(void *ptr)
 	//	Start the level process start loop
 	for (i=0 ; i<processes.size() ; i++)
 	{
-		//cout << "Starting " <<
-		//	processes[i]->servname << "/" << processes[i]->instancename << endl;
-
 		start_process(processes[i]);
 
 		//	Build server name from admin name
@@ -254,7 +250,6 @@ void *StartProcessThread::run_undetached(void *ptr)
 //	starter->starting_processes--;
 	//	remove in level vector to start another level
 	starter->start_proc_data->remove_current_level();
-	return NULL;
 }
 #ifndef	_TG_WINDOWS_
 //+------------------------------------------------------------------
@@ -392,7 +387,7 @@ string StartWinThread::get_server_name_with_cotes(string servname)
 //	WIN 32 Thread to fork a sub process
 //		If batch file, the spawnv is blocking !!!
 //+----------------------------------------------------------
-void *StartWinThread::run_undetached(void *ptr)
+void StartWinThread::run(void *ptr)
 {
 	//	Check if batch file
 	string	str_server(process->servname);
@@ -405,7 +400,7 @@ void *StartWinThread::run_undetached(void *ptr)
 	cmd += process->instancename;
 	cout << "system(" << cmd << ");" << endl;
 	system(cmd.c_str());
-	return NULL;
+	return;
 
 	if (str_server.find(".bat") != string::npos)
 	{
@@ -556,7 +551,6 @@ void *StartWinThread::run_undetached(void *ptr)
 		ofs.close();
 	}
 	delete[] servname;
-	return NULL;
 }
 
 #endif	//	_TG_WINDOWS_

@@ -483,8 +483,8 @@ public:
 	// Set the path between cotes for windows.
 	string get_server_name_with_cotes(string servname);
 	
-	void *run_undetached(void *);
-	void start() {start_undetached();}
+	void run(void *);
+	//void start() {start_undetached();}
 };
 #endif
 
@@ -506,8 +506,8 @@ public:
 /**
  * Execute the fork of the sub process in a thread.
  */
-	void *run_undetached(void *);
-	void start() {start_undetached();}
+	void run(void *);
+	//void start() {start_undetached();}
 /**
  *	Start one process
  */
