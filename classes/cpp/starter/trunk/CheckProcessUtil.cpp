@@ -105,6 +105,9 @@ static const char *RcsId = "$Header$";
 #endif	/*	_TG_WINDOWS_		*/
 #endif	/*	TIME_VAR	*/
 
+#ifdef _TG_WINDOWS_
+typedef LONG (WINAPI *TNtQueryInformationProcess)(HANDLE,UINT,PVOID,ULONG,PULONG);
+#endif
 
 namespace Starter_ns
 {
@@ -217,7 +220,7 @@ void ProcessData::read_process_list_from_sys()
 	for (int i=0 ; i<proc_list.size() ; i++)
 		delete proc_list[i];
 	proc_list.clear();
-
+#ifdef OLD
 	// Take a snapshot of all processes in the system.
 	HANDLE	hProcessSnap = 
 		CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS | TH32CS_SNAPMODULE, 0);
@@ -248,7 +251,6 @@ void ProcessData::read_process_list_from_sys()
 
 	//	Get module ntdll
     NTQIP						*lpfnNtQueryInformationProcess;
-	PROCESS_BASIC_INFORMATION	pbi;
 	WCHAR	*wc = string2wchar("ntdll.dll");
 	HINSTANCE	hLibrary = GetModuleHandle(wc);
 	delete wc;
@@ -265,57 +267,62 @@ void ProcessData::read_process_list_from_sys()
 						(const char *)"Starter::get_process_list()");
     }
 
-	__INFOBLOCK	block;
-    __PEB 		PEB;
-	char		*c_cmdline = NULL;
-    DWORD		dwSize=0;
-
-	// Now walk the snapshot of processes, and
-	pbi.PebBaseAddress = (PPEB)0x7ffdf000;
 	do
 	{
 		// Retrieve the priority class.
-		DWORD	dwPriorityClass = 0;
 		HANDLE	hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pe32.th32ProcessID );
 		if( hProcess != NULL )
 		{
-	        if (lpfnNtQueryInformationProcess != NULL)
-    	        (*lpfnNtQueryInformationProcess)(hProcess, ProcessBasicInformation, &pbi, sizeof(pbi), &dwSize);
+			PROCESS_BASIC_INFORMATION	pbi;
+			DWORD		dwSize=0;
+			if (lpfnNtQueryInformationProcess != NULL)
+				(*lpfnNtQueryInformationProcess)(hProcess, ProcessBasicInformation, &pbi, sizeof(pbi), &dwSize);
+			cout << pbi.PebBaseAddress <<  "  -  " << dwSize << endl;
 
 			string cmdline("");
-			dwPriorityClass = GetPriorityClass( hProcess );
-			if( !dwPriorityClass )
-				errorCodeToString(GetLastError(), "GetPriorityClass" );
-
-			if (ReadProcessMemory(hProcess, 
-					pbi.PebBaseAddress,
-					&PEB,
-					sizeof(PEB),
-					&dwSize))
+			SIZE_T		sizeT=0;
+			__PEB 		PEB;
+			DWORD dwPriorityClass = GetPriorityClass( hProcess );
+			if( dwPriorityClass )
 			{
 				if (ReadProcessMemory(hProcess, 
-						(LPVOID)PEB.dwInfoBlockAddress,
-						&block,
-						sizeof(block),
-						&dwSize))
+						pbi.PebBaseAddress,
+						&PEB,
+						sizeof(PEB),
+						&sizeT))
 				{
-					WCHAR	*buff = new WCHAR[block.wMaxLength+1];
-    	        	if (ReadProcessMemory(hProcess, 
-									(LPVOID)block.dwCmdLineAddress, 
-									buff, 
-									block.wMaxLength, 
-									&dwSize))
-						cmdline = wchar2string(buff, dwSize);
+					cout << hex << PEB.dwInfoBlockAddress << "  -  " << sizeT << endl;
+					sizeT = 0;
+					__INFOBLOCK	block;
+					if (ReadProcessMemory(hProcess, 
+							(LPVOID)PEB.dwInfoBlockAddress,
+							&block,
+							sizeof(block),
+							&sizeT))
+					{
+						sizeT = 0;
+						WCHAR	*buff = new WCHAR[block.wMaxLength+1];
+    	        		if (ReadProcessMemory(hProcess, 
+										(LPVOID)block.dwCmdLineAddress, 
+										buff, 
+										block.wMaxLength, 
+										&sizeT)) {
+							cmdline = wchar2string(buff, sizeT);
+							cout << cmdline << endl;
+						}
+						else
+							errorCodeToString(GetLastError(), "3-ReadProcessMemory()" );
+						delete buff;
+					}
 					else
-						errorCodeToString(GetLastError(), "3-ReadProcessMemory()" );
-					delete buff;
+						errorCodeToString(GetLastError(), "2-ReadProcessMemory()" );
 				}
 				else
-					errorCodeToString(GetLastError(), "2-ReadProcessMemory()" );
+					errorCodeToString(GetLastError(), "1-ReadProcessMemory()" );
 			}
 			else
-				errorCodeToString(GetLastError(), "1-ReadProcessMemory()" );
-			
+				errorCodeToString(GetLastError(), "GetPriorityClass" );
+	
 			CloseHandle( hProcess );
 
 			//	build process object to be added in vector
@@ -346,8 +353,169 @@ void ProcessData::read_process_list_from_sys()
 	} while ( Process32Next(hProcessSnap, &pe32) );
 
 	CloseHandle(hProcessSnap);
+	
+#else	//=============================================================================
+
+	// Take a snapshot of all processes in the system.
+	HANDLE	hProcessSnap = 
+		CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS | TH32CS_SNAPMODULE, 0);
+	if( hProcessSnap == INVALID_HANDLE_VALUE)
+	{
+		string desc = errorCodeToString(GetLastError(), "CreateToolhelp32Snapshot" );
+		Tango::Except::throw_exception(
+						(const char *)"PROCESS_LIST_FAILED",
+						(const char *) desc.c_str(),
+						(const char *)"Starter::get_process_list()");
+	}
+
+	// Set the size of the structure before using it.
+	PROCESSENTRY32	pe32;
+	pe32.dwSize = sizeof( PROCESSENTRY32 );
+
+	// Retrieve information about the first process,
+	// and exit if unsuccessful
+	if( !Process32First( hProcessSnap, &pe32 ) )
+	{
+		string desc = errorCodeToString(GetLastError(), "Process32First" );  // Show cause of failure
+		CloseHandle( hProcessSnap );     // Must clean up the snapshot object!
+		Tango::Except::throw_exception(
+						(const char *)"PROCESS_LIST_FAILED",
+						(const char *) desc.c_str(),
+						(const char *)"Starter::get_process_list()");
+	}
+
+	//	Get module ntdll
+    NTQIP		*lpfnNtQueryInformationProcess;
+	HINSTANCE	hLibrary = GetModuleHandleA("ntdll.dll");
+    if (hLibrary != NULL)
+    {
+        lpfnNtQueryInformationProcess = (NTQIP *)GetProcAddress(hLibrary, "ZwQueryInformationProcess");
+    }
+	else
+    {
+		string	desc = errorCodeToString(GetLastError(), "GetModuleHandle() ");
+		Tango::Except::throw_exception(
+						(const char *)"PROCESS_LIST_FAILED",
+						(const char *) desc.c_str(),
+						(const char *)"Starter::get_process_list()");
+    }
+
+	do
+	{
+		// Retrieve the priority class.
+		//HANDLE	hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pe32.th32ProcessID );
+		HANDLE	hProcess = OpenProcess(
+			PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pe32.th32ProcessID );
+		if( hProcess != NULL )
+		{
+			string strLine("");
+
+			//	Get PEB address
+			PVOID	pebAddress = getPebAddress(hProcess);
+
+			//	Get the address of parameters
+			PVOID	rtlUserProcParamsAddress = getPebStructure(hProcess, pebAddress);
+			if (rtlUserProcParamsAddress!=NULL)
+			{
+				//	Read the command line in UNICODE structure
+				UNICODE_STRING	commandLine =
+					getUnicodeCommandLine(hProcess, rtlUserProcParamsAddress);
+					
+				//	Convert the command line
+				WCHAR *commandLineContents = new WCHAR[commandLine.Length];
+				if (ReadProcessMemory(hProcess, commandLine.Buffer,
+					commandLineContents, commandLine.Length, NULL))
+				{
+					strLine = wchar2string(
+						commandLineContents, commandLine.Length/2);
+				}
+				else
+					errorCodeToString(GetLastError(), "Cannot convert the command line" );
+				delete commandLineContents;
+			}
+			else
+				errorCodeToString(GetLastError(), "Cannot get the address of parameters" );
+
+
+			CloseHandle( hProcess );
+
+			//	build process object to be added in vector
+			Process	*process = new Process();
+
+			//	Remove extention from exe name
+			string	full_name = wchar2string(pe32.szExeFile);
+			string::size_type	pos = full_name.find('.');
+			if (pos!=string::npos)
+				process->name = full_name.substr(0, pos);
+			else
+				process->name = full_name;
+
+			//	Parse name frome cmd line because file manager truncate it at 15 chars
+			if (win2000 && process->name.length()>13)
+				process->name = parseNameFromCmdLine(process->name, strLine);
+
+			//	On win32 -> exe file is case unsesitive
+			transform(process->name.begin(), process->name.end(),
+				process->name.begin(), ::tolower);
+
+
+			//	add pid and cmd line
+			process->pid  = pe32.th32ProcessID;
+			process->line = strLine;
+			proc_list.push_back(process);
+		}
+	} while ( Process32Next(hProcessSnap, &pe32) );
+	CloseHandle(hProcessSnap);
+#endif
 }
 
+//============================================================================ 
+//============================================================================
+UNICODE_STRING ProcessData::getUnicodeCommandLine(HANDLE hProcess, PVOID paramAddress)
+{
+	UNICODE_STRING	commandLine;
+
+#if (_MSC_VER >= 1600)	//	VC10
+	RTL_USER_PROCESS_PARAMETERS	*pProcessParam =
+		(RTL_USER_PROCESS_PARAMETERS *) paramAddress;
+	ReadProcessMemory(hProcess,
+		(PCHAR) &pProcessParam->CommandLine,
+		&commandLine, sizeof(commandLine), NULL);
+#else
+	ReadProcessMemory(hProcess,
+		(PCHAR) paramAddress + 0x40,
+		&commandLine, sizeof(commandLine), NULL);
+#endif
+	return commandLine;
+}
+//============================================================================ 
+//============================================================================
+PVOID ProcessData::getPebStructure(HANDLE hProcess, PVOID pebAddress)
+{
+	PVOID	rtlUserProcParamsAddress = NULL;
+
+#if (_MSC_VER >= 1600)	//	VC10
+	PEB		*peb = (PEB *)pebAddress;
+	ReadProcessMemory(hProcess,
+		(PCHAR)&peb->ProcessParameters,
+		&rtlUserProcParamsAddress, sizeof(PVOID), NULL);
+#else
+	ReadProcessMemory(hProcess,
+		(PCHAR)pebAddress+0x10,
+		&rtlUserProcParamsAddress, sizeof(PVOID), NULL);
+#endif
+	return rtlUserProcParamsAddress;
+}
+//============================================================================ 
+//============================================================================
+PVOID  ProcessData::getPebAddress(HANDLE pHandle)
+{
+	NTQIP	*ntQueryInformationProcess = 
+		(NTQIP *)GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtQueryInformationProcess");
+	PROCESS_BASIC_INFORMATION	pbi;
+	ntQueryInformationProcess(pHandle, ProcessBasicInformation, &pbi, sizeof(pbi), NULL);
+	return pbi.PebBaseAddress;
+}
 
 
 // ============================================================================

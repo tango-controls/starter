@@ -68,8 +68,9 @@
 #ifndef _CHECKPROCESS_UTIL_H
 #define _CHECKPROCESS_UTIL_H
 
-#if defined (_TG_WINDOWS_)
-# pragma warning (disable : 4786)
+
+#ifdef _WIN32	//	Pb with tango_config.h
+#	define _WIN32_WINNT 0x500
 #endif
 
 
@@ -80,6 +81,7 @@
 #	include <direct.h>
 #	include <io.h>
 #	include <tlhelp32.h>
+#	include <WinBase.h>
 #else
 #		include <sys/wait.h>
 #		include <sys/time.h>
@@ -120,50 +122,9 @@ Process;
 
 #ifdef _TG_WINDOWS_
 
-	typedef enum _PROCESSINFOCLASS
-	{
-    	ProcessBasicInformation
-	}
-	PROCESSINFOCLASS;
-
-	typedef LONG (WINAPI NTQIP)(HANDLE, PROCESSINFOCLASS, PVOID, ULONG, PULONG);
-
-	typedef struct _PEB
-	{
-    	BYTE Reserved1[2];
-    	BYTE BeingDebugged;
-    	BYTE Reserved2[229];
-    	PVOID Reserved3[59];
-    	ULONG SessionId;
-	}
-	PEB, *PPEB;
-
-	typedef struct _PROCESS_BASIC_INFORMATION
-	{
-    	PVOID Reserved1;
-    	PPEB PebBaseAddress;
-    	PVOID Reserved2[2];
-	//    ULONG_PTR UniqueProcessId;
-    	ULONG* UniqueProcessId;
-    	PVOID Reserved3;
-	}
-	PROCESS_BASIC_INFORMATION;
-
-	typedef struct ___PEB
-	{
-    	DWORD   dwFiller[4];
-    	DWORD   dwInfoBlockAddress;
-	}
-	__PEB;
-
-	typedef struct ___INFOBLOCK
-	{
-    	DWORD   dwFiller[16];
-    	WORD    wLength;
-    	WORD    wMaxLength;
-    	DWORD   dwCmdLineAddress;
-	}
-	__INFOBLOCK;
+#	include <Winternl.h>
+	typedef LONG (NTAPI NTQIP)	\
+		(HANDLE, PROCESSINFOCLASS, PVOID, ULONG, PULONG);
 
 #endif
 
@@ -193,6 +154,9 @@ private:
 	bool win2000;
 	bool isWin2000();
 	string  parseNameFromCmdLine(string name, string cmdline);
+	PVOID  getPebAddress(HANDLE pHandle);
+	PVOID  getPebStructure(HANDLE hProcess, PVOID pebAddress);
+	UNICODE_STRING  getUnicodeCommandLine(HANDLE hProcess, PVOID paramAddress);
 #else
 	bool manageProcFiles(Process *process);
 #endif

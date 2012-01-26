@@ -66,6 +66,7 @@
 #define _STARTER_UTIL_H
 
 #include <tango.h>
+#include <COS/CosNotifyChannelAdmin.hh>
 #include <PingThread.h>
 #include <CheckProcessUtil.h>
 
