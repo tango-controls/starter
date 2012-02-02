@@ -144,7 +144,7 @@ StartProcessThread::StartProcessThread(vector<NewProcess *> v_np, int level, Sta
  * Execute the fork of the sub process in a thread.
  */
 //+------------------------------------------------------------------
-void StartProcessThread::run(void *ptr)
+void StartProcessThread::run(TANGO_UNUSED(void *ptr))
 {
 	unsigned int	i;
 	CheckProcessUtil	*process_util = starter->util->proc_util;

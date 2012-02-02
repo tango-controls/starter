@@ -77,7 +77,7 @@ namespace Starter_ns
  */
 //--------------------------------------------------------
 
-bool Starter::is_NotifdState_allowed(Tango::AttReqType type)
+bool Starter::is_NotifdState_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 		//	Not any excluded states for NotifdState attribute in READ access.
 	
@@ -95,7 +95,7 @@ bool Starter::is_NotifdState_allowed(Tango::AttReqType type)
  */
 //--------------------------------------------------------
 
-bool Starter::is_HostState_allowed(Tango::AttReqType type)
+bool Starter::is_HostState_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 		//	Not any excluded states for HostState attribute in READ access.
 	
@@ -113,7 +113,7 @@ bool Starter::is_HostState_allowed(Tango::AttReqType type)
  */
 //--------------------------------------------------------
 
-bool Starter::is_RunningServers_allowed(Tango::AttReqType type)
+bool Starter::is_RunningServers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 		//	Not any excluded states for RunningServers attribute in READ access.
 	
@@ -131,7 +131,7 @@ bool Starter::is_RunningServers_allowed(Tango::AttReqType type)
  */
 //--------------------------------------------------------
 
-bool Starter::is_StoppedServers_allowed(Tango::AttReqType type)
+bool Starter::is_StoppedServers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 		//	Not any excluded states for StoppedServers attribute in READ access.
 	
@@ -149,7 +149,7 @@ bool Starter::is_StoppedServers_allowed(Tango::AttReqType type)
  */
 //--------------------------------------------------------
 
-bool Starter::is_Servers_allowed(Tango::AttReqType type)
+bool Starter::is_Servers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 		//	Not any excluded states for Servers attribute in READ access.
 	
@@ -180,7 +180,7 @@ bool Starter::is_Servers_allowed(Tango::AttReqType type)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevStart_allowed(const CORBA::Any &any)
+bool Starter::is_DevStart_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStart command.
 
@@ -198,7 +198,7 @@ bool Starter::is_DevStart_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevStop_allowed(const CORBA::Any &any)
+bool Starter::is_DevStop_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStop command.
 
@@ -216,7 +216,7 @@ bool Starter::is_DevStop_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevStartAll_allowed(const CORBA::Any &any)
+bool Starter::is_DevStartAll_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStartAll command.
 
@@ -234,7 +234,7 @@ bool Starter::is_DevStartAll_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevStopAll_allowed(const CORBA::Any &any)
+bool Starter::is_DevStopAll_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStopAll command.
 
@@ -252,7 +252,7 @@ bool Starter::is_DevStopAll_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevGetRunningServers_allowed(const CORBA::Any &any)
+bool Starter::is_DevGetRunningServers_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevGetRunningServers command.
 
@@ -270,7 +270,7 @@ bool Starter::is_DevGetRunningServers_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevGetStopServers_allowed(const CORBA::Any &any)
+bool Starter::is_DevGetStopServers_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevGetStopServers command.
 
@@ -288,7 +288,7 @@ bool Starter::is_DevGetStopServers_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_DevReadLog_allowed(const CORBA::Any &any)
+bool Starter::is_DevReadLog_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevReadLog command.
 
@@ -306,7 +306,7 @@ bool Starter::is_DevReadLog_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_HardKillServer_allowed(const CORBA::Any &any)
+bool Starter::is_HardKillServer_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for HardKillServer command.
 
@@ -324,7 +324,7 @@ bool Starter::is_HardKillServer_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_NotifyDaemonState_allowed(const CORBA::Any &any)
+bool Starter::is_NotifyDaemonState_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for NotifyDaemonState command.
 
@@ -342,7 +342,7 @@ bool Starter::is_NotifyDaemonState_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_ResetStatistics_allowed(const CORBA::Any &any)
+bool Starter::is_ResetStatistics_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for ResetStatistics command.
 
@@ -360,7 +360,7 @@ bool Starter::is_ResetStatistics_allowed(const CORBA::Any &any)
  */
 //--------------------------------------------------------
 
-bool Starter::is_UpdateServersInfo_allowed(const CORBA::Any &any)
+bool Starter::is_UpdateServersInfo_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for UpdateServersInfo command.
 

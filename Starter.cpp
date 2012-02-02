@@ -1029,11 +1029,12 @@ void Starter::dev_start_all(Tango::DevShort argin)
 	Tango::DevBoolean	throw_it = false;
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0)
+	if (servers.size()==0) {
 		if (throwable)
 			throw_it = true;
 		else
 			return;
+	}
 	if (throw_it)
 	{
 			TangoSys_OMemStream out_stream;
@@ -1763,6 +1764,9 @@ void Starter::manage_changing_state(ControlledServer *server, Tango::DevState pr
 				}
 			}
 		}
+		break;
+	default:
+		//	Do nothing
 		break;
 	}
 }

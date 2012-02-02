@@ -107,12 +107,12 @@ int main(int argc,char *argv[])
 	return 0;
 
 #else
-	Tango::Util *tg;
+
 	try
 	{
 		// Initialise the device server
 		//----------------------------------------
-		tg = Tango::Util::init(argc,argv);
+		Tango::Util *tg = Tango::Util::init(argc,argv);
 
 		// Create the device server singleton 
 		//	which will create everything
@@ -139,7 +139,7 @@ int main(int argc,char *argv[])
 		cerr << "Received a CORBA_Exception" << endl;
 		cerr << "Exiting" << endl;
 	}
-	tg->server_cleanup();
+	Tango::Util::instance()->server_cleanup();
 #ifdef WIN32_DBG
   DeInitAllocCheck();
 #endif

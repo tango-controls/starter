@@ -68,14 +68,6 @@ OUTPUT_DIR = ./bin/$(BIN_DIR)
 #
 INC_DIR_USER= -I . 
 
-
-#=============================================================================
-# LIB_DIR_USER is the list of user library directories
-#   - for a device server, tango libraries directories are automatically appended
-#   - '-L ../lib' is automatically appended in all cases
-#
-LIB_DIR_USER=
-
 #=============================================================================
 # LFLAGS_USR is the list of user link flags
 #   - for a device server, tango libraries directories are automatically appended
@@ -87,7 +79,7 @@ LIB_DIR_USER=
 # you must use '-lA -lB' in this order as link flags, otherwise you will get
 # 'undefined reference' errors
 #
-#LFLAGS_USR+=
+LFLAGS_USR+= -Wl,-z,now -Wl,-z,relro -pie
 
 
 #=============================================================================
@@ -96,7 +88,7 @@ LIB_DIR_USER=
 #
 # -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__ for ACE
 #
-#CXXFLAGS_USR+= -Wall
+CXXFLAGS_USR+= -Wall -Wextra -D_FORTIFY_SOURCE=2 -O1 -fpie -fstack-protector
 
 
 #=============================================================================
