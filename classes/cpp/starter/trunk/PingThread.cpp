@@ -200,7 +200,7 @@ void PingThreadData::wake_up()
  *	Execute the thread loop.
  */
 //+----------------------------------------------------------------------------
-void *PingThread::run_undetached(void *ptr)
+void *PingThread::run_undetached(TANGO_UNUSED(void *ptr))
 {
 	bool	trace = false;
 	if (trace)	cout << "Start a thread to ping " << servname << endl;

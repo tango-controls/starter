@@ -599,7 +599,7 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 
 		} 
 		struct dirent	*ent;
-		while (ent=readdir (dir))
+		while ( (ent=readdir(dir)) )
 		{
 			string	name(ent->d_name);
 			pos = name.find(filter);

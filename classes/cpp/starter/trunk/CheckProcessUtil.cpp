@@ -598,7 +598,7 @@ void ProcessData::read_process_list_from_sys()
 	} 
 
 	struct dirent	*ent;
-	while (ent = readdir (proc))
+	while ( (ent=readdir(proc)) )
 	{
 		if (isdigit (ent->d_name[0]))
 		{
@@ -1175,7 +1175,7 @@ vector<Process> CheckProcessUtil::get_process_list()
 }
 //=============================================================
 //=============================================================
-void *CheckProcessUtil::run_undetached(void *ptr)
+void *CheckProcessUtil::run_undetached(TANGO_UNUSED(void *ptr))
 {
 	while (stop_thread==false)
 	{

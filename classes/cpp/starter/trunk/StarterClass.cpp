@@ -346,7 +346,7 @@ CORBA::Any *HardKillServerClass::execute(Tango::DeviceImpl *device, const CORBA:
  *	returns The command output data (packed in the Any object)
  */
 //--------------------------------------------------------
-CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
+CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
 {
 	cout2 << "NotifyDaemonStateClass::execute(): arrived" << endl;
 
@@ -364,7 +364,7 @@ CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, const COR
  *	returns The command output data (packed in the Any object)
  */
 //--------------------------------------------------------
-CORBA::Any *ResetStatisticsClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
+CORBA::Any *ResetStatisticsClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
 {
 	cout2 << "ResetStatisticsClass::execute(): arrived" << endl;
 
@@ -383,7 +383,7 @@ CORBA::Any *ResetStatisticsClass::execute(Tango::DeviceImpl *device, const CORBA
  *	returns The command output data (packed in the Any object)
  */
 //--------------------------------------------------------
-CORBA::Any *UpdateServersInfoClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
+CORBA::Any *UpdateServersInfoClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
 {
 	cout2 << "UpdateServersInfoClass::execute(): arrived" << endl;
 
