@@ -9,7 +9,7 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -30,38 +30,7 @@ static const char *RcsId = "$Header$";
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
 // $Revision$
-//
-// $Log$
-// Revision 1.10  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 1.9  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 1.8  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 1.7  2008/12/16 10:44:57  pascal_verdier
-// Memory leak fixed.
-//
-// Revision 1.6  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
-// Revision 1.5  2007/09/25 12:12:00  pascal_verdier
-// little memory leaks fixed.
-//
-// Revision 1.4  2006/11/10 14:53:28  pascal_verdier
-// Remove vc8 warnings.
-//
-// Revision 1.3  2006/04/24 07:06:27  pascal_verdier
-// A thread is started for each level when at servers startup.
-//
-// Revision 1.2  2006/02/10 10:14:24  pascal_verdier
-// Recreate DeviceProxy object in case of Exception on ping() (bug in cpp api).
-//
-// Revision 1.1  2006/02/09 12:00:15  pascal_verdier
-// A ping thread is now started for each server.
+// $Date$
 //
 //-=============================================================================
 

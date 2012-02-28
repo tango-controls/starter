@@ -9,7 +9,7 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -30,132 +30,7 @@ static const char *RcsId = "$Header$";
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
 // $Revision$
-//
-// $Log$
-// Revision 3.28  2010/10/18 12:58:52  pascal_verdier
-// Pogo-7 compatibility
-//
-// Revision 3.27  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
-// Revision 3.26  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 3.25  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.24  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.23  2008/12/12 13:29:56  pascal_verdier
-// Log in file start and stop for servers and itself.
-//
-// Revision 3.22  2008/09/23 14:19:41  pascal_verdier
-// Log files history added.
-//
-// Revision 3.21  2008/05/15 08:07:18  pascal_verdier
-// TangoSys_MemStream replaced by TangoSys_OMemStream
-// (for leaking problem under win32)
-//
-// Revision 3.20  2008/03/27 07:55:17  pascal_verdier
-// *** empty log message ***
-//
-// Revision 3.19  2008/03/03 13:25:35  pascal_verdier
-// Do not try to narrow notifd if not running.
-//
-// Revision 3.18  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
-// Revision 3.17  2007/11/12 08:09:28  pascal_verdier
-// const char* cast added on throw_exception call.
-//
-// Revision 3.16  2007/09/25 12:12:00  pascal_verdier
-// little memory leaks fixed.
-//
-// Revision 3.15  2007/05/25 06:08:00  pascal_verdier
-// Iterator management modified (strange in vc8 ?)
-//
-// Revision 3.14  2007/05/03 06:54:58  pascal_verdier
-// Re-try on DServer exported added before polling startup added.
-//
-// Revision 3.13  2007/03/30 14:21:49  pascal_verdier
-// remove 2 warnings on linux.
-//
-// Revision 3.12  2006/11/20 06:58:37  pascal_verdier
-// Mutex on start process data added.
-//
-// Revision 3.11  2006/11/10 14:53:28  pascal_verdier
-// Remove vc8 warnings.
-//
-// Revision 3.10  2006/06/05 07:20:36  pascal_verdier
-// Server startup is now delayed (with timeout) in a startup level.
-// New state MOVING added.
-// At startup, starter loop until properties have been read.
-//
-// Revision 3.9  2006/04/24 07:06:28  pascal_verdier
-// A thread is started for each level when at servers startup.
-//
-// Revision 3.8  2006/02/09 11:59:19  pascal_verdier
-// A ping thread is now started for each server.
-//
-// Revision 3.7  2005/09/19 13:35:22  pascal_verdier
-// change on traces.
-//
-// Revision 3.6  2005/08/26 07:18:16  pascal_verdier
-// FQDN management added.
-// Time between startup level added.
-//
-// Revision 3.5  2005/05/18 12:11:56  pascal_verdier
-// Start a batch file under windows.
-//
-// Revision 3.4  2005/04/21 07:18:48  pascal_verdier
-// Add a little timeout for ping.
-// Fix a bug for windows (SIGCHLD).
-//
-// Revision 3.3  2004/06/29 04:24:26  pascal_verdier
-// First revision using events.
-//
-// Revision 3.2  2004/05/19 08:56:32  pascal_verdier
-// Bug fixed on service mode.
-// CreateProcess used under Windows.
-//
-// Revision 3.0.1.4  2004/02/27 09:53:02  pascal_verdier
-// - The starter device is now warned by Database server when something change on a server.
-// It replace the DbGetHostServersInfo polling.
-// - HostState, ControlledRunningServers, ontrolledStoppedServers attributes added.
-//
-// Revision 3.0.1.3  2003/12/08 08:53:52  pascal_verdier
-// Cluster (multi-host) control implemented.
-// Control of notify daemon implemented but not tested.
-//
-// Revision 3.0.1.2  2003/10/15 10:37:08  pascal_verdier
-// *** empty log message ***
-//
-// Revision 3.0.1.1  2003/09/18 12:02:49  pascal_verdier
-// Problem on Windows service startup fixed.
-//
-// Revision 3.0  2003/06/17 12:06:36  pascal_verdier
-// TANGO 3.x server.
-// polling bugs fixed.
-//
-// Revision 2.0  2003/01/09 13:35:50  verdier
-// TANGO 2.2
-//
-// Revision 1.22  2002/12/18 08:09:19  verdier
-// omniORB compatibility
-//
-// Revision 1.6  2002/10/15 18:55:21  verdier
-// The host state is now calculated during the State polled command.
-//
-// Revision 1.5  2002/02/27 15:19:32  verdier
-// WinNt services implemented.
-//
-// Revision 1.2  2001/04/03 09:40:50  verdier
-// WInNt version is running.
-//
-// Revision 1.1  2001/02/12 09:34:21  verdier
-// Initial revision
+// $Date$
 //
 //-=============================================================================
 

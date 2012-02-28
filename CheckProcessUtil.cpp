@@ -9,7 +9,7 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -30,55 +30,7 @@ static const char *RcsId = "$Header$";
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
 // $Revision$
-//
-// $Log$
-// Revision 3.15  2010/10/15 06:20:32  pascal_verdier
-// Copyright added.
-//
-// Revision 3.14  2010/09/21 12:18:57  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.13  2010/08/09 06:52:25  pascal_verdier
-// Patch for Python module added (thanks to Tiago).
-//
-// Revision 3.12  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.11  2008/12/12 13:30:44  pascal_verdier
-// Problem on python server options fixed.
-//
-// Revision 3.10  2008/06/18 08:17:03  pascal_verdier
-// Pb with case unsensitive on win32 fixed.
-//
-// Revision 3.9  2008/06/06 07:56:50  pascal_verdier
-// Case unsensitive on instance name added.
-//
-// Revision 3.8  2008/06/04 09:08:03  pascal_verdier
-// javaw process control added.
-// Java -cp classpath parsing mmodified.
-//
-// Revision 3.7  2008/05/15 08:07:18  pascal_verdier
-// TangoSys_MemStream replaced by TangoSys_OMemStream
-// (for leaking problem under win32)
-//
-// Revision 3.6  2008/04/28 12:36:09  pascal_verdier
-// Eception in solaris modified.
-//
-// Revision 3.5  2008/04/24 06:33:52  pascal_verdier
-// Bug in solaris management fixed.
-//
-// Revision 3.4  2008/04/10 12:15:05  jensmeyer
-// Added compile options for MacOSX and FreeBSD
-//
-// Revision 3.3  2008/04/09 14:39:57  pascal_verdier
-// Better trace on pread failed
-//
-// Revision 3.2  2008/03/03 13:26:15  pascal_verdier
-// is_process_running() method added.
-//
-// Revision 3.1  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
+// $Date$
 //
 //-=============================================================================
 
@@ -639,7 +591,7 @@ void ProcessData::read_process_list_from_sys()
 //=============================================================
 bool  ProcessData::manageProcFiles(Process *process)
 {
-#if (defined linux) || (defined __darwin__) || (defined __freebsd__)
+#if (defined __GLIBC__) || (defined __darwin__) || (defined __freebsd__)
 
 	//	Read command line file
 	TangoSys_OMemStream	fname;

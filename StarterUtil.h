@@ -8,7 +8,7 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -29,36 +29,7 @@
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
 // $Revision$
-//
-// $Log$
-// Revision 3.15  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.14  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.13  2008/12/12 13:29:56  pascal_verdier
-// Log in file start and stop for servers and itself.
-//
-// Revision 3.12  2008/09/23 14:19:41  pascal_verdier
-// Log files history added.
-//
-// Revision 3.11  2008/05/15 08:07:18  pascal_verdier
-// TangoSys_MemStream replaced by TangoSys_OMemStream
-// (for leaking problem under win32)
-//
-// Revision 3.10  2008/02/29 15:15:05  pascal_verdier
-// Checking running processes by system call added.
-//
-// Revision 3.9  2007/05/03 06:54:59  pascal_verdier
-// Re-try on DServer exported added before polling startup added.
-//
-// Revision 3.8  2006/04/24 07:06:28  pascal_verdier
-// A thread is started for each level when at servers startup.
-//
-// Revision 3.7  2006/02/09 11:59:19  pascal_verdier
-// A ping thread is now started for each server.
+// $Date$
 //
 //=============================================================================
 
