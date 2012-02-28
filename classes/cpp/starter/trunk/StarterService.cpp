@@ -9,7 +9,7 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -30,35 +30,7 @@ static const char *RcsId = "$Header$";
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
 // $Revision$
-//
-// $Log$
-// Revision 3.12  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
-// Revision 3.11  2010/10/08 08:48:50  pascal_verdier
-// Include files order changed.
-//
-// Revision 3.10  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
-// Revision 3.9  2010/02/09 15:09:49  pascal_verdier
-// Define  _TG_WINDOWS_  replace WIN32.
-// LogFileHome property added.
-//
-// Revision 3.8  2008/04/07 08:54:55  pascal_verdier
-// Check if this starter instance is able to ru on this host.
-//
-// Revision 3.7  2007/09/27 15:12:01  pascal_verdier
-// Get TANGO_HOST from registry and add it to environement.
-//
-// Revision 3.6  2004/09/28 07:13:19  pascal_verdier
-// bug on state with notify daemon fixed.
-//
-// Revision 3.5  2004/07/05 11:01:20  pascal_verdier
-// PB on service fixed.
-//
-// Revision 3.4  2004/06/29 04:24:26  pascal_verdier
-// First revision using events.
+// $Date$
 //
 //-=============================================================================
 

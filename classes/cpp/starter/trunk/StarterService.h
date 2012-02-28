@@ -9,7 +9,8 @@
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010//
+
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -30,14 +31,7 @@
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
 // $Revision$
-//
-// $Log$
-// Revision 3.2  2010/10/15 06:20:33  pascal_verdier
-// Copyright added.
-//
-// Revision 3.1  2010/09/21 12:18:58  pascal_verdier
-// GPL Licence added to header.
-//
+// $Date$
 //
 //=============================================================================
 
