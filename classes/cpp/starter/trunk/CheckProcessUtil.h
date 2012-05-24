@@ -36,8 +36,10 @@
 #define _CHECKPROCESS_UTIL_H
 
 
-#ifdef _WIN32	//	Pb with tango_config.h
-#	define _WIN32_WINNT 0x500
+#ifdef _WIN32
+	#ifndef _WIN32_WINNT	
+		#define _WIN32_WINNT 0x500
+	#endif
 #endif
 
 

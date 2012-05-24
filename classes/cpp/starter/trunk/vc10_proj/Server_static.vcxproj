@@ -33,6 +33,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,6 +79,7 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Starter</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Starter</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,10 +124,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>
-..;$(TANGO_ROOT)\win64_vc10\win64\include;$(TANGO_ROOT)\classes\win64_vc10\win64\include;TemplateAbstractPath;%(AdditionalIncludeDirectories)
-
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..;$(TANGO_ROOT)\win64\include\vc10;$(TANGO_ROOT)\classes\win64\include;TemplateAbstractPath;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINSTATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -199,10 +198,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>
-..;$(TANGO_ROOT)\win64_vc10\win64\include;$(TANGO_ROOT)\classes\win64_vc10\win64\include;TemplateAbstractPath;%(AdditionalIncludeDirectories)
-
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..;$(TANGO_ROOT)\win64\include\vc10;$(TANGO_ROOT)\classes\win64_vc10\win64\include;TemplateAbstractPath;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINSTATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -215,9 +211,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Starter.lib;omniORB4.lib;omniDynamic4.lib;COS4.lib;omnithread.lib;tango.lib;log4tango.lib;comctl32.lib;ws2_32.lib;mswsock.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Starter.lib;omniORB4.lib;omniDynamic4.lib;COS4.lib;omnithread.lib;tango.lib;log4tango.lib;zmq.lib;comctl32.lib;ws2_32.lib;mswsock.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Starter.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\win64\release;$(TANGO_ROOT)\win64_vc10\win64\lib;$(TANGO_ROOT)\classes\win64_vc10\win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\tango_src\starter\lib\win64\release;$(TANGO_ROOT)\win64\lib\vc10;$(TANGO_ROOT)\classes\win64_vc10\win64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>
