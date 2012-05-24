@@ -130,7 +130,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..;&quot;$(TANGO_ROOT)\win32_vc9\win32\include&quot;;&quot;TemplateAbstractPath&quot;"
+				AdditionalIncludeDirectories="..;C:\tango_src\ci\win32\include;&quot;$(TANGO_ROOT)\win32_vc9\win32\include&quot;;TemplateAbstractPath"
 				PreprocessorDefinitions="WIN32;_WINSTATIC;NDEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -154,10 +154,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionName).lib omniORB4.lib omniDynamic4.lib COS4.lib omnithread.lib tango.lib log4tango.lib comctl32.lib ws2_32.lib mswsock.lib advapi32.lib"
+				AdditionalDependencies="$(SolutionName).lib omniORB4.lib omniDynamic4.lib COS4.lib omnithread.lib tango.lib zmq.lib log4tango.lib comctl32.lib ws2_32.lib mswsock.lib advapi32.lib"
 				OutputFile="$(OutDir)\$(SolutionName).exe"
 				LinkIncremental="0"
-				AdditionalLibraryDirectories="&quot;..\lib\win32\release&quot;;&quot;$(TANGO_ROOT)\win32_vc9\win32\lib&quot;;&quot;$(TANGO_ROOT)\classes\win32_vc9\win32\lib&quot;"
+				AdditionalLibraryDirectories="C:\tango_src\ci\win32\lib\vc9;..\lib\win32\release;&quot;$(TANGO_ROOT)\win32_vc9\win32\lib&quot;;&quot;$(TANGO_ROOT)\classes\win32_vc9\win32\lib&quot;"
 				GenerateDebugInformation="false"
 				SubSystem="1"
 				OptimizeReferences="0"
