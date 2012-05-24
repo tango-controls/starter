@@ -33,6 +33,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -154,10 +155,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>
-..;$(TANGO_ROOT)\win64_vc10\win64\include;$(TANGO_ROOT)\classes\win64_vc10\win64\include;TemplateAbstractPath;%(AdditionalIncludeDirectories)
-
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..;$(TANGO_ROOT)\win64\include\vc10;$(TANGO_ROOT)\classes\win64_vc10\win64\include;TemplateAbstractPath;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINSTATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -178,14 +176,22 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-	<ClCompile Include="..\Starter.cpp" />
-	<ClCompile Include="..\StarterClass.cpp" />
-	<ClCompile Include="..\StarterStateMachine.cpp" />
-	
+    <ClCompile Include="..\CheckProcessUtil.cpp" />
+    <ClCompile Include="..\PingThread.cpp" />
+    <ClCompile Include="..\Starter.cpp" />
+    <ClCompile Include="..\StarterClass.cpp" />
+    <ClCompile Include="..\StarterStateMachine.cpp" />
+    <ClCompile Include="..\StarterUtil.cpp" />
+    <ClCompile Include="..\StartProcessThread.cpp" />
   </ItemGroup>
   <ItemGroup>
-	<ClInclude Include="..\Starter.h"></ClInclude>
-	<ClInclude Include="..\StarterClass.h"></ClInclude>
+    <ClInclude Include="..\CheckProcessUtil.h" />
+    <ClInclude Include="..\PingThread.h" />
+    <ClInclude Include="..\Starter.h">
+    </ClInclude>
+    <ClInclude Include="..\StarterClass.h">
+    </ClInclude>
+    <ClInclude Include="..\StarterUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
