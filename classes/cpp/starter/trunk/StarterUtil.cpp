@@ -415,7 +415,7 @@ void StarterUtil::manage_log_file_history(char *filename, int nb_max)
 		cerr << "Renaming " << filename << " to " << new_filename << " failed : " << strerror(errno) << endl;
 	//else
 	//	cout << "Renaming " << filename << " to " << new_filename << "  done." << endl;
-	delete new_filename;
+	delete [] new_filename;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -486,6 +486,7 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 				list.push_back(full_name);
 			}
 		}
+		closedir(dir);
 #else
 		cout << "Searching " << filter << "  in " << path << endl;
 		path += "\\";

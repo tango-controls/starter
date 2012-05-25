@@ -1026,7 +1026,6 @@ void Starter::dev_start_all(Tango::DevShort argin)
 	Tango::DevShort  level = argin;
 	cout << "Starter::dev_start_all(): entering for level "<< level <<"... !" << endl;
 
-	Tango::DevBoolean	throw_it = false;
 	//	Check if servers object initilized
 	//---------------------------------------
 	if (servers.empty()) {
@@ -1293,7 +1292,7 @@ Tango::ConstDevString Starter::dev_read_log(Tango::DevString argin)
 	strlog << ifs.rdbuf() << ends;
 	ifs.close();
 	returned_str = strlog.str();
-	return returned_str.c_str();
+	argout = returned_str.c_str();
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_read_log
 
@@ -1490,6 +1489,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 	catch(Tango::DevFailed &e)
 	{
 		free(servname);
+		delete [] adminname;
 		if (throwable)
 			throw;
 		else
