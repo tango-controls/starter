@@ -1029,19 +1029,14 @@ void Starter::dev_start_all(Tango::DevShort argin)
 	Tango::DevBoolean	throw_it = false;
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0) {
-		if (throwable)
-			throw_it = true;
-		else
-			return;
-	}
-	if (throw_it)
-	{
+	if (servers.empty()) {
+		if (throwable) {
 			TangoSys_OMemStream out_stream;
 			out_stream << "NO Server  controlled !" << ends;
 			Tango::Except::throw_exception(out_stream.str(),
 			out_stream.str(),
 				(const char *)"Starter::dev_start_all()");
+		}
 	}
 
 	//	Do not want exception during startup
