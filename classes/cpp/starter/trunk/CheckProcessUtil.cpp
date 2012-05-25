@@ -146,7 +146,7 @@ string ProcessData::wchar2string(WCHAR *wch, int size)
 		ch[i] = wch[i];
 	ch[i] = 0x0;
 	string	str(ch);
-	delete ch;
+	delete [] ch;
 	return str;
 }
 //=============================================================
@@ -161,7 +161,7 @@ WCHAR *ProcessData::string2wchar(string str)
 	for (i=0 ; ch[i]!=0 ; i++)
 		wch[i] = (short)ch[i];
 	wch[i] = 0x0;
-	delete ch;
+	delete [] ch;
 	return wch;
 }
 //=============================================================
@@ -205,7 +205,7 @@ void ProcessData::read_process_list_from_sys()
     NTQIP						*lpfnNtQueryInformationProcess;
 	WCHAR	*wc = string2wchar("ntdll.dll");
 	HINSTANCE	hLibrary = GetModuleHandle(wc);
-	delete wc;
+	delete [] wc;
     if (hLibrary != NULL)
     {
         lpfnNtQueryInformationProcess = (NTQIP *)GetProcAddress(hLibrary, "ZwQueryInformationProcess");
@@ -264,7 +264,7 @@ void ProcessData::read_process_list_from_sys()
 						}
 						else
 							errorCodeToString(GetLastError(), "3-ReadProcessMemory()" );
-						delete buff;
+						delete [] buff;
 					}
 					else
 						errorCodeToString(GetLastError(), "2-ReadProcessMemory()" );
@@ -383,7 +383,7 @@ void ProcessData::read_process_list_from_sys()
 				}
 				else
 					errorCodeToString(GetLastError(), "Cannot convert the command line" );
-				delete commandLineContents;
+				delete [] commandLineContents;
 			}
 			else
 				errorCodeToString(GetLastError(), "Cannot get the address of parameters" );
@@ -680,6 +680,8 @@ bool  ProcessData::manageProcFiles(Process *process)
 							line << buff << " ";
 
 					process->line = line.str();
+					free(argvp);
+					close(fdesc);
 				}
 				else
 				{
@@ -695,8 +697,6 @@ bool  ProcessData::manageProcFiles(Process *process)
 							(const char *) tms.str().c_str(),
 							(const char *)"Starter::manageProcFiles()");
 				}
-				free(argvp);
-				close(fdesc);
 			}
 		}
 		else
@@ -962,7 +962,7 @@ void ProcessData::update_process_list()
 
 
 #ifndef _TG_WINDOWS_
-		if (process->line_args.size()>0)
+		if (process->line_args.empty()==false)
 			process->name = process->line_args[0];
 		else
 			process->name = "";
@@ -976,7 +976,7 @@ void ProcessData::update_process_list()
 		build_server_names(process);
 #ifdef TRACE2
 		cout << process->pid << "	" << process->name;
-		if (process->proc_args.size()>0)
+		if (process->proc_args.empty()==false)
 			cout << " " << process->proc_args[0];
 		cout << endl;
 #endif
@@ -1009,7 +1009,7 @@ int ProcessData::get_server_pid(string argin)
 	{
 		Process	*process = proc_list[i];
 		// server is a process with at least one arg
-		if (process->proc_args.size()>0)
+		if (process->proc_args.empty()==false)
 		{
 			string	servname(process->name);
 			servname += "/";

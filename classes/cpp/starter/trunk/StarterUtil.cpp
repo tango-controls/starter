@@ -301,7 +301,7 @@ void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers)
 	//	build present situation log
 	stringstream	strlog;
 	vector<ControlledServer>::iterator it;
-	for (it=servers->begin() ; it<servers->end() ; it++)
+	for (it=servers->begin() ; it<servers->end() ; ++it)
 	{
 		if (it->controlled && it->startup_level>0)
 		{
@@ -593,7 +593,7 @@ vector<string>	StarterUtil::get_host_ds_list()
 
 		//	Check servers really used (Erase this one and database server
 		vector<string>::iterator pos;
-		for (pos=tmp.begin() ; pos<tmp.end() ; pos++)
+		for (pos=tmp.begin() ; pos<tmp.end() ; ++pos)
 		{
 			int	idx = (*pos).find_first_of("/");
 			if (idx>0)
@@ -607,7 +607,7 @@ vector<string>	StarterUtil::get_host_ds_list()
 					s=="logconsumer")
 				{
 					tmp.erase(pos);
-					pos--;	//	because erase decrease size !
+					--pos;	//	because erase decrease size !
 				}
 			}
 		}
@@ -705,7 +705,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 	while (redo)
 	{
 		redo = false;
-		for (it=servers->begin() ; it<servers->end() ; it++)
+		for (it=servers->begin() ; it<servers->end() ; ++it)
 		{
 			string	s1(it->name);
 			bool	found = false;

@@ -115,8 +115,6 @@ private:
 	 *	The pinged server name
 	 */
 	string	servname;
-	
-	long	ping_timeout;
 
 public:
 	/**
