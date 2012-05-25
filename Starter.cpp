@@ -158,7 +158,7 @@ void Starter::delete_device()
 
 		//	Stop ping threads
 		vector<ControlledServer>::iterator it;
-		for (it=servers.begin() ; it<servers.end() ; it++)
+		for (it=servers.begin() ; it<servers.end() ; ++it)
 		{
 			it->thread_data->set_stop_thread();
 		}
@@ -514,7 +514,7 @@ void Starter::get_device_property()
 	/*----- PROTECTED REGION ID(Starter::get_device_property_after) ENABLED START -----*/
 
 	//	Check device property data members init
-	if (startDsPath.size()==0)
+	if (startDsPath.empty())
 		startDsPath.push_back(".");
 	else
 	for (unsigned int i=0 ; i<startDsPath.size() ; i++)
@@ -815,7 +815,7 @@ Tango::DevState Starter::dev_state()
 
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0)
+	if (servers.empty())
 	{
 		INFO_STREAM << "Exiting dev_state() with servers.size() null" << endl;
 		if (notifyd_state==Tango::ON)
@@ -897,8 +897,8 @@ void Starter::dev_start(Tango::DevString argin)
 			server->started_time = time(NULL);
 		}
 	}
-	catch (Tango::DevFailed &e) {
-		throw e;
+	catch (Tango::DevFailed &) {
+		throw;
 	}
 	catch (exception &e) {
 		cerr << "================================" << endl;
@@ -942,7 +942,7 @@ void Starter::dev_stop(Tango::DevString argin)
 	//	Add your own code
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0)
+	if (servers.empty())
 	{
 		TangoSys_OMemStream out_stream;
 		out_stream << argin << ": Server  not controlled !" << ends;
@@ -1072,7 +1072,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 				cout << "	Alread running...."<< endl;
 		}
 	}
-	if (processes.size()>0)
+	if (processes.empty()==false)
 		startProcesses(processes, level);
 
 	//	Want exception during normal run
@@ -1100,7 +1100,7 @@ void Starter::dev_stop_all(Tango::DevShort argin)
 	Tango::DevShort  level = argin;
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0)
+	if (servers.empty())
 	{
 		TangoSys_OMemStream out_stream;
 		out_stream << "NO Server  controlled !" << ends;
@@ -1147,7 +1147,7 @@ Tango::DevVarStringArray *Starter::dev_get_running_servers(Tango::DevBoolean arg
 
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0)
+	if (servers.empty())
 	{
 		return argout;
 	}
@@ -1201,7 +1201,7 @@ Tango::DevVarStringArray *Starter::dev_get_stop_servers(Tango::DevBoolean argin)
 
 	//	Check if servers object initilized
 	//---------------------------------------
-	if (servers.size()==0)
+	if (servers.empty())
 	{
 		argout->length(0);
 		return argout;
@@ -1463,7 +1463,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 	
 	//	Make sure that it's not running.
 	//---------------------------------------
-	if (servers.size()>0)
+	if (servers.empty()==false)
 	{
 		string	name(argin);
 		ControlledServer	*server = util->get_server_by_name(name, servers);
@@ -1496,10 +1496,10 @@ NewProcess *Starter::processCouldStart(char *argin)
 	{
 		free(servname);
 		if (throwable)
-			throw e;
+			throw;
 		else
 		{
-			cout << e.errors[0].desc << endl;
+			cerr << e.errors[0].desc << endl;
 			return NULL;
 		}
 	}
