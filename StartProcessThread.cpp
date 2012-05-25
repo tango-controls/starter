@@ -329,7 +329,7 @@ void StartWinThread::run(void *ptr)
 	return;
 
 //	Not used any more
-#ifdef FORK_USED
+/*************************
 	if (str_server.find(".bat") != string::npos)
 	{
 		char	*argv[3];
@@ -479,7 +479,7 @@ void StartWinThread::run(void *ptr)
 		ofs.close();
 	}
 	delete[] servname;
-#endif
+***********************/
 }
 
 #endif	//	_TG_WINDOWS_
