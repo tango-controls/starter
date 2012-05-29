@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Starter">
-    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Starter" institute="ESRF">
+    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,VC10 Project" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
       <comments commandsTable="//================================================================&#xA;//&#xA;//  The following table gives the correspondence&#xA;//  between command and method names.&#xA;//&#xA;//  Command name          |  Method name&#xA;//----------------------------------------------------------------&#xA;//  State                 |  dev_state&#xA;//  Status                |  Inherited (no method)&#xA;//  DevStart              |  dev_start&#xA;//  DevStop               |  dev_stop&#xA;//  DevStartAll           |  dev_start_all&#xA;//  DevStopAll            |  dev_stop_all&#xA;//  DevGetRunningServers  |  dev_get_running_servers&#xA;//  DevGetStopServers     |  dev_get_stop_servers&#xA;//  DevReadLog            |  dev_read_log&#xA;//  HardKillServer        |  hard_kill_server&#xA;//  NotifyDaemonState     |  notify_daemon_state&#xA;//  ResetStatistics       |  reset_statistics&#xA;//  UpdateServersInfo     |  update_servers_info&#xA;//================================================================"/>
@@ -82,7 +82,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
-    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR">
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -91,7 +91,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR">
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="none.">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -100,7 +100,7 @@
       </argout>
       <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
     </commands>
-    <commands name="DevStart" description="Start the specified server." execMethod="dev_start" displayLevel="OPERATOR">
+    <commands name="DevStart" description="Start the specified server." execMethod="dev_start" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Server to be started.">
         <type xsi:type="pogoDsl:StringType"/>
       </argin>
@@ -109,7 +109,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevStop" description="Stop the specified server." execMethod="dev_stop" displayLevel="OPERATOR">
+    <commands name="DevStop" description="Stop the specified server." execMethod="dev_stop" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Servero be stopped.">
         <type xsi:type="pogoDsl:StringType"/>
       </argin>
@@ -118,7 +118,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevStartAll" description="Start all device servers controled on the host for the argin level." execMethod="dev_start_all" displayLevel="OPERATOR">
+    <commands name="DevStartAll" description="Start all device servers controled on the host for the argin level." execMethod="dev_start_all" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Startup level.">
         <type xsi:type="pogoDsl:ShortType"/>
       </argin>
@@ -127,7 +127,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevStopAll" description="Stop all device servers controled on the host for the argin level." execMethod="dev_stop_all" displayLevel="OPERATOR">
+    <commands name="DevStopAll" description="Stop all device servers controled on the host for the argin level." execMethod="dev_stop_all" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Startup Level.">
         <type xsi:type="pogoDsl:ShortType"/>
       </argin>
@@ -136,7 +136,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevGetRunningServers" description="Control the running process from property list.&#xA;And return the list of the processes which are really running." execMethod="dev_get_running_servers" displayLevel="OPERATOR">
+    <commands name="DevGetRunningServers" description="Control the running process from property list.&#xA;And return the list of the processes which are really running." execMethod="dev_get_running_servers" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="True for all servers. False for controled servers only.">
         <type xsi:type="pogoDsl:BooleanType"/>
       </argin>
@@ -145,7 +145,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevGetStopServers" description="Control the running process from property list.&#xA;And return the list of the processes which are not running." execMethod="dev_get_stop_servers" displayLevel="OPERATOR">
+    <commands name="DevGetStopServers" description="Control the running process from property list.&#xA;And return the list of the processes which are not running." execMethod="dev_get_stop_servers" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="True for all servers. False for controled servers only.">
         <type xsi:type="pogoDsl:BooleanType"/>
       </argin>
@@ -154,7 +154,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevReadLog" description="At server startup, its standard error is redirected to a log file.&#xA;This command will read this file and return the read string from the file." execMethod="dev_read_log" displayLevel="OPERATOR">
+    <commands name="DevReadLog" description="At server startup, its standard error is redirected to a log file.&#xA;This command will read this file and return the read string from the file." execMethod="dev_read_log" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="server name and domain (e.g. Starter/corvus)&#xA;If argin ==``Starter``     -> return Starter logg file content.&#xA;If argin ==``Statistics``  -> return Starter statistics file content.">
         <type xsi:type="pogoDsl:StringType"/>
       </argin>
@@ -163,7 +163,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="HardKillServer" description="Hard kill a server (kill -9)" execMethod="hard_kill_server" displayLevel="OPERATOR">
+    <commands name="HardKillServer" description="Hard kill a server (kill -9)" execMethod="hard_kill_server" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Server name">
         <type xsi:type="pogoDsl:StringType"/>
       </argin>
@@ -172,7 +172,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="NotifyDaemonState" description="Returns the Notify Daemon state." execMethod="notify_daemon_state" displayLevel="OPERATOR">
+    <commands name="NotifyDaemonState" description="Returns the Notify Daemon state." execMethod="notify_daemon_state" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -181,7 +181,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="ResetStatistics" description="Reset statistics file." execMethod="reset_statistics" displayLevel="EXPERT">
+    <commands name="ResetStatistics" description="Reset statistics file." execMethod="reset_statistics" displayLevel="EXPERT" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -190,7 +190,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="UpdateServersInfo" description="Indicate to the device server than the information about servers to be controlled has been modified.&#xA;The device server must read the database to update the servers info list.&#xA;If the default case, this command is sent by Database server itself." execMethod="update_servers_info" displayLevel="OPERATOR">
+    <commands name="UpdateServersInfo" description="Indicate to the device server than the information about servers to be controlled has been modified.&#xA;The device server must read the database to update the servers info list.&#xA;If the default case, this command is sent by Database server itself." execMethod="update_servers_info" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
       </argin>
@@ -248,5 +248,9 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
     <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="CheckProcessUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/CheckProcessUtil.cpp"/>
+    <additionalFiles name="PingThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/PingThread.cpp"/>
+    <additionalFiles name="StarterUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StarterUtil.cpp"/>
+    <additionalFiles name="StartProcessThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StartProcessThread.cpp"/>
   </classes>
 </pogoDsl:PogoSystem>
