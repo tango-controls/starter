@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Class_lib"
 	ProjectGUID="{4C40E24A-E85F-4DD1-9E6D-F8B19CD7D2D4}"
 	RootNamespace="$(SolutionName)_lib"
@@ -111,7 +111,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="C:\tango_src\ci\win32\include;..;&quot;$(TANGO_ROOT)\win32_vc9\win32\include&quot;;&quot;$(TANGO_ROOT)\classes\win32_vc9\win32\include&quot;;TemplateAbstractPath"
+				AdditionalIncludeDirectories="..;&quot;$(TANGO_ROOT)\win32_vc9\win32\include&quot;;&quot;$(TANGO_ROOT)\classes\win32_vc9\win32\include&quot;;&quot;TemplateAbstractPath&quot;"
 				PreprocessorDefinitions="WIN32;_WINSTATIC;NDEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
