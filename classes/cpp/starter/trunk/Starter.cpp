@@ -345,7 +345,13 @@ void Starter::init_device()
 			//	And then start levels
 			for (int level=1 ; level<=nb_levels ; level++)
 			{
-				dev_start_all(level);
+				throwable = false;
+				try {
+					dev_start_all(level);
+				}
+				catch (Tango::DevFailed &e) {
+					cerr << e.errors[0].desc << endl;
+				}
 				ms_sleep(50);
 			}
 		}
