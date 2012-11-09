@@ -795,13 +795,21 @@ bool ProcessData::check_python_process(Process* process)
 {
 	if (process->line_args.size()==0)
 		return false;
+
+	//	Check id process is python (must start with "python")
+	string	processName;
 #ifdef _TG_WINDOWS_
-	if (process->name!="python")
-		return false;
+	processName = process->name;
+//	if (process->name!="python")
+//		return false;
 #else
-	if (name_from_path(process->line_args[0])!="python")
-		return false;
+	processName = name_from_path(process->line_args[0]);
+//	if (name_from_path(process->line_args[0])!="python")
+//		return false;
 #endif
+	if (processName.find("python")!=0)
+		return false;
+	
 
 	if (process->line_args.size()<2)
 		return false;	//	No module loaded
