@@ -135,6 +135,14 @@ SVC_OBJS =      \
 #
 include $(MAKE_ENV)/common_target.opt
 
-	
+
+
+
+SVN_TAG_REV  = Release-$(RELEASE)
+SVN_SVC_PATH = $(SVN_TCS)/classes/cpp/starter
+tag:
+	@echo "Tagging  $(PACKAGE_NAME)  for $(SVN_TAG_REV)"
+	svn copy  $(SVN_SVC_PATH)/trunk \
+	          $(SVN_SVC_PATH)/tags/$(PACKAGE_NAME)-$(SVN_TAG_REV)
 
 #PROTECTED REGION END#
