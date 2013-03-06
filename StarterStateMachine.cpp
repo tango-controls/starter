@@ -44,331 +44,270 @@ static const char *RcsId = "$Id$";
 #include <Starter.h>
 #include <StarterClass.h>
 
-/*----- PROTECTED REGION END -----*/
+/*----- PROTECTED REGION END -----*/	//	Starter::StarterStateMachine.cpp
 
+//================================================================
+//  States   |  Description
+//================================================================
+//  UNKNOWN  |  This device server has NOT been correctly initialised.
+//  ON       |  All controlled servers are running.
+//  ALARM    |  At least one controled device server is not running.
+//  MOVING   |  The Sarter is starting servers.
 
-/*
- * Starter states description:
- *
- * UNKNOWN :	This device server has NOT been correctly initialised. 
- * ON :	All controlled servers are running. 
- * ALARM :	At least one controled device server is not running. 
- * MOVING :	The Sarter is starting servers. 
- */
 
 namespace Starter_ns
 {
-
 //=================================================
 //		Attributes Allowed Methods
 //=================================================
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_NotifdStateState_allowed()
- *	Description : Execution allowed for NotifdState attribute.
+ *	Method      : Starter::is_NotifdState_allowed()
+ *	Description : Execution allowed for NotifdState attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_NotifdState_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
-		//	Not any excluded states for NotifdState attribute in READ access.
+
+	//	Not any excluded states for NotifdState attribute in read access.
+	/*----- PROTECTED REGION ID(Starter::NotifdStateStateAllowed_READ) ENABLED START -----*/
 	
-	/*----- PROTECTED REGION ID(Starter::read_NotifdStateStateAllowed_READ) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::read_NotifdStateStateAllowed_READ
-
+	/*----- PROTECTED REGION END -----*/	//	Starter::NotifdStateStateAllowed_READ
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_HostStateState_allowed()
- *	Description : Execution allowed for HostState attribute.
+ *	Method      : Starter::is_HostState_allowed()
+ *	Description : Execution allowed for HostState attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_HostState_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
-		//	Not any excluded states for HostState attribute in READ access.
+
+	//	Not any excluded states for HostState attribute in read access.
+	/*----- PROTECTED REGION ID(Starter::HostStateStateAllowed_READ) ENABLED START -----*/
 	
-	/*----- PROTECTED REGION ID(Starter::read_HostStateStateAllowed_READ) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::read_HostStateStateAllowed_READ
-
+	/*----- PROTECTED REGION END -----*/	//	Starter::HostStateStateAllowed_READ
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_RunningServersState_allowed()
- *	Description : Execution allowed for RunningServers attribute.
+ *	Method      : Starter::is_RunningServers_allowed()
+ *	Description : Execution allowed for RunningServers attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_RunningServers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
-		//	Not any excluded states for RunningServers attribute in READ access.
+
+	//	Not any excluded states for RunningServers attribute in read access.
+	/*----- PROTECTED REGION ID(Starter::RunningServersStateAllowed_READ) ENABLED START -----*/
 	
-	/*----- PROTECTED REGION ID(Starter::read_RunningServersStateAllowed_READ) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::read_RunningServersStateAllowed_READ
-
+	/*----- PROTECTED REGION END -----*/	//	Starter::RunningServersStateAllowed_READ
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_StoppedServersState_allowed()
- *	Description : Execution allowed for StoppedServers attribute.
+ *	Method      : Starter::is_StoppedServers_allowed()
+ *	Description : Execution allowed for StoppedServers attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_StoppedServers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
-		//	Not any excluded states for StoppedServers attribute in READ access.
+
+	//	Not any excluded states for StoppedServers attribute in read access.
+	/*----- PROTECTED REGION ID(Starter::StoppedServersStateAllowed_READ) ENABLED START -----*/
 	
-	/*----- PROTECTED REGION ID(Starter::read_StoppedServersStateAllowed_READ) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::read_StoppedServersStateAllowed_READ
-
+	/*----- PROTECTED REGION END -----*/	//	Starter::StoppedServersStateAllowed_READ
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_ServersState_allowed()
- *	Description : Execution allowed for Servers attribute.
+ *	Method      : Starter::is_Servers_allowed()
+ *	Description : Execution allowed for Servers attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_Servers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
-		//	Not any excluded states for Servers attribute in READ access.
+
+	//	Not any excluded states for Servers attribute in read access.
+	/*----- PROTECTED REGION ID(Starter::ServersStateAllowed_READ) ENABLED START -----*/
 	
-	/*----- PROTECTED REGION ID(Starter::read_ServersStateAllowed_READ) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::read_ServersStateAllowed_READ
-
+	/*----- PROTECTED REGION END -----*/	//	Starter::ServersStateAllowed_READ
 	return true;
 }
-
-
-	/*----- PROTECTED REGION ID(Starter::are_dynamic_attributes_allowed) ENABLED START -----*/
-
-	//	Add your code to check if dynamic attributes are alowed
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::are_dynamic_attributes_allowed
-
 
 //=================================================
 //		Commands Allowed Methods
 //=================================================
 
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevStartState_allowed()
- *	Description : Execution allowed for DevStart command.
+ *	Method      : Starter::is_DevStart_allowed()
+ *	Description : Execution allowed for DevStart attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevStart_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStart command.
-
 	/*----- PROTECTED REGION ID(Starter::DevStartStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevStartStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevStopState_allowed()
- *	Description : Execution allowed for DevStop command.
+ *	Method      : Starter::is_DevStop_allowed()
+ *	Description : Execution allowed for DevStop attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevStop_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStop command.
-
 	/*----- PROTECTED REGION ID(Starter::DevStopStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevStopStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevStartAllState_allowed()
- *	Description : Execution allowed for DevStartAll command.
+ *	Method      : Starter::is_DevStartAll_allowed()
+ *	Description : Execution allowed for DevStartAll attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevStartAll_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStartAll command.
-
 	/*----- PROTECTED REGION ID(Starter::DevStartAllStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevStartAllStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevStopAllState_allowed()
- *	Description : Execution allowed for DevStopAll command.
+ *	Method      : Starter::is_DevStopAll_allowed()
+ *	Description : Execution allowed for DevStopAll attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevStopAll_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevStopAll command.
-
 	/*----- PROTECTED REGION ID(Starter::DevStopAllStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevStopAllStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevGetRunningServersState_allowed()
- *	Description : Execution allowed for DevGetRunningServers command.
+ *	Method      : Starter::is_DevGetRunningServers_allowed()
+ *	Description : Execution allowed for DevGetRunningServers attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevGetRunningServers_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevGetRunningServers command.
-
 	/*----- PROTECTED REGION ID(Starter::DevGetRunningServersStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevGetRunningServersStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevGetStopServersState_allowed()
- *	Description : Execution allowed for DevGetStopServers command.
+ *	Method      : Starter::is_DevGetStopServers_allowed()
+ *	Description : Execution allowed for DevGetStopServers attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevGetStopServers_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevGetStopServers command.
-
 	/*----- PROTECTED REGION ID(Starter::DevGetStopServersStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevGetStopServersStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_DevReadLogState_allowed()
- *	Description : Execution allowed for DevReadLog command.
+ *	Method      : Starter::is_DevReadLog_allowed()
+ *	Description : Execution allowed for DevReadLog attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_DevReadLog_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for DevReadLog command.
-
 	/*----- PROTECTED REGION ID(Starter::DevReadLogStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::DevReadLogStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_HardKillServerState_allowed()
- *	Description : Execution allowed for HardKillServer command.
+ *	Method      : Starter::is_HardKillServer_allowed()
+ *	Description : Execution allowed for HardKillServer attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_HardKillServer_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for HardKillServer command.
-
 	/*----- PROTECTED REGION ID(Starter::HardKillServerStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::HardKillServerStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_NotifyDaemonStateState_allowed()
- *	Description : Execution allowed for NotifyDaemonState command.
+ *	Method      : Starter::is_NotifyDaemonState_allowed()
+ *	Description : Execution allowed for NotifyDaemonState attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_NotifyDaemonState_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for NotifyDaemonState command.
-
 	/*----- PROTECTED REGION ID(Starter::NotifyDaemonStateStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::NotifyDaemonStateStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_ResetStatisticsState_allowed()
- *	Description : Execution allowed for ResetStatistics command.
+ *	Method      : Starter::is_ResetStatistics_allowed()
+ *	Description : Execution allowed for ResetStatistics attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_ResetStatistics_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for ResetStatistics command.
-
 	/*----- PROTECTED REGION ID(Starter::ResetStatisticsStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::ResetStatisticsStateAllowed
-
 	return true;
 }
 
 //--------------------------------------------------------
 /**
- *	Method      : Starter::is_UpdateServersInfoState_allowed()
- *	Description : Execution allowed for UpdateServersInfo command.
+ *	Method      : Starter::is_UpdateServersInfo_allowed()
+ *	Description : Execution allowed for UpdateServersInfo attribute
  */
 //--------------------------------------------------------
-
 bool Starter::is_UpdateServersInfo_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for UpdateServersInfo command.
-
 	/*----- PROTECTED REGION ID(Starter::UpdateServersInfoStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::UpdateServersInfoStateAllowed
-
 	return true;
 }
 
-
-	/*----- PROTECTED REGION ID(Starter::are_dynamic_commands_allowed) ENABLED START -----*/
-
-	//	Add your code to check if dynamic commands are alowed
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::are_dynamic_commands_allowed
-
-}	// namespace Starter_ns
+}	//	End of namespace

@@ -60,4 +60,4 @@ void Tango::DServer::class_factory()
 	add_class(Starter_ns::StarterClass::init("Starter"));
 
 }
-/*----- PROTECTED REGION END -----*/
+/*----- PROTECTED REGION END -----*/	//	Starter::ClassFactory.cpp

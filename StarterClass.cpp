@@ -1,6 +1,6 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-5.6 $";
+static const char *TagName    = "$Name: Starter-Release-5.8 $";
 static const char *CvsPath    = "$Source: $";
 static const char *SvnPath    = "$HeadURL:  $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
@@ -50,7 +50,7 @@ static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc
 #include <Starter.h>
 #include <StarterClass.h>
 
-/*----- PROTECTED REGION END -----*/
+/*----- PROTECTED REGION END -----*/	//	StarterClass.cpp
 
 //-------------------------------------------------------------------
 /**
@@ -70,11 +70,8 @@ __declspec(dllexport)
 	}
 }
 
-
 namespace Starter_ns
 {
-
-
 //===================================================================
 //	Initialize pointer for singleton pattern
 //===================================================================
@@ -88,20 +85,19 @@ StarterClass *StarterClass::_instance = NULL;
  * @param s	The class name
  */
 //--------------------------------------------------------
-StarterClass::StarterClass(string &s):DeviceClass(s)
+StarterClass::StarterClass(string &s):Tango::DeviceClass(s)
 {
 	cout2 << "Entering StarterClass constructor" << endl;
 	set_default_property();
 	get_class_property();
 	write_class_property();
 
-	/*----- PROTECTED REGION ID(Starter::Class::constructor) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::constructor) ENABLED START -----*/
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::constructor
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::constructor
 
 	cout2 << "Leaving StarterClass constructor" << endl;
 }
-
 
 //--------------------------------------------------------
 /**
@@ -111,9 +107,9 @@ StarterClass::StarterClass(string &s):DeviceClass(s)
 //--------------------------------------------------------
 StarterClass::~StarterClass()
 {
-	/*----- PROTECTED REGION ID(Starter::Class::destructor) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::destructor) ENABLED START -----*/
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::destructor
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::destructor
 
 	_instance = NULL;
 }
@@ -137,7 +133,7 @@ StarterClass *StarterClass::init(const char *name)
 			string s(name);
 			_instance = new StarterClass(s);
 		}
-		catch (bad_alloc)
+		catch (bad_alloc &)
 		{
 			throw;
 		}		
@@ -164,7 +160,6 @@ StarterClass *StarterClass::instance()
 
 
 
-
 //===================================================================
 //	Command execution method calls
 //===================================================================
@@ -182,12 +177,12 @@ StarterClass *StarterClass::instance()
 CORBA::Any *DevStartClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevStartClass::execute(): arrived" << endl;
-
-	Tango::DevString	argin;
+	Tango::DevString argin;
 	extract(in_any, argin);
 	((static_cast<Starter *>(device))->dev_start(argin));
 	return new CORBA::Any();
 }
+
 //--------------------------------------------------------
 /**
  * method : 		DevStopClass::execute()
@@ -202,12 +197,12 @@ CORBA::Any *DevStartClass::execute(Tango::DeviceImpl *device, const CORBA::Any &
 CORBA::Any *DevStopClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevStopClass::execute(): arrived" << endl;
-
-	Tango::DevString	argin;
+	Tango::DevString argin;
 	extract(in_any, argin);
 	((static_cast<Starter *>(device))->dev_stop(argin));
 	return new CORBA::Any();
 }
+
 //--------------------------------------------------------
 /**
  * method : 		DevStartAllClass::execute()
@@ -222,12 +217,12 @@ CORBA::Any *DevStopClass::execute(Tango::DeviceImpl *device, const CORBA::Any &i
 CORBA::Any *DevStartAllClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevStartAllClass::execute(): arrived" << endl;
-
-	Tango::DevShort	argin;
+	Tango::DevShort argin;
 	extract(in_any, argin);
 	((static_cast<Starter *>(device))->dev_start_all(argin));
 	return new CORBA::Any();
 }
+
 //--------------------------------------------------------
 /**
  * method : 		DevStopAllClass::execute()
@@ -242,12 +237,12 @@ CORBA::Any *DevStartAllClass::execute(Tango::DeviceImpl *device, const CORBA::An
 CORBA::Any *DevStopAllClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevStopAllClass::execute(): arrived" << endl;
-
-	Tango::DevShort	argin;
+	Tango::DevShort argin;
 	extract(in_any, argin);
 	((static_cast<Starter *>(device))->dev_stop_all(argin));
 	return new CORBA::Any();
 }
+
 //--------------------------------------------------------
 /**
  * method : 		DevGetRunningServersClass::execute()
@@ -262,11 +257,11 @@ CORBA::Any *DevStopAllClass::execute(Tango::DeviceImpl *device, const CORBA::Any
 CORBA::Any *DevGetRunningServersClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevGetRunningServersClass::execute(): arrived" << endl;
-
-	Tango::DevBoolean	argin;
+	Tango::DevBoolean argin;
 	extract(in_any, argin);
 	return insert((static_cast<Starter *>(device))->dev_get_running_servers(argin));
 }
+
 //--------------------------------------------------------
 /**
  * method : 		DevGetStopServersClass::execute()
@@ -281,11 +276,11 @@ CORBA::Any *DevGetRunningServersClass::execute(Tango::DeviceImpl *device, const 
 CORBA::Any *DevGetStopServersClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevGetStopServersClass::execute(): arrived" << endl;
-
-	Tango::DevBoolean	argin;
+	Tango::DevBoolean argin;
 	extract(in_any, argin);
 	return insert((static_cast<Starter *>(device))->dev_get_stop_servers(argin));
 }
+
 //--------------------------------------------------------
 /**
  * method : 		DevReadLogClass::execute()
@@ -300,11 +295,11 @@ CORBA::Any *DevGetStopServersClass::execute(Tango::DeviceImpl *device, const COR
 CORBA::Any *DevReadLogClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "DevReadLogClass::execute(): arrived" << endl;
-
-	Tango::DevString	argin;
+	Tango::DevString argin;
 	extract(in_any, argin);
 	return insert((static_cast<Starter *>(device))->dev_read_log(argin));
 }
+
 //--------------------------------------------------------
 /**
  * method : 		HardKillServerClass::execute()
@@ -319,12 +314,12 @@ CORBA::Any *DevReadLogClass::execute(Tango::DeviceImpl *device, const CORBA::Any
 CORBA::Any *HardKillServerClass::execute(Tango::DeviceImpl *device, const CORBA::Any &in_any)
 {
 	cout2 << "HardKillServerClass::execute(): arrived" << endl;
-
-	Tango::DevString	argin;
+	Tango::DevString argin;
 	extract(in_any, argin);
 	((static_cast<Starter *>(device))->hard_kill_server(argin));
 	return new CORBA::Any();
 }
+
 //--------------------------------------------------------
 /**
  * method : 		NotifyDaemonStateClass::execute()
@@ -339,10 +334,9 @@ CORBA::Any *HardKillServerClass::execute(Tango::DeviceImpl *device, const CORBA:
 CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
 {
 	cout2 << "NotifyDaemonStateClass::execute(): arrived" << endl;
-
-	
 	return insert((static_cast<Starter *>(device))->notify_daemon_state());
 }
+
 //--------------------------------------------------------
 /**
  * method : 		ResetStatisticsClass::execute()
@@ -357,11 +351,10 @@ CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, TANGO_UNU
 CORBA::Any *ResetStatisticsClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
 {
 	cout2 << "ResetStatisticsClass::execute(): arrived" << endl;
-
-	
 	((static_cast<Starter *>(device))->reset_statistics());
 	return new CORBA::Any();
 }
+
 //--------------------------------------------------------
 /**
  * method : 		UpdateServersInfoClass::execute()
@@ -376,25 +369,18 @@ CORBA::Any *ResetStatisticsClass::execute(Tango::DeviceImpl *device, TANGO_UNUSE
 CORBA::Any *UpdateServersInfoClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
 {
 	cout2 << "UpdateServersInfoClass::execute(): arrived" << endl;
-
-	
 	((static_cast<Starter *>(device))->update_servers_info());
 	return new CORBA::Any();
 }
 
 
-
-
 //===================================================================
 //	Properties management
 //===================================================================
-
 //--------------------------------------------------------
 /**
- * method : 		StarterClass::get_class_property
- * description : 	Get the class property for specified name.
- *
- * @param	name  The property name
+ *	Method      : StarterClass::get_class_property()
+ *	Description : Get the class property for specified name.
  */
 //--------------------------------------------------------
 Tango::DbDatum StarterClass::get_class_property(string &prop_name)
@@ -406,10 +392,9 @@ Tango::DbDatum StarterClass::get_class_property(string &prop_name)
 	return Tango::DbDatum(prop_name);
 }
 
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::get_default_device_property()()
+ *	Method      : StarterClass::get_default_device_property()
  *	Description : Return the default value for device property.
  */
 //--------------------------------------------------------
@@ -422,10 +407,9 @@ Tango::DbDatum StarterClass::get_default_device_property(string &prop_name)
 	return Tango::DbDatum(prop_name);
 }
 
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::get_default_class_property()()
+ *	Method      : StarterClass::get_default_class_property()
  *	Description : Return the default value for class property.
  */
 //--------------------------------------------------------
@@ -438,16 +422,15 @@ Tango::DbDatum StarterClass::get_default_class_property(string &prop_name)
 	return Tango::DbDatum(prop_name);
 }
 
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::get_class_property()
- *	Description : //	Add your own code to initialize
+ *	Method      : StarterClass::get_class_property()
+ *	Description : Read database to initialize class property data members.
  */
 //--------------------------------------------------------
 void StarterClass::get_class_property()
 {
-	/*----- PROTECTED REGION ID(Starter::Class::get_class_property_before) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::get_class_property_before) ENABLED START -----*/
 
 	//	Initialize class property data members
 	readInfoDbPeriod  = 4;
@@ -455,8 +438,7 @@ void StarterClass::get_class_property()
 	useEvents   = false;
 	logFileHome = LOG_HOME;
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::get_class_property_before
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::get_class_property_before
 	//	Read class properties from database.
 	cl_prop.push_back(Tango::DbDatum("AutoRestartDuration"));
 	cl_prop.push_back(Tango::DbDatum("LogFileHome"));
@@ -466,9 +448,6 @@ void StarterClass::get_class_property()
 	cl_prop.push_back(Tango::DbDatum("StartServersAtStartup"));
 	cl_prop.push_back(Tango::DbDatum("UseEvents"));
 	
-
-	if (cl_prop.size()==0) return;	//	No property to read
-
 	//	Call database and extract values
 	if (Tango::Util::instance()->_UseDb==true)
 		get_db_class()->get_property(cl_prop);
@@ -559,8 +538,7 @@ void StarterClass::get_class_property()
 			cl_prop[i]  <<  useEvents;
 		}
 	}
-
-	/*----- PROTECTED REGION ID(Starter::Class::get_class_property_after) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::get_class_property_after) ENABLED START -----*/
 
 	//	Check class property data members init
 	cout2 << "readInfoDbPeriod  = " << readInfoDbPeriod << endl;
@@ -573,18 +551,17 @@ void StarterClass::get_class_property()
 		if (cl_prop[i].name == "LogFileHome")
 			cl_prop[i]  <<  logFileHome;
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::get_class_property_after
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::get_class_property_after
 
 }
 
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::set_default_property()
+ *	Method      : StarterClass::set_default_property()
  *	Description : Set default property (class and device) for wizard.
- *	              For each property, add to wizard property name and description.
- *	              If default value has been set, add it to wizard property and.
- *	              store it in a DbDatum.
+ *                For each property, add to wizard property name and description.
+ *                If default value has been set, add it to wizard property and
+ *                store it in a DbDatum.
  */
 //--------------------------------------------------------
 void StarterClass::set_default_property()
@@ -593,11 +570,11 @@ void StarterClass::set_default_property()
 	string	prop_desc;
 	string	prop_def;
 	vector<string>	vect_data;
-	
+
 	//	Set Default Class Properties
 	prop_name = "AutoRestartDuration";
 	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.";
-	prop_def  = "0`\n";
+	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
 	if (prop_def.length()>0)
@@ -610,7 +587,7 @@ void StarterClass::set_default_property()
 	else
 		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "LogFileHome";
-	prop_desc = "The home directory to log servers traces.  For Linux the default value is /var/tmp  For Win32 it is c:\temp";
+	prop_desc = "The home directory to log servers traces.\nFor Linux the default value is /var/tmp\nFor Win32 it is c:\temp";
 	prop_def  = "";
 	vect_data.clear();
 	if (prop_def.length()>0)
@@ -624,7 +601,7 @@ void StarterClass::set_default_property()
 		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "NbStartupLevels";
 	prop_desc = "Number of startup levels managed by starter.";
-	prop_def  = "5`\n";
+	prop_def  = "5";
 	vect_data.clear();
 	vect_data.push_back("5");
 	if (prop_def.length()>0)
@@ -651,7 +628,7 @@ void StarterClass::set_default_property()
 		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "ServerStartupTimeout";
 	prop_desc = "Timeout on device server startup in seconds.";
-	prop_def  = "1`\n";
+	prop_def  = "1";
 	vect_data.clear();
 	vect_data.push_back("1");
 	if (prop_def.length()>0)
@@ -665,7 +642,7 @@ void StarterClass::set_default_property()
 		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "StartServersAtStartup";
 	prop_desc = "Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.";
-	prop_def  = "true`\n";
+	prop_def  = "true";
 	vect_data.clear();
 	vect_data.push_back("true");
 	if (prop_def.length()>0)
@@ -679,7 +656,7 @@ void StarterClass::set_default_property()
 		add_wiz_class_prop(prop_name, prop_desc);
 	prop_name = "UseEvents";
 	prop_desc = "Use events if not null.";
-	prop_def  = "0`\n";
+	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
 	if (prop_def.length()>0)
@@ -692,11 +669,10 @@ void StarterClass::set_default_property()
 	else
 		add_wiz_class_prop(prop_name, prop_desc);
 
-	//	Set Default Device Properties
-
+	//	Set Default device Properties
 	prop_name = "AutoRestartDuration";
 	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.";
-	prop_def  = "0\n";
+	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
 	if (prop_def.length()>0)
@@ -708,10 +684,9 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "InterStartupLevelWait";
 	prop_desc = "Time to wait before two startup levels in seconds.";
-	prop_def  = "1\n";
+	prop_def  = "1";
 	vect_data.clear();
 	vect_data.push_back("1");
 	if (prop_def.length()>0)
@@ -723,10 +698,9 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "KeepLogFiles";
 	prop_desc = "Number of log file kept.";
-	prop_def  = "3\n";
+	prop_def  = "3";
 	vect_data.clear();
 	vect_data.push_back("3");
 	if (prop_def.length()>0)
@@ -738,9 +712,8 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "LogFileHome";
-	prop_desc = "The home directory to log servers traces.  For Linux the default value is /var/tmp  For Win32 it is c:\temp";
+	prop_desc = "The home directory to log servers traces.\nFor Linux the default value is /var/tmp\nFor Win32 it is c:\temp";
 	prop_def  = "";
 	vect_data.clear();
 	if (prop_def.length()>0)
@@ -752,10 +725,9 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "ServerStartupTimeout";
 	prop_desc = "Timeout on device server startup in seconds.";
-	prop_def  = "5\n";
+	prop_def  = "5";
 	vect_data.clear();
 	vect_data.push_back("5");
 	if (prop_def.length()>0)
@@ -767,9 +739,8 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "StartDsPath";
-	prop_desc = "Path to find executable files  to start device servers";
+	prop_desc = "Path to find executable files\nto start device servers";
 	prop_def  = "";
 	vect_data.clear();
 	if (prop_def.length()>0)
@@ -781,10 +752,9 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "StartServersAtStartup";
 	prop_desc = "Skip starting servers at startup if false.";
-	prop_def  = "true\n";
+	prop_def  = "true";
 	vect_data.clear();
 	vect_data.push_back("true");
 	if (prop_def.length()>0)
@@ -796,10 +766,9 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "UseEvents";
 	prop_desc = "Use events if not null.";
-	prop_def  = "0\n";
+	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
 	if (prop_def.length()>0)
@@ -811,10 +780,9 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_dev_prop(prop_name, prop_desc);
-
 	prop_name = "WaitForDriverStartup";
-	prop_desc = "The Starter will wait a bit before starting servers, to be sure than the drivers  are started.This time is in seconds.";
-	prop_def  = "0\n";
+	prop_desc = "The Starter will wait a bit before starting servers, to be sure than the drivers\nare started.This time is in seconds.";
+	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
 	if (prop_def.length()>0)
@@ -828,10 +796,9 @@ void StarterClass::set_default_property()
 		add_wiz_dev_prop(prop_name, prop_desc);
 }
 
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::write_class_property()
+ *	Method      : StarterClass::write_class_property()
  *	Description : Set class description fields as property in database
  */
 //--------------------------------------------------------
@@ -859,11 +826,11 @@ void StarterClass::write_class_property()
 	str_desc.push_back("It is able to start or stop and to report the status of these components.");
 	description << str_desc;
 	data.push_back(description);
-		
+
 	//	put cvs or svn location
 	string	filename("Starter");
 	filename += "Class.cpp";
-	
+
 	// check for cvs information
 	string	src_path(CvsPath);
 	start = src_path.find("/");
@@ -886,6 +853,7 @@ void StarterClass::write_class_property()
 			data.push_back(cvs_loc);
 		}
 	}
+
 	// check for svn information
 	else
 	{
@@ -960,7 +928,7 @@ void StarterClass::write_class_property()
 	//  Put inheritance
 	Tango::DbDatum	inher_datum("InheritedFrom");
 	vector<string> inheritance;
-	inheritance.push_back("Device_4Impl");
+	inheritance.push_back("Tango::Device_4Impl");
 	inher_datum << inheritance;
 	data.push_back(inher_datum);
 
@@ -968,32 +936,25 @@ void StarterClass::write_class_property()
 	get_db_class()->put_property(data);
 }
 
-
-
-
 //===================================================================
 //	Factory methods
 //===================================================================
 
-
 //--------------------------------------------------------
 /**
- * method : 		StarterClass::device_factory
- * description : 	Create the device object(s)
- *                  and store them in the device list
- *
- * @param	*devlist_ptr	The device name list
+ *	Method      : StarterClass::device_factory()
+ *	Description : Create the device object(s)
+ *                and store them in the device list
  */
 //--------------------------------------------------------
 void StarterClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
 {
-
-	/*----- PROTECTED REGION ID(Starter::Class::device_factory_before) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::device_factory_before) ENABLED START -----*/
 
 	//	Add your own code
 	
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::device_factory_before
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::device_factory_before
 
 	//	Create devices and add it into the device list
 	for (unsigned long i=0 ; i<devlist_ptr->length() ; i++)
@@ -1019,112 +980,97 @@ void StarterClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
 			export_device(dev, dev->get_name().c_str());
 	}
 
-	/*----- PROTECTED REGION ID(Starter::Class::device_factory_after) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::device_factory_after) ENABLED START -----*/
 
 	//	Add your own code
 	
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::device_factory_after
-
-	
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::device_factory_after
 }
-
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::attribute_factory()
+ *	Method      : StarterClass::attribute_factory()
  *	Description : Create the attribute object(s)
- *	              and store them in the attribute list
+ *                and store them in the attribute list
  */
 //--------------------------------------------------------
 void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 {
-	/*----- PROTECTED REGION ID(Starter::Class::attribute_factory_before) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::attribute_factory_before) ENABLED START -----*/
 
 	//	Add your own code
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::attribute_factory_before
-
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::attribute_factory_before
 	//	Attribute : NotifdState
 	NotifdStateAttrib	*notifdstate = new NotifdStateAttrib();
 	Tango::UserDefaultAttrProp	notifdstate_prop;
 	notifdstate_prop.set_description("return ON or FAULT if notify daemon is running or not.");
 	notifdstate_prop.set_label("Notifd State");
-	//	unit	not set for	NotifdState
-	//	standard_unit	not set for	NotifdState
-	//	display_unit	not set for	NotifdState
-	//	format	not set for	NotifdState
-	//	max_value	not set for	NotifdState
-	//	min_value	not set for	NotifdState
-	//	max_alarm	not set for	NotifdState
-	//	min_alarm	not set for	NotifdState
-	//	max_warning	not set for	NotifdState
-	//	min_warning	not set for	NotifdState
-	//	delta_t	not set for	NotifdState
-	//	delta_val	not set for	NotifdState
+	//	unit	not set for NotifdState
+	//	standard_unit	not set for NotifdState
+	//	display_unit	not set for NotifdState
+	//	format	not set for NotifdState
+	//	max_value	not set for NotifdState
+	//	min_value	not set for NotifdState
+	//	max_alarm	not set for NotifdState
+	//	min_alarm	not set for NotifdState
+	//	max_warning	not set for NotifdState
+	//	min_warning	not set for NotifdState
+	//	delta_t	not set for NotifdState
+	//	delta_val	not set for NotifdState
+	
 	notifdstate->set_default_properties(notifdstate_prop);
 	notifdstate->set_polling_period(1000);
 	notifdstate->set_disp_level(Tango::OPERATOR);
-	//	Not memorized
-
-	//	NotifdState does not fire change event
-	//	NotifdState does not fire archive event
-	//	NotifdState does not fire data_ready event
+	//	Not Memorized
 	att_list.push_back(notifdstate);
 
 	//	Attribute : HostState
 	HostStateAttrib	*hoststate = new HostStateAttrib();
 	Tango::UserDefaultAttrProp	hoststate_prop;
-	//	description	not set for	HostState
-	//	label	not set for	HostState
-	//	unit	not set for	HostState
-	//	standard_unit	not set for	HostState
-	//	display_unit	not set for	HostState
-	//	format	not set for	HostState
-	//	max_value	not set for	HostState
-	//	min_value	not set for	HostState
-	//	max_alarm	not set for	HostState
-	//	min_alarm	not set for	HostState
-	//	max_warning	not set for	HostState
-	//	min_warning	not set for	HostState
-	//	delta_t	not set for	HostState
-	//	delta_val	not set for	HostState
+	//	description	not set for HostState
+	//	label	not set for HostState
+	//	unit	not set for HostState
+	//	standard_unit	not set for HostState
+	//	display_unit	not set for HostState
+	//	format	not set for HostState
+	//	max_value	not set for HostState
+	//	min_value	not set for HostState
+	//	max_alarm	not set for HostState
+	//	min_alarm	not set for HostState
+	//	max_warning	not set for HostState
+	//	min_warning	not set for HostState
+	//	delta_t	not set for HostState
+	//	delta_val	not set for HostState
+	
 	hoststate->set_default_properties(hoststate_prop);
 	hoststate->set_polling_period(1000);
 	hoststate->set_disp_level(Tango::OPERATOR);
-	//	Not memorized
-
-	//	HostState does not fire change event
-	//	HostState does not fire archive event
-	//	HostState does not fire data_ready event
+	//	Not Memorized
 	att_list.push_back(hoststate);
 
 	//	Attribute : RunningServers
 	RunningServersAttrib	*runningservers = new RunningServersAttrib();
 	Tango::UserDefaultAttrProp	runningservers_prop;
-	//	description	not set for	RunningServers
-	//	label	not set for	RunningServers
-	//	unit	not set for	RunningServers
-	//	standard_unit	not set for	RunningServers
-	//	display_unit	not set for	RunningServers
-	//	format	not set for	RunningServers
-	//	max_value	not set for	RunningServers
-	//	min_value	not set for	RunningServers
-	//	max_alarm	not set for	RunningServers
-	//	min_alarm	not set for	RunningServers
-	//	max_warning	not set for	RunningServers
-	//	min_warning	not set for	RunningServers
-	//	delta_t	not set for	RunningServers
-	//	delta_val	not set for	RunningServers
+	//	description	not set for RunningServers
+	//	label	not set for RunningServers
+	//	unit	not set for RunningServers
+	//	standard_unit	not set for RunningServers
+	//	display_unit	not set for RunningServers
+	//	format	not set for RunningServers
+	//	max_value	not set for RunningServers
+	//	min_value	not set for RunningServers
+	//	max_alarm	not set for RunningServers
+	//	min_alarm	not set for RunningServers
+	//	max_warning	not set for RunningServers
+	//	min_warning	not set for RunningServers
+	//	delta_t	not set for RunningServers
+	//	delta_val	not set for RunningServers
+	
 	runningservers->set_default_properties(runningservers_prop);
 	runningservers->set_polling_period(1000);
 	runningservers->set_disp_level(Tango::OPERATOR);
-	//	Not memorized
-
-	//	RunningServers does not fire change event
-	//	RunningServers does not fire archive event
-	//	RunningServers does not fire data_ready event
+	//	Not Memorized
 	att_list.push_back(runningservers);
 
 	//	Attribute : StoppedServers
@@ -1132,26 +1078,23 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	Tango::UserDefaultAttrProp	stoppedservers_prop;
 	stoppedservers_prop.set_description("Return all the Stopped servers.\n");
 	stoppedservers_prop.set_label("All Stopped Servers");
-	//	unit	not set for	StoppedServers
-	//	standard_unit	not set for	StoppedServers
-	//	display_unit	not set for	StoppedServers
-	//	format	not set for	StoppedServers
-	//	max_value	not set for	StoppedServers
-	//	min_value	not set for	StoppedServers
-	//	max_alarm	not set for	StoppedServers
-	//	min_alarm	not set for	StoppedServers
-	//	max_warning	not set for	StoppedServers
-	//	min_warning	not set for	StoppedServers
-	//	delta_t	not set for	StoppedServers
-	//	delta_val	not set for	StoppedServers
+	//	unit	not set for StoppedServers
+	//	standard_unit	not set for StoppedServers
+	//	display_unit	not set for StoppedServers
+	//	format	not set for StoppedServers
+	//	max_value	not set for StoppedServers
+	//	min_value	not set for StoppedServers
+	//	max_alarm	not set for StoppedServers
+	//	min_alarm	not set for StoppedServers
+	//	max_warning	not set for StoppedServers
+	//	min_warning	not set for StoppedServers
+	//	delta_t	not set for StoppedServers
+	//	delta_val	not set for StoppedServers
+	
 	stoppedservers->set_default_properties(stoppedservers_prop);
 	stoppedservers->set_polling_period(1000);
 	stoppedservers->set_disp_level(Tango::OPERATOR);
-	//	Not memorized
-
-	//	StoppedServers does not fire change event
-	//	StoppedServers does not fire archive event
-	//	StoppedServers does not fire data_ready event
+	//	Not Memorized
 	att_list.push_back(stoppedservers);
 
 	//	Attribute : Servers
@@ -1159,54 +1102,45 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	Tango::UserDefaultAttrProp	servers_prop;
 	servers_prop.set_description("Return all registred servers for this host.\nServer names are followed by their states and controls");
 	servers_prop.set_label("Servers");
-	//	unit	not set for	Servers
-	//	standard_unit	not set for	Servers
-	//	display_unit	not set for	Servers
-	//	format	not set for	Servers
-	//	max_value	not set for	Servers
-	//	min_value	not set for	Servers
-	//	max_alarm	not set for	Servers
-	//	min_alarm	not set for	Servers
-	//	max_warning	not set for	Servers
-	//	min_warning	not set for	Servers
-	//	delta_t	not set for	Servers
-	//	delta_val	not set for	Servers
+	//	unit	not set for Servers
+	//	standard_unit	not set for Servers
+	//	display_unit	not set for Servers
+	//	format	not set for Servers
+	//	max_value	not set for Servers
+	//	min_value	not set for Servers
+	//	max_alarm	not set for Servers
+	//	min_alarm	not set for Servers
+	//	max_warning	not set for Servers
+	//	min_warning	not set for Servers
+	//	delta_t	not set for Servers
+	//	delta_val	not set for Servers
+	
 	servers->set_default_properties(servers_prop);
 	servers->set_polling_period(1000);
 	servers->set_disp_level(Tango::OPERATOR);
-	//	Not memorized
-
-	//	Servers does not fire change event
-	//	Servers does not fire archive event
-	//	Servers does not fire data_ready event
+	//	Not Memorized
 	att_list.push_back(servers);
-
 
 	//	Create a list of static attributes
 	create_static_attribute_list(get_class_attr()->get_attr_list());
-
-	/*----- PROTECTED REGION ID(Starter::Class::attribute_factory_after) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::attribute_factory_after) ENABLED START -----*/
 
 	//	Add your own code
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::attribute_factory_after
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::attribute_factory_after
 }
-
-
 //--------------------------------------------------------
 /**
- *	Method      : Starter::StarterClass::command_factory()
+ *	Method      : StarterClass::command_factory()
  *	Description : Create the command object(s)
- *	              and store them in the command list
+ *                and store them in the command list
  */
 //--------------------------------------------------------
 void StarterClass::command_factory()
 {
-	/*----- PROTECTED REGION ID(Starter::Class::command_factory_before) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::command_factory_before) ENABLED START -----*/
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::command_factory_before
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::command_factory_before
 	DevStartClass	*pDevStartCmd =
 		new DevStartClass("DevStart",
 			Tango::DEV_STRING, Tango::DEV_VOID,
@@ -1284,20 +1218,14 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pUpdateServersInfoCmd);
+	/*----- PROTECTED REGION ID(StarterClass::command_factory_after) ENABLED START -----*/
 
-	/*----- PROTECTED REGION ID(Starter::Class::command_factory_after) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::command_factory_after
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::command_factory_after
 }
-
-
-
 
 //===================================================================
 //	Dynamic attributes related methods
 //===================================================================
-
 
 //--------------------------------------------------------
 /**
@@ -1318,11 +1246,9 @@ void StarterClass::create_static_attribute_list(vector<Tango::Attr *> &att_list)
 
 	cout2 << defaultAttList.size() << " attributes in default list" << endl;
 
+	/*----- PROTECTED REGION ID(StarterClass::create_static_att_list) ENABLED START -----*/
 
-	/*----- PROTECTED REGION ID(Starter::Class::create_static_att_list) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::create_static_att_list
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::create_static_att_list
 }
 
 
@@ -1356,21 +1282,34 @@ void StarterClass::erase_dynamic_attributes(const Tango::DevVarStringArray *devl
 			{
 				cout2 << att_name << " is a UNWANTED dynamic attribute for device " << (*devlist_ptr)[i] << endl;
 				Tango::Attribute &att = dev->get_device_attr()->get_attr_by_name(att_name.c_str());
-				dev->remove_attribute(att_list[att.get_attr_idx()],true);
+				dev->remove_attribute(att_list[att.get_attr_idx()], true, false);
 				--ite_att;
 			}
 		}
 	}
-	/*----- PROTECTED REGION ID(Starter::Class::erase_dynamic_attributes) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::erase_dynamic_attributes) ENABLED START -----*/
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::erase_dynamic_attributes
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::erase_dynamic_attributes
+}
 
+//--------------------------------------------------------
+/**
+ *	Method      : StarterClass::get_attr_by_name()
+ *	Description : returns Tango::Attr * object found by name
+ */
+//--------------------------------------------------------
+Tango::Attr *StarterClass::get_attr_object_by_name(vector<Tango::Attr *> &att_list, string attname)
+{
+	vector<Tango::Attr *>::iterator it;
+	for (it=att_list.begin() ; it<att_list.end() ; it++)
+		if ((*it)->get_name()==attname)
+			return (*it);
+	//	Attr does not exist
+	return NULL;
 }
 
 
+/*----- PROTECTED REGION ID(StarterClass::Additional Methods) ENABLED START -----*/
 
-	/*----- PROTECTED REGION ID(Starter::Class::Additional Methods) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::Class::Additional Methods
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::Additional Methods
 } //	namespace

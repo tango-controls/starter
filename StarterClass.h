@@ -48,15 +48,14 @@
 #include <tango.h>
 #include <Starter.h>
 
-/*----- PROTECTED REGION END -----*/
+/*----- PROTECTED REGION END -----*/	//	StarterClass.h
+
 
 namespace Starter_ns
 {
-	/*----- PROTECTED REGION ID(Starter::classes for dynamic creation) ENABLED START -----*/
+/*----- PROTECTED REGION ID(StarterClass::classes for dynamic creation) ENABLED START -----*/
 
-	/*----- PROTECTED REGION END -----*/	//	Starter::classes for dynamic creation
-
-
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::classes for dynamic creation
 
 //=========================================
 //	Define classes for attributes
@@ -66,9 +65,8 @@ class NotifdStateAttrib: public Tango::Attr
 {
 public:
 	NotifdStateAttrib():Attr("NotifdState",
-	                   Tango::DEV_STATE, Tango::READ) {};
+			Tango::DEV_STATE, Tango::READ) {};
 	~NotifdStateAttrib() {};
-	
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_NotifdState(att);}
 	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
@@ -80,9 +78,8 @@ class HostStateAttrib: public Tango::Attr
 {
 public:
 	HostStateAttrib():Attr("HostState",
-	                   Tango::DEV_SHORT, Tango::READ) {};
+			Tango::DEV_SHORT, Tango::READ) {};
 	~HostStateAttrib() {};
-	
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_HostState(att);}
 	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
@@ -94,9 +91,8 @@ class RunningServersAttrib: public Tango::SpectrumAttr
 {
 public:
 	RunningServersAttrib():SpectrumAttr("RunningServers",
-	                   Tango::DEV_STRING, Tango::READ, 200) {};
+			Tango::DEV_STRING, Tango::READ, 200) {};
 	~RunningServersAttrib() {};
-	
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_RunningServers(att);}
 	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
@@ -108,9 +104,8 @@ class StoppedServersAttrib: public Tango::SpectrumAttr
 {
 public:
 	StoppedServersAttrib():SpectrumAttr("StoppedServers",
-	                   Tango::DEV_STRING, Tango::READ, 200) {};
+			Tango::DEV_STRING, Tango::READ, 200) {};
 	~StoppedServersAttrib() {};
-	
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_StoppedServers(att);}
 	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
@@ -122,17 +117,13 @@ class ServersAttrib: public Tango::SpectrumAttr
 {
 public:
 	ServersAttrib():SpectrumAttr("Servers",
-	                   Tango::DEV_STRING, Tango::READ, 1024) {};
+			Tango::DEV_STRING, Tango::READ, 1024) {};
 	~ServersAttrib() {};
-	
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_Servers(att);}
 	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
 		{return (static_cast<Starter *>(dev))->is_Servers_allowed(ty);}
 };
-
-
-
 
 
 //=========================================
@@ -392,81 +383,72 @@ public:
 };
 
 
-
-
-
 /**
- *	The TemplateDevServClass singleton definition
+ *	The StarterClass singleton definition
  */
 
-class
 #ifdef _TG_WINDOWS_
-	__declspec(dllexport)
+class __declspec(dllexport)  StarterClass : public Tango::DeviceClass
+#else
+class StarterClass : public Tango::DeviceClass
 #endif
-	StarterClass : public Tango::DeviceClass
 {
-	/*----- PROTECTED REGION ID(Starter::Additionnal DServer data members) ENABLED START -----*/
+	/*----- PROTECTED REGION ID(StarterClass::Additionnal DServer data members) ENABLED START -----*/
 public:
+
+	/*----- PROTECTED REGION END -----*/	//	StarterClass::Additionnal DServer data members
+
+	//	Class properties data members
+	public:
+		//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.
+		Tango::DevLong	autoRestartDuration;
+		//	LogFileHome:	The home directory to log servers traces.
+		//  For Linux the default value is /var/tmp
+		//  For Win32 it is c:\temp
+		string	logFileHome;
+		//	NbStartupLevels:	Number of startup levels managed by starter.
+		Tango::DevShort	nbStartupLevels;
+		//	ReadInfoDbPeriod:	Period to read database for new info if not fired from Database server.
+		Tango::DevShort	readInfoDbPeriod;
+		//	ServerStartupTimeout:	Timeout on device server startup in seconds.
+		Tango::DevLong	serverStartupTimeout;
+		//	StartServersAtStartup:	Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.
+		Tango::DevBoolean	startServersAtStartup;
+		//	UseEvents:	Use events if not null.
+		Tango::DevShort	useEvents;
+	public:
+		//	write class properties data members
+		Tango::DbData	cl_prop;
+		Tango::DbData	cl_def_prop;
+		Tango::DbData	dev_def_prop;
 	
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::Additionnal DServer data members
-
-
-
-
-//	Class properties data members
-public:
-	//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.
-	Tango::DevLong	autoRestartDuration;
-	//	LogFileHome:	The home directory to log servers traces.
-	 //	For Linux the default value is /var/tmp
-	 //	For Win32 it is c:\temp
-	string	logFileHome;
-	//	NbStartupLevels:	Number of startup levels managed by starter.
-	Tango::DevShort	nbStartupLevels;
-	//	ReadInfoDbPeriod:	Period to read database for new info if not fired from Database server.
-	Tango::DevShort	readInfoDbPeriod;
-	//	ServerStartupTimeout:	Timeout on device server startup in seconds.
-	Tango::DevLong	serverStartupTimeout;
-	//	StartServersAtStartup:	Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.
-	Tango::DevBoolean	startServersAtStartup;
-	//	UseEvents:	Use events if not null.
-	Tango::DevShort	useEvents;
-public:
-//	write class properties data members
-	Tango::DbData	cl_prop;
-	Tango::DbData	cl_def_prop;
-	Tango::DbData	dev_def_prop;
-
-//	Method prototypes
-	static StarterClass *init(const char *);
-	static StarterClass *instance();
-	~StarterClass();
-	Tango::DbDatum	get_class_property(string &);
-	Tango::DbDatum	get_default_device_property(string &);
-	Tango::DbDatum	get_default_class_property(string &);
+		//	Method prototypes
+		static StarterClass *init(const char *);
+		static StarterClass *instance();
+		~StarterClass();
+		Tango::DbDatum	get_class_property(string &);
+		Tango::DbDatum	get_default_device_property(string &);
+		Tango::DbDatum	get_default_class_property(string &);
 	
-protected:
-	StarterClass(string &);
-	static StarterClass *_instance;
-	void command_factory();
-	void attribute_factory(vector<Tango::Attr *> &);
-	void write_class_property();
-	void set_default_property();
-	void get_class_property();
-	string get_cvstag();
-	string get_cvsroot();
-
-private:
-	void device_factory(const Tango::DevVarStringArray *);
-	void create_static_attribute_list(vector<Tango::Attr *> &);
-	void erase_dynamic_attributes(const Tango::DevVarStringArray *,vector<Tango::Attr *> &);
-	vector<string>	defaultAttList;
-
-
+	protected:
+		StarterClass(string &);
+		static StarterClass *_instance;
+		void command_factory();
+		void attribute_factory(vector<Tango::Attr *> &);
+		void write_class_property();
+		void set_default_property();
+		void get_class_property();
+		string get_cvstag();
+		string get_cvsroot();
+	
+	private:
+		void device_factory(const Tango::DevVarStringArray *);
+		void create_static_attribute_list(vector<Tango::Attr *> &);
+		void erase_dynamic_attributes(const Tango::DevVarStringArray *,vector<Tango::Attr *> &);
+		vector<string>	defaultAttList;
+		Tango::Attr *get_attr_object_by_name(vector<Tango::Attr *> &att_list, string attname);
 };
 
-}	//	namespace
+}	//	End of namespace
 
-#endif	//	STARTERCLASS_H
-
+#endif   //	Starter_H

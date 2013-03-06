@@ -29,7 +29,7 @@ MAKE_ENV = /segfs/tango/cppserver/env
 #
 PACKAGE_NAME = Starter
 MAJOR_VERS   = 5
-MINOR_VERS   = 6
+MINOR_VERS   = 8
 RELEASE      = Release_$(MAJOR_VERS)_$(MINOR_VERS)
 
 # #=============================================================================
@@ -79,7 +79,7 @@ INC_DIR_USER= -I .
 # you must use '-lA -lB' in this order as link flags, otherwise you will get
 # 'undefined reference' errors
 #
-LFLAGS_USR+= -Wl,-z,now -Wl,-z,relro -pie
+#LFLAGS_USR+= -Wl,-z,now -Wl,-z,relro -pie
 
 
 #=============================================================================
@@ -88,7 +88,7 @@ LFLAGS_USR+= -Wl,-z,now -Wl,-z,relro -pie
 #
 # -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__ for ACE
 #
-CXXFLAGS_USR+= -Wall -Wextra -D_FORTIFY_SOURCE=2 -O1 -fpie -fstack-protector
+#CXXFLAGS_USR+= -Wall -Wextra -D_FORTIFY_SOURCE=2 -O1 -fpie -fstack-protector
 
 
 #=============================================================================
@@ -144,5 +144,13 @@ tag:
 	@echo "Tagging  $(PACKAGE_NAME)  for $(SVN_TAG_REV)"
 	svn copy  $(SVN_SVC_PATH)/trunk \
 	          $(SVN_SVC_PATH)/tags/$(PACKAGE_NAME)-$(SVN_TAG_REV)
+
+
+
+WWW_HOST=webserv02
+WWW_HOME=/ftp/pub/cs/tango
+put_ftp:
+	scp -rp $(TANGO_HOME)/bin/win64/Starter.exe          $(WWW_HOME)/Starter/win64/Starter.exe
+	scp -rp $(TANGO_HOME)/bin/win64/service/Starter.exe  $(WWW_HOME)/Starter/win64/service/Starter.exe
 
 #PROTECTED REGION END#

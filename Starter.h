@@ -74,30 +74,27 @@ typedef struct {
 NewProcess;
 
 
-/*----- PROTECTED REGION END -----*/
-
+/*----- PROTECTED REGION END -----*/	//	Starter.h
 
 /**
- *	Starter class Description:
- *	This device server is able to control <b>Tango</b> components (database, device servers, clients...).
- *	It is able to start or stop and to report the status of these components.
+ *  Starter class description:
+ *    This device server is able to control <b>Tango</b> components (database, device servers, clients...).
+ *    It is able to start or stop and to report the status of these components.
  */
 
 namespace Starter_ns
 {
-	/*----- PROTECTED REGION ID(Starter::Additional Class Declarations) ENABLED START -----*/
+/*----- PROTECTED REGION ID(Starter::Additional Class Declarations) ENABLED START -----*/
 
 		//		Additional Class Declarations
 class StartProcessShared;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Additional Class Declarations
 
-
 class Starter : public Tango::Device_4Impl
 {
 
-
-	/*----- PROTECTED REGION ID(Starter::Data Members) ENABLED START -----*/
+/*----- PROTECTED REGION ID(Starter::Data Members) ENABLED START -----*/
 
 	//		Add your own data members
 public:
@@ -148,35 +145,33 @@ public:
 	Tango::DevVarStringArray	stringArrayServers;
 
 	bool debug;
-	bool state_polling_started;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Data Members
 
-
 //	Device property data members
-public:		//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.
+public:
+	//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.
 	Tango::DevLong	autoRestartDuration;
 	//	InterStartupLevelWait:	Time to wait before two startup levels in seconds.
 	Tango::DevLong	interStartupLevelWait;
 	//	KeepLogFiles:	Number of log file kept.
 	Tango::DevLong	keepLogFiles;
 	//	LogFileHome:	The home directory to log servers traces.
-	//	For Linux the default value is /var/tmp
-	//	For Win32 it is c:\temp
+	//  For Linux the default value is /var/tmp
+	//  For Win32 it is c:\temp
 	string	logFileHome;
 	//	ServerStartupTimeout:	Timeout on device server startup in seconds.
 	Tango::DevLong	serverStartupTimeout;
 	//	StartDsPath:	Path to find executable files
-	//	to start device servers
+	//  to start device servers
 	vector<string>	startDsPath;
 	//	StartServersAtStartup:	Skip starting servers at startup if false.
 	Tango::DevBoolean	startServersAtStartup;
 	//	UseEvents:	Use events if not null.
 	Tango::DevShort	useEvents;
 	//	WaitForDriverStartup:	The Starter will wait a bit before starting servers, to be sure than the drivers
-	//	are started.This time is in seconds.
+	//  are started.This time is in seconds.
 	Tango::DevShort	waitForDriverStartup;
-	
 
 //	Attribute data members
 public:
@@ -186,26 +181,24 @@ public:
 	Tango::DevString	*attr_StoppedServers_read;
 	Tango::DevString	*attr_Servers_read;
 
-
-
 //	Constructors and destructors
 public:
 	/**
-	 * Constructs a newly allocated Command object.
+	 * Constructs a newly device object.
 	 *
 	 *	@param cl	Class.
 	 *	@param s 	Device Name
 	 */
 	Starter(Tango::DeviceClass *cl,string &s);
 	/**
-	 * Constructs a newly allocated Command object.
+	 * Constructs a newly device object.
 	 *
 	 *	@param cl	Class.
 	 *	@param s 	Device Name
 	 */
 	Starter(Tango::DeviceClass *cl,const char *s);
 	/**
-	 * Constructs a newly allocated Command object.
+	 * Constructs a newly device object.
 	 *
 	 *	@param cl	Class.
 	 *	@param s 	Device name
@@ -213,10 +206,9 @@ public:
 	 */
 	Starter(Tango::DeviceClass *cl,const char *s,const char *d);
 	/**
-	 * The object destructor.
+	 * The device object destructor.
 	 */	
 	~Starter() {delete_device();};
-
 
 
 //	Miscellaneous methods
@@ -232,7 +224,7 @@ public:
 	/**
 	 *	Read the device properties from database
 	 */
-	 void get_device_property();
+	void get_device_property();
 	/**
 	 *	Always executed method before execution command method.
 	 */
@@ -241,156 +233,190 @@ public:
 
 //	Attribute methods
 public:
+	//--------------------------------------------------------
 	/**
 	 *	Method      : Starter::read_attr_hardware()
 	 *	Description : Hardware acquisition for attributes.
 	 */
+	//--------------------------------------------------------
 	virtual void read_attr_hardware(vector<long> &attr_list);
 
-
-	/**
-	 *	NotifdState attribute related methods.
-	 *	Description: return ON or FAULT if notify daemon is running or not.
-	 *
-	 *	Data type:	Tango::DevState
-	 *	Attr type:	Scalar 
-	 */
-	virtual void read_NotifdState(Tango::Attribute &attr);
-	virtual bool is_NotifdState_allowed(Tango::AttReqType type);
-
-
-
-	/**
-	 *	HostState attribute related methods.
-	 *	Description: 
-	 *
-	 *	Data type:	Tango::DevShort
-	 *	Attr type:	Scalar 
-	 */
-	virtual void read_HostState(Tango::Attribute &attr);
-	virtual bool is_HostState_allowed(Tango::AttReqType type);
-
-
-
-	/**
-	 *	RunningServers attribute related methods.
-	 *	Description: 
-	 *
-	 *	Data type:	Tango::DevString
-	 *	Attr type:	Spectrum  max = 200
-	 */
-	virtual void read_RunningServers(Tango::Attribute &attr);
-	virtual bool is_RunningServers_allowed(Tango::AttReqType type);
-
-
-
-	/**
-	 *	StoppedServers attribute related methods.
-	 *	Description: Return all the Stopped servers.\n
-	 *
-	 *	Data type:	Tango::DevString
-	 *	Attr type:	Spectrum  max = 200
-	 */
-	virtual void read_StoppedServers(Tango::Attribute &attr);
-	virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
-
+/**
+ *	Attribute NotifdState related methods
+ *	Description: return ON or FAULT if notify daemon is running or not.
+ *
+ *	Data type:	Tango::DevState
+ *	Attr type:	Scalar
+ */
+virtual void read_NotifdState(Tango::Attribute &attr);
+virtual bool is_NotifdState_allowed(Tango::AttReqType type);
+/**
+ *	Attribute HostState related methods
+ *	Description: 
+ *
+ *	Data type:	Tango::DevShort
+ *	Attr type:	Scalar
+ */
+virtual void read_HostState(Tango::Attribute &attr);
+virtual bool is_HostState_allowed(Tango::AttReqType type);
+/**
+ *	Attribute RunningServers related methods
+ *	Description: 
+ *
+ *	Data type:	Tango::DevString
+ *	Attr type:	Spectrum max = 200
+ */
+virtual void read_RunningServers(Tango::Attribute &attr);
+virtual bool is_RunningServers_allowed(Tango::AttReqType type);
+/**
+ *	Attribute StoppedServers related methods
+ *	Description: Return all the Stopped servers.\n
+ *
+ *	Data type:	Tango::DevString
+ *	Attr type:	Spectrum max = 200
+ */
+virtual void read_StoppedServers(Tango::Attribute &attr);
+virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
+/**
+ *	Attribute Servers related methods
+ *	Description: Return all registred servers for this host.\nServer names are followed by their states and controls
+ *
+ *	Data type:	Tango::DevString
+ *	Attr type:	Spectrum max = 1024
+ */
+virtual void read_Servers(Tango::Attribute &attr);
+virtual bool is_Servers_allowed(Tango::AttReqType type);
 
 
-	/**
-	 *	Servers attribute related methods.
-	 *	Description: Return all registred servers for this host.\nServer names are followed by their states and controls
-	 *
-	 *	Data type:	Tango::DevString
-	 *	Attr type:	Spectrum  max = 1024
-	 */
-	virtual void read_Servers(Tango::Attribute &attr);
-	virtual bool is_Servers_allowed(Tango::AttReqType type);
-
-
-
+	//--------------------------------------------------------
 	/**
 	 *	Method      : Starter::add_dynamic_attributes()
 	 *	Description : Add dynamic attributes if any.
 	 */
-		void add_dynamic_attributes();
+	//--------------------------------------------------------
+	void add_dynamic_attributes();
+
+
 
 //	Command related methods
-public: 
+public:
 	/**
-	 *	Command State related methods.
+	 *	Command State related method
+	 *	Description: This command gets the device state (stored in its <i>device_state</i> data member) and returns it to the caller.
+	 *
+	 *	@param argin none.
+	 *	@returns State Code
 	 */
-	Tango::DevState dev_state();
-
-
+	virtual Tango::DevState dev_state();
 	/**
-	 *	Command DevStart related methods.
+	 *	Command DevStart related method
+	 *	Description: Start the specified server.
+	 *
+	 *	@param argin Server to be started.
+	 *	@returns 
 	 */
-	void dev_start(Tango::DevString argin);
+	virtual void dev_start(Tango::DevString argin);
 	virtual bool is_DevStart_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command DevStop related methods.
+	 *	Command DevStop related method
+	 *	Description: Stop the specified server.
+	 *
+	 *	@param argin Servero be stopped.
+	 *	@returns 
 	 */
-	void dev_stop(Tango::DevString argin);
+	virtual void dev_stop(Tango::DevString argin);
 	virtual bool is_DevStop_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command DevStartAll related methods.
+	 *	Command DevStartAll related method
+	 *	Description: Start all device servers controled on the host for the argin level.
+	 *
+	 *	@param argin Startup level.
+	 *	@returns 
 	 */
-	void dev_start_all(Tango::DevShort argin);
+	virtual void dev_start_all(Tango::DevShort argin);
 	virtual bool is_DevStartAll_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command DevStopAll related methods.
+	 *	Command DevStopAll related method
+	 *	Description: Stop all device servers controled on the host for the argin level.
+	 *
+	 *	@param argin Startup Level.
+	 *	@returns 
 	 */
-	void dev_stop_all(Tango::DevShort argin);
+	virtual void dev_stop_all(Tango::DevShort argin);
 	virtual bool is_DevStopAll_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command DevGetRunningServers related methods.
+	 *	Command DevGetRunningServers related method
+	 *	Description: Control the running process from property list.
+	 *               And return the list of the processes which are really running.
+	 *
+	 *	@param argin True for all servers. False for controled servers only.
+	 *	@returns List of the processes which are running.
 	 */
-	Tango::DevVarStringArray *dev_get_running_servers(Tango::DevBoolean argin);
+	virtual Tango::DevVarStringArray *dev_get_running_servers(Tango::DevBoolean argin);
 	virtual bool is_DevGetRunningServers_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command DevGetStopServers related methods.
+	 *	Command DevGetStopServers related method
+	 *	Description: Control the running process from property list.
+	 *               And return the list of the processes which are not running.
+	 *
+	 *	@param argin True for all servers. False for controled servers only.
+	 *	@returns List of the processes which are not running.
 	 */
-	Tango::DevVarStringArray *dev_get_stop_servers(Tango::DevBoolean argin);
+	virtual Tango::DevVarStringArray *dev_get_stop_servers(Tango::DevBoolean argin);
 	virtual bool is_DevGetStopServers_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command DevReadLog related methods.
+	 *	Command DevReadLog related method
+	 *	Description: At server startup, its standard error is redirected to a log file.
+	 *               This command will read this file and return the read string from the file.
+	 *
+	 *	@param argin server name and domain (e.g. Starter/corvus)
+	 *               If argin ==``Starter``     -> return Starter logg file content.
+	 *               If argin ==``Statistics``  -> return Starter statistics file content.
+	 *	@returns String found in log file.
 	 */
-	Tango::ConstDevString dev_read_log(Tango::DevString argin);
+	virtual Tango::ConstDevString dev_read_log(Tango::DevString argin);
 	virtual bool is_DevReadLog_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command HardKillServer related methods.
+	 *	Command HardKillServer related method
+	 *	Description: Hard kill a server (kill -9)
+	 *
+	 *	@param argin Server name
+	 *	@returns 
 	 */
-	void hard_kill_server(Tango::DevString argin);
+	virtual void hard_kill_server(Tango::DevString argin);
 	virtual bool is_HardKillServer_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command NotifyDaemonState related methods.
+	 *	Command NotifyDaemonState related method
+	 *	Description: Returns the Notify Daemon state.
+	 *
+	 *	@param argin 
+	 *	@returns Tango::ON if Notify daemon is running else Tango::FAULT.
 	 */
-	Tango::DevState notify_daemon_state();
+	virtual Tango::DevState notify_daemon_state();
 	virtual bool is_NotifyDaemonState_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command ResetStatistics related methods.
+	 *	Command ResetStatistics related method
+	 *	Description: Reset statistics file.
+	 *
+	 *	@param argin 
+	 *	@returns 
 	 */
-	void reset_statistics();
+	virtual void reset_statistics();
 	virtual bool is_ResetStatistics_allowed(const CORBA::Any &any);
-
 	/**
-	 *	Command UpdateServersInfo related methods.
+	 *	Command UpdateServersInfo related method
+	 *	Description: Indicate to the device server than the information about servers to be controlled has been modified.
+	 *               The device server must read the database to update the servers info list.
+	 *               If the default case, this command is sent by Database server itself.
+	 *
+	 *	@param argin 
+	 *	@returns 
 	 */
-	void update_servers_info();
+	virtual void update_servers_info();
 	virtual bool is_UpdateServersInfo_allowed(const CORBA::Any &any);
 
 
-
-	/*----- PROTECTED REGION ID(Starter::Additional Method prototypes) ENABLED START -----*/
+/*----- PROTECTED REGION ID(Starter::Additional Method prototypes) ENABLED START -----*/
 
 	//	Additional Method prototypes
 protected :	
@@ -423,20 +449,14 @@ void check_host();
  *	check if log dir already exists (else create it
  */
 void check_log_dir();
-/**
- *	Starte polling on State
- */
-void set_state_polled();
-
 
 void manage_changing_state(ControlledServer *server, Tango::DevState previous_state);
 //@}
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Additional Method prototypes
-
 };
 
-	/*----- PROTECTED REGION ID(Starter::Additional Classes Definitions) ENABLED START -----*/
+/*----- PROTECTED REGION ID(Starter::Additional Classes Definitions) ENABLED START -----*/
 
 
 
@@ -516,6 +536,6 @@ public:
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Additional Classes Definitions
 
-} //	namespace
+}	//	End of namespace
 
-#endif	//	STARTER_H
+#endif   //	Starter_H
