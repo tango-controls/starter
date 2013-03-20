@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+<title> Starter Tango Class Commands </title>
+</head>
+<body text="Black" bgcolor="White" link="Blue" vlink="Purple" alink="Red">
+<br><br><br><br>
+<Table Border=2 Cellpadding=3 CELLSPACING=0>
+	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+	<td colspan=5> <font size=+1> <center><b> Starter Class Commands </b></font></center></td>
+	<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+		<td> <center><b> Name </b></center> </td>
+		<td> <center><b> Input type </b></center> </td>
+		<td> <center><b> Output type </b></center> </td>
+		<td> <center><b> Level </b></center> </td>
+		<td> <center><b> Description </b></center> </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdState.html"> State </a> </td>
+		<td> DEV_VOID </td>
+		<td> DEV_STATE </td>
+		<td> OPERATOR </td>
+		<td> This command gets the device state (stored in its <i>device_state</i> data member) and returns it to the caller. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdStatus.html"> Status </a> </td>
+		<td> DEV_VOID </td>
+		<td> CONST_DEV_STRING </td>
+		<td> OPERATOR </td>
+		<td> This command gets the device status (stored in its <i>device_status</i> data member) and returns it to the caller. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevStart.html"> DevStart </a> </td>
+		<td> DEV_STRING </td>
+		<td> DEV_VOID </td>
+		<td> OPERATOR </td>
+		<td> Start the specified server. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevStop.html"> DevStop </a> </td>
+		<td> DEV_STRING </td>
+		<td> DEV_VOID </td>
+		<td> OPERATOR </td>
+		<td> Stop the specified server. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevStartAll.html"> DevStartAll </a> </td>
+		<td> DEV_SHORT </td>
+		<td> DEV_VOID </td>
+		<td> OPERATOR </td>
+		<td> Start all device servers controled on the host for the argin level. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevStopAll.html"> DevStopAll </a> </td>
+		<td> DEV_SHORT </td>
+		<td> DEV_VOID </td>
+		<td> OPERATOR </td>
+		<td> Stop all device servers controled on the host for the argin level. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevGetRunningServers.html"> DevGetRunningServers </a> </td>
+		<td> DEV_BOOLEAN </td>
+		<td> DEVVAR_STRINGARRAY </td>
+		<td> OPERATOR </td>
+		<td> Control the running process from property list.<Br>
+			And return the list of the processes which are really running. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevGetStopServers.html"> DevGetStopServers </a> </td>
+		<td> DEV_BOOLEAN </td>
+		<td> DEVVAR_STRINGARRAY </td>
+		<td> OPERATOR </td>
+		<td> Control the running process from property list.<Br>
+			And return the list of the processes which are not running. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdDevReadLog.html"> DevReadLog </a> </td>
+		<td> DEV_STRING </td>
+		<td> CONST_DEV_STRING </td>
+		<td> OPERATOR </td>
+		<td> At server startup, its standard error is redirected to a log file.<Br>
+			This command will read this file and return the read string from the file. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdHardKillServer.html"> HardKillServer </a> </td>
+		<td> DEV_STRING </td>
+		<td> DEV_VOID </td>
+		<td> OPERATOR </td>
+		<td> Hard kill a server (kill -9) </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdNotifyDaemonState.html"> NotifyDaemonState </a> </td>
+		<td> DEV_VOID </td>
+		<td> DEV_STATE </td>
+		<td> OPERATOR </td>
+		<td> Returns the Notify Daemon state. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdResetStatistics.html"> ResetStatistics </a> </td>
+		<td> DEV_VOID </td>
+		<td> DEV_VOID </td>
+		<td> EXPERT </td>
+		<td> Reset statistics file. </td>
+	</tr>
+	<tr>
+		<td> <a href="CmdUpdateServersInfo.html"> UpdateServersInfo </a> </td>
+		<td> DEV_VOID </td>
+		<td> DEV_VOID </td>
+		<td> OPERATOR </td>
+		<td> Indicate to the device server than the information about servers to be controlled has been modified.<Br>
+			The device server must read the database to update the servers info list.<Br>
+			If the default case, this command is sent by Database server itself. </td>
+	</tr>
+</table>
+</body>
+</html>
