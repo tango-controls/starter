@@ -29,7 +29,7 @@ MAKE_ENV = /segfs/tango/cppserver/env
 #
 PACKAGE_NAME = Starter
 MAJOR_VERS   = 5
-MINOR_VERS   = 9
+MINOR_VERS   = 10
 RELEASE      = $(MAJOR_VERS).$(MINOR_VERS)
 
 # #=============================================================================
@@ -88,7 +88,7 @@ INC_DIR_USER= -I .
 #
 # -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__ for ACE
 #
-#CXXFLAGS_USR+= -Wall -Wextra -D_FORTIFY_SOURCE=2 -O1 -fpie -fstack-protector
+CXXFLAGS_USR+= -Wall -Wextra -D_FORTIFY_SOURCE=2 -O1 -fpie -fstack-protector
 
 
 #=============================================================================

@@ -342,7 +342,7 @@ void Starter::init_device()
 				ControlledServer	*server = &servers[i];
 				server->state = server->thread_data->get_state();
 			}
-			//	And then start levels
+			//	And then starl-c16-1 (ZMQ)t levels
 			for (int level=1 ; level<=nb_levels ; level++)
 			{
 				throwable = false;
@@ -658,10 +658,14 @@ void Starter::read_RunningServers(Tango::Attribute &attr)
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 		if (servers[i].state==Tango::ON)
 			runnings.push_back(servers[i].name);
-	//	And fill attribute
-	stringArrayRunning << runnings;	
-	attr.set_value(stringArrayRunning.get_buffer(), stringArrayRunning.length());
-
+	if (runnings.empty()) {
+		attr.set_value(dummyStringArray, 0);
+	}
+	else {
+		//	And fill attribute
+		stringArrayRunning << runnings;	
+		attr.set_value(stringArrayRunning.get_buffer(), stringArrayRunning.length());
+	}
 	/*----- PROTECTED REGION END -----*/	//	Starter::read_RunningServers
 }
 //--------------------------------------------------------
@@ -683,10 +687,14 @@ void Starter::read_StoppedServers(Tango::Attribute &attr)
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 		if (servers[i].state!=Tango::ON)
 			stopped.push_back(servers[i].name);
-	//	And fill attribute
-	stringArrayStopped << stopped;	
-	attr.set_value(stringArrayStopped.get_buffer(), stringArrayStopped.length());
-
+	if (stopped.empty()) {
+		attr.set_value(dummyStringArray, 0);
+	}
+	else {
+		//	And fill attribute
+		stringArrayStopped << stopped;	
+		attr.set_value(stringArrayStopped.get_buffer(), stringArrayStopped.length());
+	}
 	/*----- PROTECTED REGION END -----*/	//	Starter::read_StoppedServers
 }
 //--------------------------------------------------------
@@ -715,10 +723,13 @@ void Starter::read_Servers(Tango::Attribute &attr)
 		vs.push_back(s);
 		
 	}
-	//	And fill attribute
-	stringArrayServers << vs;	
-	attr.set_value(stringArrayServers.get_buffer(), stringArrayServers.length());
-
+	if (vs.empty())
+		attr.set_value(dummyStringArray, 0);
+	else {
+		//	And fill attribute
+		stringArrayServers << vs;	
+		attr.set_value(stringArrayServers.get_buffer(), stringArrayServers.length());
+	}
 	/*----- PROTECTED REGION END -----*/	//	Starter::read_Servers
 }
 
@@ -833,17 +844,17 @@ Tango::DevState Starter::dev_state()
 			argout = Tango::ALARM;
 	}
 	
-	switch (argout) {
-		case Tango::ON:
-			set_status("All controlled servers are running");
-			break;
-		case Tango::ALARM:
-			set_status("At least one of the  controlled servers is not running");
-			break;
-		case Tango::MOVING:
-			set_status("At least one of the  controlled servers is running but not responding");
-			break;
+	if (argout==Tango::ON) {
+		set_status("All controlled servers are running");
 	}
+	else if (argout==Tango::ALARM) {
+		set_status("At least one of the  controlled servers is not running");
+	}
+	else if (argout==Tango::MOVING) {
+		set_status("At least one of the  controlled servers is running but not responding");
+	}
+	else
+		set_status("Starter state is unknown...");
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_state
 	set_state(argout);    // Give the state to Tango.
