@@ -1,8 +1,7 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-5.10 $";
-static const char *CvsPath    = "$Source: $";
-static const char *SvnPath    = "$HeadURL:  $";
+static const char *TagName    = "$Name: Starter-Release-5.11 $";
+static const char *SvnPath    = "$HeadURL: https://tango-cs.svn.sourceforge.net/svnroot/tango-cs/classes/cpp/starter $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
 //=============================================================================
 //
@@ -1141,6 +1140,13 @@ void StarterClass::command_factory()
 	/*----- PROTECTED REGION ID(StarterClass::command_factory_before) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::command_factory_before
+
+	//	Set polling perod for command State
+	Tango::Command	&stateCmd = get_cmd_by_name("State");
+	stateCmd.set_polling_period(1000);
+	
+
+	//	Command DevStart
 	DevStartClass	*pDevStartCmd =
 		new DevStartClass("DevStart",
 			Tango::DEV_STRING, Tango::DEV_VOID,
@@ -1148,6 +1154,8 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pDevStartCmd);
+
+	//	Command DevStop
 	DevStopClass	*pDevStopCmd =
 		new DevStopClass("DevStop",
 			Tango::DEV_STRING, Tango::DEV_VOID,
@@ -1155,6 +1163,8 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pDevStopCmd);
+
+	//	Command DevStartAll
 	DevStartAllClass	*pDevStartAllCmd =
 		new DevStartAllClass("DevStartAll",
 			Tango::DEV_SHORT, Tango::DEV_VOID,
@@ -1162,6 +1172,8 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pDevStartAllCmd);
+
+	//	Command DevStopAll
 	DevStopAllClass	*pDevStopAllCmd =
 		new DevStopAllClass("DevStopAll",
 			Tango::DEV_SHORT, Tango::DEV_VOID,
@@ -1169,6 +1181,8 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pDevStopAllCmd);
+
+	//	Command DevGetRunningServers
 	DevGetRunningServersClass	*pDevGetRunningServersCmd =
 		new DevGetRunningServersClass("DevGetRunningServers",
 			Tango::DEV_BOOLEAN, Tango::DEVVAR_STRINGARRAY,
@@ -1176,6 +1190,8 @@ void StarterClass::command_factory()
 			"List of the processes which are running.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevGetRunningServersCmd);
+
+	//	Command DevGetStopServers
 	DevGetStopServersClass	*pDevGetStopServersCmd =
 		new DevGetStopServersClass("DevGetStopServers",
 			Tango::DEV_BOOLEAN, Tango::DEVVAR_STRINGARRAY,
@@ -1183,6 +1199,8 @@ void StarterClass::command_factory()
 			"List of the processes which are not running.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevGetStopServersCmd);
+
+	//	Command DevReadLog
 	DevReadLogClass	*pDevReadLogCmd =
 		new DevReadLogClass("DevReadLog",
 			Tango::DEV_STRING, Tango::CONST_DEV_STRING,
@@ -1190,6 +1208,8 @@ void StarterClass::command_factory()
 			"String found in log file.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevReadLogCmd);
+
+	//	Command HardKillServer
 	HardKillServerClass	*pHardKillServerCmd =
 		new HardKillServerClass("HardKillServer",
 			Tango::DEV_STRING, Tango::DEV_VOID,
@@ -1197,6 +1217,8 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pHardKillServerCmd);
+
+	//	Command NotifyDaemonState
 	NotifyDaemonStateClass	*pNotifyDaemonStateCmd =
 		new NotifyDaemonStateClass("NotifyDaemonState",
 			Tango::DEV_VOID, Tango::DEV_STATE,
@@ -1204,6 +1226,8 @@ void StarterClass::command_factory()
 			"Tango::ON if Notify daemon is running else Tango::FAULT.",
 			Tango::OPERATOR);
 	command_list.push_back(pNotifyDaemonStateCmd);
+
+	//	Command ResetStatistics
 	ResetStatisticsClass	*pResetStatisticsCmd =
 		new ResetStatisticsClass("ResetStatistics",
 			Tango::DEV_VOID, Tango::DEV_VOID,
@@ -1211,6 +1235,8 @@ void StarterClass::command_factory()
 			"",
 			Tango::EXPERT);
 	command_list.push_back(pResetStatisticsCmd);
+
+	//	Command UpdateServersInfo
 	UpdateServersInfoClass	*pUpdateServersInfoCmd =
 		new UpdateServersInfoClass("UpdateServersInfo",
 			Tango::DEV_VOID, Tango::DEV_VOID,
@@ -1218,6 +1244,7 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pUpdateServersInfoCmd);
+
 	/*----- PROTECTED REGION ID(StarterClass::command_factory_after) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::command_factory_after

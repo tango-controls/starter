@@ -29,7 +29,7 @@ MAKE_ENV = /segfs/tango/cppserver/env
 #
 PACKAGE_NAME = Starter
 MAJOR_VERS   = 5
-MINOR_VERS   = 10
+MINOR_VERS   = 11
 RELEASE      = $(MAJOR_VERS).$(MINOR_VERS)
 
 # #=============================================================================
@@ -79,7 +79,7 @@ INC_DIR_USER= -I .
 # you must use '-lA -lB' in this order as link flags, otherwise you will get
 # 'undefined reference' errors
 #
-#LFLAGS_USR+= -Wl,-z,now -Wl,-z,relro -pie
+LFLAGS_USR+= -Wl,-z,now -Wl,-z,relro -pie
 
 
 #=============================================================================
