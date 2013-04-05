@@ -388,6 +388,7 @@ void Starter::get_device_property()
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::get_device_property_before
 
+
 	//	Read device properties from database.
 	Tango::DbData	dev_prop;
 	dev_prop.push_back(Tango::DbDatum("AutoRestartDuration"));
