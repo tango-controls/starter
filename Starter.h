@@ -140,7 +140,7 @@ public:
 	Tango::DevShort	fireFromDbase;
 	bool	do_update_from_db;
 
-	Tango::DevString			dummyStringArray[0];
+	Tango::DevString			dummyStringArray[1];
 	Tango::DevVarStringArray	stringArrayRunning;
 	Tango::DevVarStringArray	stringArrayStopped;
 	Tango::DevVarStringArray	stringArrayServers;
