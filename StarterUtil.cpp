@@ -773,10 +773,14 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 //+------------------------------------------------------------------
 ControlledServer *StarterUtil::get_server_by_name(string &servname, vector<ControlledServer> &servers)
 {
+	string serverName(servname);
+	transform(serverName.begin(), serverName.end(), serverName.begin(), ::tolower);
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 	{
 		ControlledServer	*server = &servers[i];
-		if (server->name == servname)
+		string ctrlName(server->name);
+		transform(ctrlName.begin(), ctrlName.end(), ctrlName.begin(), ::tolower);
+		if (ctrlName == serverName)
 			return server;
 	}
 	return NULL;
