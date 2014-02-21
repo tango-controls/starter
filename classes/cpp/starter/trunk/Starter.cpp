@@ -25,12 +25,12 @@ static const char *RcsId = "$Id$";
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -152,7 +152,7 @@ void Starter::delete_device()
 	DEBUG_STREAM << "Starter::delete_device() " << device_name << endl;
 	/*----- PROTECTED REGION ID(Starter::delete_device) ENABLED START -----*/
 
-	
+
 	//	Do not re-create object at init command
 	starting = false;
 
@@ -195,14 +195,14 @@ void Starter::init_device()
 	cout << "Starter::Starter() init device " << device_name << endl;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::init_device_before
-	
+
 
 	//	Get the device properties from database
 	get_device_property();
-	
+
 
 	/*----- PROTECTED REGION ID(Starter::init_device) ENABLED START -----*/
-	
+
 	debug = false;
 	char	*dbg = (char *)getenv("DEBUG");
 	if (dbg!=NULL)
@@ -319,7 +319,7 @@ void Starter::init_device()
 				sleep(1);
 #			endif
 		}
-		
+
 //	A a wait for first ping timeout !!!!
 #	ifdef _TG_WINDOWS_
 		_sleep(3000);
@@ -407,7 +407,7 @@ void Starter::get_device_property()
 		//	Call database and extract values
 		if (Tango::Util::instance()->_UseDb==true)
 			get_db_device()->get_property(dev_prop);
-	
+
 		//	get instance on StarterClass to get class property
 		Tango::DbDatum	def_prop, cl_prop;
 		StarterClass	*ds_class =
@@ -590,7 +590,7 @@ void Starter::read_attr_hardware(TANGO_UNUSED(vector<long> &attr_list))
 				//	Check if state has changed.
 				if (previous_state!=servers[j].state)
 					manage_changing_state(&servers[j], previous_state);
-				
+
 				//cout << "read_attr_hardware:[" << servers[j].name << "]	" <<
 				//				Tango::DevStateName[servers[j].state]  << endl;
 			}
@@ -622,7 +622,7 @@ void Starter::read_NotifdState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute HostState related method
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -643,7 +643,7 @@ void Starter::read_HostState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute RunningServers related method
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
@@ -664,7 +664,7 @@ void Starter::read_RunningServers(Tango::Attribute &attr)
 	}
 	else {
 		//	And fill attribute
-		stringArrayRunning << runnings;	
+		stringArrayRunning << runnings;
 		attr.set_value(stringArrayRunning.get_buffer(), stringArrayRunning.length());
 	}
 	/*----- PROTECTED REGION END -----*/	//	Starter::read_RunningServers
@@ -693,7 +693,7 @@ void Starter::read_StoppedServers(Tango::Attribute &attr)
 	}
 	else {
 		//	And fill attribute
-		stringArrayStopped << stopped;	
+		stringArrayStopped << stopped;
 		attr.set_value(stringArrayStopped.get_buffer(), stringArrayStopped.length());
 	}
 	/*----- PROTECTED REGION END -----*/	//	Starter::read_StoppedServers
@@ -717,18 +717,18 @@ void Starter::read_Servers(Tango::Attribute &attr)
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 	{
 		TangoSys_OMemStream tms;
-		tms << servers[i].name << "\t" << 
+		tms << servers[i].name << "\t" <<
 					Tango::DevStateName[servers[i].state] << "\t" <<
 					servers[i].controlled  << "\t" << servers[i].startup_level;
 		string	s = tms.str();
 		vs.push_back(s);
-		
+
 	}
 	if (vs.empty())
 		attr.set_value(dummyStringArray, 0);
 	else {
 		//	And fill attribute
-		stringArrayServers << vs;	
+		stringArrayServers << vs;
 		attr.set_value(stringArrayServers.get_buffer(), stringArrayServers.length());
 	}
 	/*----- PROTECTED REGION END -----*/	//	Starter::read_Servers
@@ -744,9 +744,9 @@ void Starter::read_Servers(Tango::Attribute &attr)
 void Starter::add_dynamic_attributes()
 {
 	/*----- PROTECTED REGION ID(Starter::add_dynamic_attributes) ENABLED START -----*/
-	
+
 	//	Add your own code to create and add dynamic attributes if any
-	
+
 	/*----- PROTECTED REGION END -----*/	//	Starter::add_dynamic_attributes
 }
 
@@ -775,7 +775,7 @@ Tango::DevState Starter::dev_state()
 	if (fireFromDbase==false)
 	{
 		static time_t	t0 = 0;
-	    	   time_t	t1 = time(NULL);		
+	    	   time_t	t1 = time(NULL);
 		//	If less -> no update
 		if (t1-t0 >= period)
 		{
@@ -818,6 +818,7 @@ Tango::DevState Starter::dev_state()
 		int		nb_running   = 0;
 		int		nb_controlled = 0;
 		int		nb_starting  = 0;
+		int		nb_stopped  = 0;
 		for (unsigned int i=0 ; i<servers.size() ; i++)
 		{
 			p_serv = &servers[i];
@@ -828,10 +829,12 @@ Tango::DevState Starter::dev_state()
 
 				//	Fixe witch one is running and count how many controlled are running
 				if ((p_serv->state==Tango::ON))
-					nb_running ++;
+					nb_running++;
 				else
 				if (p_serv->state==Tango::MOVING)
-					nb_starting ++;
+					nb_starting++;
+                else
+                    nb_stopped++;
 			}
 		}
 
@@ -842,14 +845,20 @@ Tango::DevState Starter::dev_state()
 		if (nb_running==nb_controlled && notifyd_state==Tango::ON)
 			argout = Tango::ON;
 		else
+		if (nb_stopped==nb_controlled)
+			argout = Tango::OFF;
+        else
 			argout = Tango::ALARM;
 	}
-	
+
 	if (argout==Tango::ON) {
 		set_status("All controlled servers are running");
 	}
 	else if (argout==Tango::ALARM) {
 		set_status("At least one of the  controlled servers is not running");
+	}
+	else if (argout==Tango::OFF) {
+		set_status("All controlled servers are not running");
 	}
 	else if (argout==Tango::MOVING) {
 		set_status("At least one of the  controlled servers is running but not responding");
@@ -869,7 +878,7 @@ Tango::DevState Starter::dev_state()
  *	Description: Start the specified server.
  *
  *	@param argin Server to be started.
- *	@returns 
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_start(Tango::DevString argin)
@@ -927,7 +936,7 @@ void Starter::dev_start(Tango::DevString argin)
  *	Description: Stop the specified server.
  *
  *	@param argin Servero be stopped.
- *	@returns 
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_stop(Tango::DevString argin)
@@ -955,7 +964,7 @@ void Starter::dev_stop(Tango::DevString argin)
 	if (server==NULL)
 	{
 		TangoSys_OMemStream out_stream;
-		out_stream << argin << ": Unkown Server !" << ends;
+		out_stream << argin << ": Unknown Server !" << ends;
 		Tango::Except::throw_exception(out_stream.str(),
 				out_stream.str(),
 				(const char *)"Starter::dev_stop()");
@@ -1008,7 +1017,7 @@ void Starter::dev_stop(Tango::DevString argin)
  *	Description: Start all device servers controled on the host for the argin level.
  *
  *	@param argin Startup level.
- *	@returns 
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_start_all(Tango::DevShort argin)
@@ -1074,7 +1083,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
  *	Description: Stop all device servers controled on the host for the argin level.
  *
  *	@param argin Startup Level.
- *	@returns 
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_stop_all(Tango::DevShort argin)
@@ -1289,7 +1298,7 @@ Tango::ConstDevString Starter::dev_read_log(Tango::DevString argin)
  *	Description: Hard kill a server (kill -9)
  *
  *	@param argin Server name
- *	@returns 
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::hard_kill_server(Tango::DevString argin)
@@ -1321,7 +1330,7 @@ void Starter::hard_kill_server(Tango::DevString argin)
 					tms.str().c_str(),
 					(const char *)"Starter::hard_kill_server()");
 	}
-	
+
 	TerminateProcess(handle, 0);
 	CloseHandle(handle);
 	if (GetLastError()!= ERROR_SUCCESS)
@@ -1356,7 +1365,7 @@ void Starter::hard_kill_server(Tango::DevString argin)
  *	Command NotifyDaemonState related method
  *	Description: Returns the Notify Daemon state.
  *
- *	@param argin 
+ *	@param argin
  *	@returns Tango::ON if Notify daemon is running else Tango::FAULT.
  */
 //--------------------------------------------------------
@@ -1382,8 +1391,8 @@ Tango::DevState Starter::notify_daemon_state()
  *	Command ResetStatistics related method
  *	Description: Reset statistics file.
  *
- *	@param argin 
- *	@returns 
+ *	@param argin
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::reset_statistics()
@@ -1403,8 +1412,8 @@ void Starter::reset_statistics()
  *               The device server must read the database to update the servers info list.
  *               If the default case, this command is sent by Database server itself.
  *
- *	@param argin 
- *	@returns 
+ *	@param argin
+ *	@returns
  */
 //--------------------------------------------------------
 void Starter::update_servers_info()
@@ -1430,7 +1439,7 @@ void Starter::update_servers_info()
 NewProcess *Starter::processCouldStart(char *argin)
 {
 	INFO_STREAM << "Starter::processCouldStart(\""<< argin << "\"): entering... !" << endl;
-	
+
 	//	Make sure that it's not running.
 	//---------------------------------------
 	if (servers.empty()==false)
@@ -1477,7 +1486,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 	free(servname);
 
 	check_log_dir();
-	
+
 	string	log_file = util->build_log_file_name(argin);
 	NewProcess	*np  = new NewProcess;
 	np->servname     = filename;
@@ -1485,7 +1494,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 	np->adminname    = adminname;
 	np->logfile      = new char[log_file.length()+1];
 	np->logfile      = strcpy(np->logfile, log_file.c_str());
-	
+
 	INFO_STREAM << "LOG file : " << log_file << endl;
 
 	return np;
@@ -1568,13 +1577,13 @@ void Starter::check_host()
 			devname = devname.substr(pos+1);
 	}
 	//cout << hostname << " == " << devname << endl;
-	
+
 	if (devname != hostname)
 	{
 		TangoSys_OMemStream	tms;
 		tms << "This server must run on " << devname << " and not on "  << hostname;
 		string	descr(tms.str());
-		
+
 		Tango::Except::throw_exception(
 				(const char *)"BAD_PARAM",
 				(const char *) descr.c_str(),
@@ -1586,7 +1595,7 @@ void Starter::check_host()
 void Starter::check_log_dir()
 {
 	//	Check if log dir already exists.
-	//-------------------------------------	
+	//-------------------------------------
 	string	logpath;
 	LogPath(logpath,logFileHome);
 	if (chdir(logpath.c_str())==-1)
@@ -1671,7 +1680,7 @@ void Starter::manage_changing_state(ControlledServer *server, Tango::DevState pr
 			server->failure_time = time(NULL);
 			//	Log statistics
 			util->log_starter_statistics(server);
-			
+
 			//	Check auto restart
 			if (autoRestartDuration>0) {
 				int	minDuration = autoRestartDuration;
