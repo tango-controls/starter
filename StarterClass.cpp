@@ -1,6 +1,6 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-5.11 $";
+static const char *TagName    = "$Name: Starter-Release-6.0 $";
 static const char *CvsPath    = "$Source:  $";
 static const char *SvnPath    = "$HeadURL: https://tango-cs.svn.sourceforge.net/svnroot/tango-cs/classes/cpp/starter $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
@@ -28,12 +28,12 @@ static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -136,8 +136,8 @@ StarterClass *StarterClass::init(const char *name)
 		catch (bad_alloc &)
 		{
 			throw;
-		}		
-	}		
+		}
+	}
 	return _instance;
 }
 
@@ -447,7 +447,7 @@ void StarterClass::get_class_property()
 	cl_prop.push_back(Tango::DbDatum("ServerStartupTimeout"));
 	cl_prop.push_back(Tango::DbDatum("StartServersAtStartup"));
 	cl_prop.push_back(Tango::DbDatum("UseEvents"));
-	
+
 	//	Call database and extract values
 	if (Tango::Util::instance()->_UseDb==true)
 		get_db_class()->get_property(cl_prop);
@@ -867,7 +867,7 @@ void StarterClass::write_class_property()
 				header = "$HeadURL: ";
 				start = header.length();
 				string	strloc = src_path.substr(start, (end-start));
-				
+
 				Tango::DbDatum	svn_loc("svn_location");
 				svn_loc << strloc;
 				data.push_back(svn_loc);
@@ -876,13 +876,13 @@ void StarterClass::write_class_property()
 	}
 
 	//	Get CVS or SVN revision tag
-	
+
 	// CVS tag
 	string	tagname(TagName);
 	header = "$Name: ";
 	start = header.length();
 	string	endstr(" $");
-	
+
 	end   = tagname.find(endstr);
 	if (end!=string::npos && end>start)
 	{
@@ -891,17 +891,17 @@ void StarterClass::write_class_property()
 		cvs_tag << strtag;
 		data.push_back(cvs_tag);
 	}
-	
+
 	// SVN tag
 	string	svnpath(SvnPath);
 	header = "$HeadURL: ";
 	start = header.length();
-	
+
 	end   = svnpath.find(endstr);
 	if (end!=string::npos && end>start)
 	{
 		string	strloc = svnpath.substr(start, end-start);
-		
+
 		string tagstr ("/tags/");
 		start = strloc.find(tagstr);
 		if ( start!=string::npos )
@@ -909,7 +909,7 @@ void StarterClass::write_class_property()
 			start = start + tagstr.length();
 			end   = strloc.find(filename);
 			string	strtag = strloc.substr(start, end-start-1);
-			
+
 			Tango::DbDatum	svn_tag("svn_tag");
 			svn_tag << strtag;
 			data.push_back(svn_tag);
@@ -952,7 +952,7 @@ void StarterClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
 	/*----- PROTECTED REGION ID(StarterClass::device_factory_before) ENABLED START -----*/
 
 	//	Add your own code
-	
+
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::device_factory_before
 
@@ -960,7 +960,7 @@ void StarterClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
 	for (unsigned long i=0 ; i<devlist_ptr->length() ; i++)
 	{
 		cout4 << "Device name : " << (*devlist_ptr)[i].in() << endl;
-		device_list.push_back(new Starter(this, (*devlist_ptr)[i]));							 
+		device_list.push_back(new Starter(this, (*devlist_ptr)[i]));
 	}
 
 	//	Manage dynamic attributes if any
@@ -983,7 +983,7 @@ void StarterClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
 	/*----- PROTECTED REGION ID(StarterClass::device_factory_after) ENABLED START -----*/
 
 	//	Add your own code
-	
+
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::device_factory_after
 }
@@ -1018,7 +1018,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for NotifdState
 	//	delta_t	not set for NotifdState
 	//	delta_val	not set for NotifdState
-	
+
 	notifdstate->set_default_properties(notifdstate_prop);
 	notifdstate->set_polling_period(1000);
 	notifdstate->set_disp_level(Tango::OPERATOR);
@@ -1042,7 +1042,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for HostState
 	//	delta_t	not set for HostState
 	//	delta_val	not set for HostState
-	
+
 	hoststate->set_default_properties(hoststate_prop);
 	hoststate->set_polling_period(1000);
 	hoststate->set_disp_level(Tango::OPERATOR);
@@ -1066,7 +1066,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for RunningServers
 	//	delta_t	not set for RunningServers
 	//	delta_val	not set for RunningServers
-	
+
 	runningservers->set_default_properties(runningservers_prop);
 	runningservers->set_polling_period(1000);
 	runningservers->set_disp_level(Tango::OPERATOR);
@@ -1090,7 +1090,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for StoppedServers
 	//	delta_t	not set for StoppedServers
 	//	delta_val	not set for StoppedServers
-	
+
 	stoppedservers->set_default_properties(stoppedservers_prop);
 	stoppedservers->set_polling_period(1000);
 	stoppedservers->set_disp_level(Tango::OPERATOR);
@@ -1114,7 +1114,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for Servers
 	//	delta_t	not set for Servers
 	//	delta_val	not set for Servers
-	
+
 	servers->set_default_properties(servers_prop);
 	servers->set_polling_period(1000);
 	servers->set_disp_level(Tango::OPERATOR);
@@ -1145,7 +1145,7 @@ void StarterClass::command_factory()
 	//	Set polling perod for command State
 	Tango::Command	&stateCmd = get_cmd_by_name("State");
 	stateCmd.set_polling_period(1000);
-	
+
 
 	//	Command DevStart
 	DevStartClass	*pDevStartCmd =
@@ -1260,7 +1260,7 @@ void StarterClass::command_factory()
  * method : 		StarterClass::create_static_attribute_list
  * description : 	Create the a list of static attributes
  *
- * @param	att_list	the ceated attribute list 
+ * @param	att_list	the ceated attribute list
  */
 //--------------------------------------------------------
 void StarterClass::create_static_attribute_list(vector<Tango::Attr *> &att_list)
@@ -1294,10 +1294,10 @@ void StarterClass::erase_dynamic_attributes(const Tango::DevVarStringArray *devl
 	Tango::Util *tg = Tango::Util::instance();
 
 	for (unsigned long i=0 ; i<devlist_ptr->length() ; i++)
-	{	
+	{
 		Tango::DeviceImpl *dev_impl = tg->get_device_by_name(((string)(*devlist_ptr)[i]).c_str());
 		Starter *dev = static_cast<Starter *> (dev_impl);
-		
+
 		vector<Tango::Attribute *> &dev_att_list = dev->get_device_attr()->get_attribute_list();
 		vector<Tango::Attribute *>::iterator ite_att;
 		for (ite_att=dev_att_list.begin() ; ite_att != dev_att_list.end() ; ++ite_att)
