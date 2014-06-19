@@ -1029,7 +1029,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 	Tango::DevShort  level = argin;
 	cout << "Starter::dev_start_all(): entering for level "<< level <<"... !" << endl;
 
-	//	Check if servers object initilized
+	//	Check if servers object initialized
 	//---------------------------------------
 	if (servers.empty()) {
 		if (throwable) {
@@ -1041,7 +1041,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 		}
 	}
 
-	//	Do not want exception during startup
+	//	Do not want exception during start up
 	throwable = false;
 
 	//	And start the stopped ones
@@ -1066,7 +1066,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 					cout << "np is null (?)" << endl;
 			}
 			else
-				cout << "	Alread running...."<< endl;
+				cout << "	Already running...."<< endl;
 		}
 	}
 	if (processes.empty()==false)
@@ -1093,8 +1093,8 @@ void Starter::dev_stop_all(Tango::DevShort argin)
 
 	//	Add your own code
 	Tango::DevShort  level = argin;
-	//	Check if servers object initilized
-	//---------------------------------------
+
+	//	Check if servers object initialized
 	if (servers.empty())
 	{
 		TangoSys_OMemStream out_stream;
@@ -1104,8 +1104,12 @@ void Starter::dev_stop_all(Tango::DevShort argin)
 				(const char *)"Starter::dev_stop_all()");
 		return;
 	}
+
+	//  Remove level from list to be started
+	cout << "Starter removing level " << level << endl;
+    start_proc_data->remove_level(level);
+
 	//	And stop the running ones
-	//---------------------------------------------------
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 	{
 		ControlledServer	*server = &servers[i];
@@ -1145,7 +1149,7 @@ Tango::DevVarStringArray *Starter::dev_get_running_servers(Tango::DevBoolean arg
 		return argout;
 	}
 
-	//	prepeare the argout for running servers list
+	//	prepare the argout for running servers list
 	//-----------------------------------------------------------
 	int		nb = 0;
 	int		x;
@@ -1657,8 +1661,8 @@ void Starter::manage_changing_state(ControlledServer *server, Tango::DevState pr
 		return;
 
 	Tango::DevState state = server->state;
-	cout << "manage_changing_state:[" << server->name << "]	" <<
-		Tango::DevStateName[previous_state]	<< "  -->  " << Tango::DevStateName[state] << endl;
+	//cout << "manage_changing_state:[" << server->name << "]	" <<
+	//	Tango::DevStateName[previous_state]	<< "  -->  " << Tango::DevStateName[state] << endl;
 
 	switch(state)
 	{

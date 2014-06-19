@@ -13,6 +13,9 @@
 
 
 
+Starter-6.1 	19/06/2014:
+	Add a stop on DevStartAll when a DevStopAll is received.
+
 Starter-6.0 	25/03/2014:
 	Add OFF state when any server is running.
 	Update file headers.

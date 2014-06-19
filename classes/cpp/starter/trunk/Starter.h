@@ -20,12 +20,12 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -51,7 +51,7 @@
 #define	TIME_BETWEEN_STARTUPS	500	//	Milli seconds
 #define NOTIFY_DAEMON_SCRIPT	"notify_daemon"
 
-//	Used onlyduring the Cpp Api bug fixing on 
+//	Used onlyduring the Cpp Api bug fixing on
 //	specAtt->get_max_x() method.
 #define NB_SERVERS_MAX			200
 #define SERVER_TIMEOUT		30	//	Timeout Minimum at server startup
@@ -208,7 +208,7 @@ public:
 	Starter(Tango::DeviceClass *cl,const char *s,const char *d);
 	/**
 	 * The device object destructor.
-	 */	
+	 */
 	~Starter() {delete_device();};
 
 
@@ -253,7 +253,7 @@ virtual void read_NotifdState(Tango::Attribute &attr);
 virtual bool is_NotifdState_allowed(Tango::AttReqType type);
 /**
  *	Attribute HostState related methods
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -262,7 +262,7 @@ virtual void read_HostState(Tango::Attribute &attr);
 virtual bool is_HostState_allowed(Tango::AttReqType type);
 /**
  *	Attribute RunningServers related methods
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
@@ -314,7 +314,7 @@ public:
 	 *	Description: Start the specified server.
 	 *
 	 *	@param argin Server to be started.
-	 *	@returns 
+	 *	@returns
 	 */
 	virtual void dev_start(Tango::DevString argin);
 	virtual bool is_DevStart_allowed(const CORBA::Any &any);
@@ -323,7 +323,7 @@ public:
 	 *	Description: Stop the specified server.
 	 *
 	 *	@param argin Servero be stopped.
-	 *	@returns 
+	 *	@returns
 	 */
 	virtual void dev_stop(Tango::DevString argin);
 	virtual bool is_DevStop_allowed(const CORBA::Any &any);
@@ -332,7 +332,7 @@ public:
 	 *	Description: Start all device servers controled on the host for the argin level.
 	 *
 	 *	@param argin Startup level.
-	 *	@returns 
+	 *	@returns
 	 */
 	virtual void dev_start_all(Tango::DevShort argin);
 	virtual bool is_DevStartAll_allowed(const CORBA::Any &any);
@@ -341,7 +341,7 @@ public:
 	 *	Description: Stop all device servers controled on the host for the argin level.
 	 *
 	 *	@param argin Startup Level.
-	 *	@returns 
+	 *	@returns
 	 */
 	virtual void dev_stop_all(Tango::DevShort argin);
 	virtual bool is_DevStopAll_allowed(const CORBA::Any &any);
@@ -382,7 +382,7 @@ public:
 	 *	Description: Hard kill a server (kill -9)
 	 *
 	 *	@param argin Server name
-	 *	@returns 
+	 *	@returns
 	 */
 	virtual void hard_kill_server(Tango::DevString argin);
 	virtual bool is_HardKillServer_allowed(const CORBA::Any &any);
@@ -390,7 +390,7 @@ public:
 	 *	Command NotifyDaemonState related method
 	 *	Description: Returns the Notify Daemon state.
 	 *
-	 *	@param argin 
+	 *	@param argin
 	 *	@returns Tango::ON if Notify daemon is running else Tango::FAULT.
 	 */
 	virtual Tango::DevState notify_daemon_state();
@@ -399,8 +399,8 @@ public:
 	 *	Command ResetStatistics related method
 	 *	Description: Reset statistics file.
 	 *
-	 *	@param argin 
-	 *	@returns 
+	 *	@param argin
+	 *	@returns
 	 */
 	virtual void reset_statistics();
 	virtual bool is_ResetStatistics_allowed(const CORBA::Any &any);
@@ -410,8 +410,8 @@ public:
 	 *               The device server must read the database to update the servers info list.
 	 *               If the default case, this command is sent by Database server itself.
 	 *
-	 *	@param argin 
-	 *	@returns 
+	 *	@param argin
+	 *	@returns
 	 */
 	virtual void update_servers_info();
 	virtual bool is_UpdateServersInfo_allowed(const CORBA::Any &any);
@@ -420,7 +420,7 @@ public:
 /*----- PROTECTED REGION ID(Starter::Additional Method prototypes) ENABLED START -----*/
 
 	//	Additional Method prototypes
-protected :	
+protected :
 /**
  * @name private methods prototypes
  */
@@ -473,7 +473,7 @@ class StartProcessShared: public Tango::TangoMonitor
 private:
 	/**
 	 *	Manage levels thread
-	 *	To be shure that (level) threads are not concurent
+	 *	To be sure that (level) threads are not concurrent
 	 */
 	vector<int>	start_process_thread_levels;
 	/**
@@ -488,6 +488,8 @@ public:
 	void remove_current_level();
 	int  get_current_level();
 	int  get_starting_processes();
+	void remove_level(int level);
+	bool level_is_still_active(int level);
 
 };
 
@@ -498,12 +500,12 @@ class StartWinThread: public omni_thread
 	NewProcess	*process;
 	Starter		*starter;
 public:
-	StartWinThread(NewProcess* proc, Starter *st) 
+	StartWinThread(NewProcess* proc, Starter *st)
 		{ process = proc; starter=st;};
 
 	// Set the path between cotes for windows.
 	string get_server_name_with_cotes(string servname);
-	
+
 	void run(void *);
 	//void start() {start_undetached();}
 };
