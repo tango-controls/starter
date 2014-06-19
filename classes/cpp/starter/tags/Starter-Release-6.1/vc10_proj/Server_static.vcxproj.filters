@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\CheckProcessUtil.cpp" />
+    <ClCompile Include="..\ClassFactory.cpp" />
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\PingThread.cpp" />
+    <ClCompile Include="..\Starter.cpp" />
+    <ClCompile Include="..\StarterClass.cpp" />
+    <ClCompile Include="..\StarterStateMachine.cpp" />
+    <ClCompile Include="..\StarterUtil.cpp" />
+    <ClCompile Include="..\StartProcessThread.cpp" />
+    <ClCompile Include="..\StarterService.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2bd1bea8-1532-4e04-b046-3b6155125cee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Starter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StarterClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
