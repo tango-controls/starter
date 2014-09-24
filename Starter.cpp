@@ -109,7 +109,7 @@ namespace Starter_ns
  */
 //--------------------------------------------------------
 Starter::Starter(Tango::DeviceClass *cl, string &s)
- : Tango::Device_4Impl(cl, s.c_str())
+ : TANGO_BASE_CLASS(cl, s.c_str())
 {
 	/*----- PROTECTED REGION ID(Starter::constructor_1) ENABLED START -----*/
 
@@ -120,7 +120,7 @@ Starter::Starter(Tango::DeviceClass *cl, string &s)
 }
 //--------------------------------------------------------
 Starter::Starter(Tango::DeviceClass *cl, const char *s)
- : Tango::Device_4Impl(cl, s)
+ : TANGO_BASE_CLASS(cl, s)
 {
 	/*----- PROTECTED REGION ID(Starter::constructor_2) ENABLED START -----*/
 
@@ -131,7 +131,7 @@ Starter::Starter(Tango::DeviceClass *cl, const char *s)
 }
 //--------------------------------------------------------
 Starter::Starter(Tango::DeviceClass *cl, const char *s, const char *d)
- : Tango::Device_4Impl(cl, s, d)
+ : TANGO_BASE_CLASS(cl, s, d)
 {
 	/*----- PROTECTED REGION ID(Starter::constructor_3) ENABLED START -----*/
 
@@ -195,12 +195,11 @@ void Starter::init_device()
 	cout << "Starter::Starter() init device " << device_name << endl;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::init_device_before
-
+	
 
 	//	Get the device properties from database
 	get_device_property();
-
-
+	
 	/*----- PROTECTED REGION ID(Starter::init_device) ENABLED START -----*/
 
 	debug = false;
@@ -407,7 +406,7 @@ void Starter::get_device_property()
 		//	Call database and extract values
 		if (Tango::Util::instance()->_UseDb==true)
 			get_db_device()->get_property(dev_prop);
-
+	
 		//	get instance on StarterClass to get class property
 		Tango::DbDatum	def_prop, cl_prop;
 		StarterClass	*ds_class =
@@ -557,7 +556,7 @@ void Starter::get_device_property()
 //--------------------------------------------------------
 void Starter::always_executed_hook()
 {
-	INFO_STREAM << "Starter::always_executed_hook()  " << device_name << endl;
+	DEBUG_STREAM << "Starter::always_executed_hook()  " << device_name << endl;
 	/*----- PROTECTED REGION ID(Starter::always_executed_hook) ENABLED START -----*/
 
 
@@ -622,7 +621,7 @@ void Starter::read_NotifdState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute HostState related method
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -643,7 +642,7 @@ void Starter::read_HostState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute RunningServers related method
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
@@ -755,7 +754,6 @@ void Starter::add_dynamic_attributes()
  *	Command State related method
  *	Description: This command gets the device state (stored in its <i>device_state</i> data member) and returns it to the caller.
  *
- *	@param argin none.
  *	@returns State Code
  */
 //--------------------------------------------------------
@@ -878,7 +876,6 @@ Tango::DevState Starter::dev_state()
  *	Description: Start the specified server.
  *
  *	@param argin Server to be started.
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_start(Tango::DevString argin)
@@ -936,7 +933,6 @@ void Starter::dev_start(Tango::DevString argin)
  *	Description: Stop the specified server.
  *
  *	@param argin Servero be stopped.
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_stop(Tango::DevString argin)
@@ -1017,7 +1013,6 @@ void Starter::dev_stop(Tango::DevString argin)
  *	Description: Start all device servers controled on the host for the argin level.
  *
  *	@param argin Startup level.
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_start_all(Tango::DevShort argin)
@@ -1083,7 +1078,6 @@ void Starter::dev_start_all(Tango::DevShort argin)
  *	Description: Stop all device servers controled on the host for the argin level.
  *
  *	@param argin Startup Level.
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::dev_stop_all(Tango::DevShort argin)
@@ -1302,7 +1296,6 @@ Tango::ConstDevString Starter::dev_read_log(Tango::DevString argin)
  *	Description: Hard kill a server (kill -9)
  *
  *	@param argin Server name
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::hard_kill_server(Tango::DevString argin)
@@ -1369,7 +1362,6 @@ void Starter::hard_kill_server(Tango::DevString argin)
  *	Command NotifyDaemonState related method
  *	Description: Returns the Notify Daemon state.
  *
- *	@param argin
  *	@returns Tango::ON if Notify daemon is running else Tango::FAULT.
  */
 //--------------------------------------------------------
@@ -1395,8 +1387,6 @@ Tango::DevState Starter::notify_daemon_state()
  *	Command ResetStatistics related method
  *	Description: Reset statistics file.
  *
- *	@param argin
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::reset_statistics()
@@ -1416,8 +1406,6 @@ void Starter::reset_statistics()
  *               The device server must read the database to update the servers info list.
  *               If the default case, this command is sent by Database server itself.
  *
- *	@param argin
- *	@returns
  */
 //--------------------------------------------------------
 void Starter::update_servers_info()
