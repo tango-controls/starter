@@ -1,6 +1,6 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-6.1 $";
+static const char *TagName    = "$Name: Starter-Release-6.2 $";
 static const char *CvsPath    = "$Source:  $";
 static const char *SvnPath    = "$HeadURL: https://tango-cs.svn.sourceforge.net/svnroot/tango-cs/classes/cpp/starter $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
@@ -136,8 +136,8 @@ StarterClass *StarterClass::init(const char *name)
 		catch (bad_alloc &)
 		{
 			throw;
-		}
-	}
+		}		
+	}		
 	return _instance;
 }
 
@@ -447,7 +447,7 @@ void StarterClass::get_class_property()
 	cl_prop.push_back(Tango::DbDatum("ServerStartupTimeout"));
 	cl_prop.push_back(Tango::DbDatum("StartServersAtStartup"));
 	cl_prop.push_back(Tango::DbDatum("UseEvents"));
-
+	
 	//	Call database and extract values
 	if (Tango::Util::instance()->_UseDb==true)
 		get_db_class()->get_property(cl_prop);
@@ -867,7 +867,7 @@ void StarterClass::write_class_property()
 				header = "$HeadURL: ";
 				start = header.length();
 				string	strloc = src_path.substr(start, (end-start));
-
+				
 				Tango::DbDatum	svn_loc("svn_location");
 				svn_loc << strloc;
 				data.push_back(svn_loc);
@@ -876,13 +876,13 @@ void StarterClass::write_class_property()
 	}
 
 	//	Get CVS or SVN revision tag
-
+	
 	// CVS tag
 	string	tagname(TagName);
 	header = "$Name: ";
 	start = header.length();
 	string	endstr(" $");
-
+	
 	end   = tagname.find(endstr);
 	if (end!=string::npos && end>start)
 	{
@@ -891,17 +891,17 @@ void StarterClass::write_class_property()
 		cvs_tag << strtag;
 		data.push_back(cvs_tag);
 	}
-
+	
 	// SVN tag
 	string	svnpath(SvnPath);
 	header = "$HeadURL: ";
 	start = header.length();
-
+	
 	end   = svnpath.find(endstr);
 	if (end!=string::npos && end>start)
 	{
 		string	strloc = svnpath.substr(start, end-start);
-
+		
 		string tagstr ("/tags/");
 		start = strloc.find(tagstr);
 		if ( start!=string::npos )
@@ -909,7 +909,7 @@ void StarterClass::write_class_property()
 			start = start + tagstr.length();
 			end   = strloc.find(filename);
 			string	strtag = strloc.substr(start, end-start-1);
-
+			
 			Tango::DbDatum	svn_tag("svn_tag");
 			svn_tag << strtag;
 			data.push_back(svn_tag);
@@ -928,7 +928,7 @@ void StarterClass::write_class_property()
 	//  Put inheritance
 	Tango::DbDatum	inher_datum("InheritedFrom");
 	vector<string> inheritance;
-	inheritance.push_back("Tango::Device_4Impl");
+	inheritance.push_back("TANGO_BASE_CLASS");
 	inher_datum << inheritance;
 	data.push_back(inher_datum);
 
@@ -1018,7 +1018,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for NotifdState
 	//	delta_t	not set for NotifdState
 	//	delta_val	not set for NotifdState
-
+	
 	notifdstate->set_default_properties(notifdstate_prop);
 	notifdstate->set_polling_period(1000);
 	notifdstate->set_disp_level(Tango::OPERATOR);
@@ -1042,7 +1042,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for HostState
 	//	delta_t	not set for HostState
 	//	delta_val	not set for HostState
-
+	
 	hoststate->set_default_properties(hoststate_prop);
 	hoststate->set_polling_period(1000);
 	hoststate->set_disp_level(Tango::OPERATOR);
@@ -1066,7 +1066,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for RunningServers
 	//	delta_t	not set for RunningServers
 	//	delta_val	not set for RunningServers
-
+	
 	runningservers->set_default_properties(runningservers_prop);
 	runningservers->set_polling_period(1000);
 	runningservers->set_disp_level(Tango::OPERATOR);
@@ -1090,7 +1090,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for StoppedServers
 	//	delta_t	not set for StoppedServers
 	//	delta_val	not set for StoppedServers
-
+	
 	stoppedservers->set_default_properties(stoppedservers_prop);
 	stoppedservers->set_polling_period(1000);
 	stoppedservers->set_disp_level(Tango::OPERATOR);
@@ -1114,7 +1114,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for Servers
 	//	delta_t	not set for Servers
 	//	delta_val	not set for Servers
-
+	
 	servers->set_default_properties(servers_prop);
 	servers->set_polling_period(1000);
 	servers->set_disp_level(Tango::OPERATOR);
@@ -1145,7 +1145,7 @@ void StarterClass::command_factory()
 	//	Set polling perod for command State
 	Tango::Command	&stateCmd = get_cmd_by_name("State");
 	stateCmd.set_polling_period(1000);
-
+	
 
 	//	Command DevStart
 	DevStartClass	*pDevStartCmd =
@@ -1260,7 +1260,7 @@ void StarterClass::command_factory()
  * method : 		StarterClass::create_static_attribute_list
  * description : 	Create the a list of static attributes
  *
- * @param	att_list	the ceated attribute list
+ * @param	att_list	the ceated attribute list 
  */
 //--------------------------------------------------------
 void StarterClass::create_static_attribute_list(vector<Tango::Attr *> &att_list)

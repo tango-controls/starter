@@ -91,7 +91,7 @@ class StartProcessShared;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::Additional Class Declarations
 
-class Starter : public Tango::Device_4Impl
+class Starter : public TANGO_BASE_CLASS
 {
 
 /*----- PROTECTED REGION ID(Starter::Data Members) ENABLED START -----*/
@@ -208,25 +208,25 @@ public:
 	Starter(Tango::DeviceClass *cl,const char *s,const char *d);
 	/**
 	 * The device object destructor.
-	 */
+	 */	
 	~Starter() {delete_device();};
 
 
 //	Miscellaneous methods
 public:
-	/**
+	/*
 	 *	will be called at device destruction or at init command.
 	 */
 	void delete_device();
-	/**
+	/*
 	 *	Initialize the device
 	 */
 	virtual void init_device();
-	/**
+	/*
 	 *	Read the device properties from database
 	 */
 	void get_device_property();
-	/**
+	/*
 	 *	Always executed method before execution command method.
 	 */
 	virtual void always_executed_hook();
@@ -235,7 +235,7 @@ public:
 //	Attribute methods
 public:
 	//--------------------------------------------------------
-	/**
+	/*
 	 *	Method      : Starter::read_attr_hardware()
 	 *	Description : Hardware acquisition for attributes.
 	 */
@@ -249,26 +249,26 @@ public:
  *	Data type:	Tango::DevState
  *	Attr type:	Scalar
  */
-virtual void read_NotifdState(Tango::Attribute &attr);
-virtual bool is_NotifdState_allowed(Tango::AttReqType type);
+	virtual void read_NotifdState(Tango::Attribute &attr);
+	virtual bool is_NotifdState_allowed(Tango::AttReqType type);
 /**
  *	Attribute HostState related methods
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
  */
-virtual void read_HostState(Tango::Attribute &attr);
-virtual bool is_HostState_allowed(Tango::AttReqType type);
+	virtual void read_HostState(Tango::Attribute &attr);
+	virtual bool is_HostState_allowed(Tango::AttReqType type);
 /**
  *	Attribute RunningServers related methods
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
  */
-virtual void read_RunningServers(Tango::Attribute &attr);
-virtual bool is_RunningServers_allowed(Tango::AttReqType type);
+	virtual void read_RunningServers(Tango::Attribute &attr);
+	virtual bool is_RunningServers_allowed(Tango::AttReqType type);
 /**
  *	Attribute StoppedServers related methods
  *	Description: Return all the Stopped servers.\n
@@ -276,8 +276,8 @@ virtual bool is_RunningServers_allowed(Tango::AttReqType type);
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
  */
-virtual void read_StoppedServers(Tango::Attribute &attr);
-virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
+	virtual void read_StoppedServers(Tango::Attribute &attr);
+	virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
 /**
  *	Attribute Servers related methods
  *	Description: Return all registred servers for this host.\nServer names are followed by their states and controls
@@ -285,8 +285,8 @@ virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 1024
  */
-virtual void read_Servers(Tango::Attribute &attr);
-virtual bool is_Servers_allowed(Tango::AttReqType type);
+	virtual void read_Servers(Tango::Attribute &attr);
+	virtual bool is_Servers_allowed(Tango::AttReqType type);
 
 
 	//--------------------------------------------------------
@@ -305,7 +305,6 @@ public:
 	 *	Command State related method
 	 *	Description: This command gets the device state (stored in its <i>device_state</i> data member) and returns it to the caller.
 	 *
-	 *	@param argin none.
 	 *	@returns State Code
 	 */
 	virtual Tango::DevState dev_state();
@@ -314,7 +313,6 @@ public:
 	 *	Description: Start the specified server.
 	 *
 	 *	@param argin Server to be started.
-	 *	@returns
 	 */
 	virtual void dev_start(Tango::DevString argin);
 	virtual bool is_DevStart_allowed(const CORBA::Any &any);
@@ -323,7 +321,6 @@ public:
 	 *	Description: Stop the specified server.
 	 *
 	 *	@param argin Servero be stopped.
-	 *	@returns
 	 */
 	virtual void dev_stop(Tango::DevString argin);
 	virtual bool is_DevStop_allowed(const CORBA::Any &any);
@@ -332,7 +329,6 @@ public:
 	 *	Description: Start all device servers controled on the host for the argin level.
 	 *
 	 *	@param argin Startup level.
-	 *	@returns
 	 */
 	virtual void dev_start_all(Tango::DevShort argin);
 	virtual bool is_DevStartAll_allowed(const CORBA::Any &any);
@@ -341,7 +337,6 @@ public:
 	 *	Description: Stop all device servers controled on the host for the argin level.
 	 *
 	 *	@param argin Startup Level.
-	 *	@returns
 	 */
 	virtual void dev_stop_all(Tango::DevShort argin);
 	virtual bool is_DevStopAll_allowed(const CORBA::Any &any);
@@ -382,7 +377,6 @@ public:
 	 *	Description: Hard kill a server (kill -9)
 	 *
 	 *	@param argin Server name
-	 *	@returns
 	 */
 	virtual void hard_kill_server(Tango::DevString argin);
 	virtual bool is_HardKillServer_allowed(const CORBA::Any &any);
@@ -390,7 +384,6 @@ public:
 	 *	Command NotifyDaemonState related method
 	 *	Description: Returns the Notify Daemon state.
 	 *
-	 *	@param argin
 	 *	@returns Tango::ON if Notify daemon is running else Tango::FAULT.
 	 */
 	virtual Tango::DevState notify_daemon_state();
@@ -399,8 +392,6 @@ public:
 	 *	Command ResetStatistics related method
 	 *	Description: Reset statistics file.
 	 *
-	 *	@param argin
-	 *	@returns
 	 */
 	virtual void reset_statistics();
 	virtual bool is_ResetStatistics_allowed(const CORBA::Any &any);
@@ -410,8 +401,6 @@ public:
 	 *               The device server must read the database to update the servers info list.
 	 *               If the default case, this command is sent by Database server itself.
 	 *
-	 *	@param argin
-	 *	@returns
 	 */
 	virtual void update_servers_info();
 	virtual bool is_UpdateServersInfo_allowed(const CORBA::Any &any);
