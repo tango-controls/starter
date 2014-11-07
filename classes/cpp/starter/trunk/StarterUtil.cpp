@@ -446,7 +446,7 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 		filter += "_[";
 		
 #ifndef _TG_WINDOWS_
-		cout << "Searching " << filter << "  in " << path << endl;
+		//cout << "Searching " << filter << "  in " << path << endl;
 		DIR		*dir = opendir ((char *)path.c_str()) ;
 		if(dir==NULL)
 		{
@@ -488,7 +488,7 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 		}
 		closedir(dir);
 #else
-		cout << "Searching " << filter << "  in " << path << endl;
+		//cout << "Searching " << filter << "  in " << path << endl;
 		path += "\\";
 		path += filter;
 		path += "*";
@@ -667,7 +667,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 	for (i=0 ; i<hostnames.size() ; i++)
 	{
 		//	Call for servers and their info for each host
-		cout << "Call for servers on " << hostnames[i] << endl;
+		//cout << "Call for servers on " << hostnames[i] << endl;
 		Tango::DeviceData	argin;
 		argin << hostnames[i];
 		Tango::DeviceData	argout = dbase->command_inout("DbGetHostServersInfo", argin);
