@@ -19,12 +19,12 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -60,7 +60,8 @@ namespace Starter_ns
 typedef unsigned char boolean;
 #endif
 
-typedef struct {
+struct ControlledServer {
+    ~ControlledServer() { delete dev; };
 	string	name;
 	string	admin_name;
 	bool	controlled;
@@ -71,12 +72,11 @@ typedef struct {
 	Tango::DevState		state;
 	bool		stopped;
 	bool		auto_start;
-	time_t		started_time;		
+	time_t		started_time;
 	time_t		failure_time;
-}
-ControlledServer;
+};
 
-//	Millisecond sleep platform independant.
+//	Millisecond sleep platform independent.
 //--------------------------------------------
 #	ifdef _TG_WINDOWS_
 #	define		ms_sleep(ms)	_sleep(ms);

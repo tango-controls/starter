@@ -23,14 +23,13 @@
 # MAKE_ENV is the path to find common environment to buil project
 #
 MAKE_ENV = /segfs/tango/cppserver/env
-MAKE_ENV = /users/verdier/env
 
 #=============================================================================
 # PACKAGE_NAME is the name of the library/device/exe you want to build
 #
 PACKAGE_NAME = Starter
 MAJOR_VERS   = 6
-MINOR_VERS   = 1
+MINOR_VERS   = 3
 RELEASE      = $(MAJOR_VERS).$(MINOR_VERS)
 
 # #=============================================================================

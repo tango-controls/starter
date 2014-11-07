@@ -13,6 +13,14 @@
 
 
 
+Starter-6.3 	09/11/2014:
+	Add patches from Elettra.
+	Improve level managemnt for startup.
+	Replace tg->get_orb()->run() by tg->server_run() in main.
+
+Starter-6.2 	01/10/2014:
+	Regenerate code with Pogo-9 to be full compatible with Tango-9
+
 Starter-6.1 	19/06/2014:
 	Add a stop on DevStartAll when a DevStopAll is received.
 

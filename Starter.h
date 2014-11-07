@@ -107,10 +107,6 @@ public:
 	 */
 	StartProcessShared	*start_proc_data;
 	/**
-	 *	Boolean used for init.
-	 */
-	bool	starting;
-	/**
 	 *	StarterUtil instance to be used everywhere.
 	 */
 	StarterUtil	*util;
@@ -208,7 +204,7 @@ public:
 	Starter(Tango::DeviceClass *cl,const char *s,const char *d);
 	/**
 	 * The device object destructor.
-	 */	
+	 */
 	~Starter() {delete_device();};
 
 
@@ -253,7 +249,7 @@ public:
 	virtual bool is_NotifdState_allowed(Tango::AttReqType type);
 /**
  *	Attribute HostState related methods
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -262,7 +258,7 @@ public:
 	virtual bool is_HostState_allowed(Tango::AttReqType type);
 /**
  *	Attribute RunningServers related methods
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
@@ -474,7 +470,6 @@ public:
 	StartProcessShared() {starting_processes=0;};
 
 	void push_back_level(int level);
-	void remove_current_level();
 	int  get_current_level();
 	int  get_starting_processes();
 	void remove_level(int level);

@@ -113,7 +113,6 @@ Starter::Starter(Tango::DeviceClass *cl, string &s)
 {
 	/*----- PROTECTED REGION ID(Starter::constructor_1) ENABLED START -----*/
 
-	starting = true;
 	init_device();
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::constructor_1
@@ -124,7 +123,6 @@ Starter::Starter(Tango::DeviceClass *cl, const char *s)
 {
 	/*----- PROTECTED REGION ID(Starter::constructor_2) ENABLED START -----*/
 
-	starting = true;
 	init_device();
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::constructor_2
@@ -135,7 +133,6 @@ Starter::Starter(Tango::DeviceClass *cl, const char *s, const char *d)
 {
 	/*----- PROTECTED REGION ID(Starter::constructor_3) ENABLED START -----*/
 
-	starting = true;
 	init_device();
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::constructor_3
@@ -153,27 +150,27 @@ void Starter::delete_device()
 	/*----- PROTECTED REGION ID(Starter::delete_device) ENABLED START -----*/
 
 
-	//	Do not re-create object at init command
-	starting = false;
-
 	//	Check if shutting down (or Init command)
-	if (Tango::Util::instance()->is_svr_shutting_down())
+	if (Tango::Util::instance()->is_svr_shutting_down() ||
+		Tango::Util::instance()->is_device_restarting(get_name()))
 	{
 		util->log_starter_info("Starter shutdown");
 
 		//	Stop ping threads
 		vector<ControlledServer>::iterator it;
 		for (it=servers.begin() ; it<servers.end() ; ++it)
-		{
 			it->thread_data->set_stop_thread();
-		}
 		util->proc_util->stop_it();
-		ms_sleep(1000);
+
+		for (it=servers.begin() ; it<servers.end() ; ++it)
+			it->thread->join(NULL);
+		util->proc_util->join(NULL);
+
 		//	Delete device allocated objects
 		delete dbase;
 		delete util;
-		delete attr_HostState_read;
-		delete attr_NotifdState_read;
+		delete[] attr_HostState_read;
+		delete[] attr_NotifdState_read;
 		delete start_proc_data;
 	}
 
@@ -195,11 +192,11 @@ void Starter::init_device()
 	cout << "Starter::Starter() init device " << device_name << endl;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::init_device_before
-	
+
 
 	//	Get the device properties from database
 	get_device_property();
-	
+
 	/*----- PROTECTED REGION ID(Starter::init_device) ENABLED START -----*/
 
 	debug = false;
@@ -219,15 +216,17 @@ void Starter::init_device()
 
 	//	Do it only at startup and not at Init command
 	//----------------------------------------------------
-	if (starting==true)
+	if (Tango::Util::instance()->is_svr_starting() ||
+		Tango::Util::instance()->is_device_restarting(get_name()))
 	{
 		//	Get database server name
 		//--------------------------------------
 		Tango::Util *tg = Tango::Util::instance();
-		string	dbname = tg->get_database()->get_dbase()->name();
+		char	*dbname = tg->get_database()->get_dbase()->name();
 		//	And connect database as DeviceProxy
 		//--------------------------------------
 		dbase = new Tango::DeviceProxy(dbname);
+		CORBA::string_free(dbname);
 
 		//	Build a shared data for StartProcessShared
 		start_proc_data = new StartProcessShared();
@@ -406,7 +405,7 @@ void Starter::get_device_property()
 		//	Call database and extract values
 		if (Tango::Util::instance()->_UseDb==true)
 			get_db_device()->get_property(dev_prop);
-	
+
 		//	get instance on StarterClass to get class property
 		Tango::DbDatum	def_prop, cl_prop;
 		StarterClass	*ds_class =
@@ -621,7 +620,7 @@ void Starter::read_NotifdState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute HostState related method
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -642,7 +641,7 @@ void Starter::read_HostState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute RunningServers related method
- *	Description: 
+ *	Description:
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 200
@@ -932,7 +931,7 @@ void Starter::dev_start(Tango::DevString argin)
  *	Command DevStop related method
  *	Description: Stop the specified server.
  *
- *	@param argin Servero be stopped.
+ *	@param argin Server be stopped.
  */
 //--------------------------------------------------------
 void Starter::dev_stop(Tango::DevString argin)
@@ -1466,6 +1465,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 	catch(Tango::DevFailed &e)
 	{
 		free(servname);
+		free(instancename);
 		delete [] adminname;
 		if (throwable)
 			throw;

@@ -146,7 +146,7 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
             out_stream << servname << " started";
             starter->util->log_starter_info(out_stream.str());
 
-            cout << "----- " << servname << " started in " << (t1-t0) << " sec." << endl;
+            //cout << "----- " << servname << " started in " << (t1-t0) << " sec." << endl;
         }
         else
         if (failed)
@@ -154,7 +154,10 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
         else
             cout << "----- " << servname << " Timeout = " << (t1-t0) << endl;
 
-        ms_sleep(TIME_BETWEEN_STARTUPS);
+		//	Wait a bit betwee 2 startup (not for last one)
+		if (thread_level>0 && i<processes.size()-1) {
+	        ms_sleep(TIME_BETWEEN_STARTUPS);
+		}
     }
 
 	//	Check if a time to wait between two start up levels in seconds as been set
@@ -163,7 +166,7 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
         starter->start_proc_data->level_is_still_active(thread_level))
 	{
 		//cout << "Thread level " << thread_level <<
-		//	" wait for " << starter->interStartupLevelWait;
+		//	" wait for " << starter->interStartupLevelWait << endl;
 		ms_sleep(starter->interStartupLevelWait*1000);
 	}
 
@@ -174,11 +177,11 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
 		free(processes[i]->instancename);
 		delete [] processes[i]->adminname;
 		delete [] processes[i]->logfile;
+		delete processes[i];
 	}
 
 	//	remove in level vector to start another level
-	if (starter->start_proc_data->level_is_still_active(thread_level))
-        starter->start_proc_data->remove_current_level();
+	starter->start_proc_data->remove_level(thread_level);
 }
 #ifndef	_TG_WINDOWS_
 //+------------------------------------------------------------------
@@ -248,7 +251,7 @@ void StartProcessThread::start_process(NewProcess *process)
 			}
 			break;
 		default:
-			cout << fork_id << " exit()" << endl;
+			//cout << fork_id << " exit()" << endl;
 			_exit(0);
 			break;
 		}
@@ -364,18 +367,6 @@ int StartProcessShared::get_current_level()
 }
 //+------------------------------------------------------------------
 /**
- *	StartProcessShared::remove_current_level()
- */
-//+------------------------------------------------------------------
-void StartProcessShared::remove_current_level()
-{
-	omni_mutex_lock sync(*this);
-	vector<int>::iterator it = start_process_thread_levels.begin();
-	start_process_thread_levels.erase(it);
-	starting_processes--;
-}
-//+------------------------------------------------------------------
-/**
  *	StartProcessShared::level_is_still_active(int level)
  */
 //+------------------------------------------------------------------
@@ -385,10 +376,10 @@ bool StartProcessShared::level_is_still_active(int level)
 	vector<int>::iterator it = start_process_thread_levels.begin();
 	for (  ; it<start_process_thread_levels.end() ; it++)
     if (*it==level) {
-        cout << "Level " << level << " is still active" << endl;
+        //cout << "Level " << level << " is still active" << endl;
         return true;
     }
-         cout << "Level " << level << " is NOT still active" << endl;
+        //cout << "Level " << level << " is NOT still active" << endl;
    return false;
 }
 //+------------------------------------------------------------------
@@ -398,12 +389,11 @@ bool StartProcessShared::level_is_still_active(int level)
 //+------------------------------------------------------------------
 void StartProcessShared::remove_level(int level)
 {
-	omni_mutex_lock sync(*this);
+	omni_mutex_lock sync(*this);	
 	vector<int>::iterator it = start_process_thread_levels.begin();
 	for (  ; it<start_process_thread_levels.end() ; it++) {
-        cout << "============> StartProcessShared " << *it << "==" << level << " ?" << endl;
         if (*it==level) {
-            cout << "StartProcessShared::remove_level " << level << endl;
+            //cout << "StartProcessShared::remove_level " << level << endl;
             start_process_thread_levels.erase(it);
             starting_processes--;
             return;
