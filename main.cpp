@@ -125,7 +125,7 @@ int main(int argc,char *argv[])
 #ifdef WIN32_DBG
   InitAllocCheck(ACOutput_XML);
 #endif
-		tg->get_orb()->run();
+		tg->server_run();
 	}
 	catch (bad_alloc)
 	{
