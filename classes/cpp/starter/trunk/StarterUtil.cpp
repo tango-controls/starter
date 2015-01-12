@@ -20,12 +20,12 @@ static const char *RcsId = "$Header$";
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -72,14 +72,14 @@ StarterUtil::StarterUtil(Tango::DeviceProxy *database, vector<string> host_names
 	notifyd_name += host_names[0];
 	ch_factory   = NULL;
 	log_home     = logHome;
-	
+
 	//	Remove the Fully Qualify Domain Name for tango less than 5.2 compatibility
 	for (unsigned int i=0 ; i<host_names.size() ; i++)
 		hostnames.push_back(removeFQDN(host_names[i]));
 
 	proc_util = new CheckProcessUtil();
 	proc_util->start();
-	//	Wait a bit to be sure 
+	//	Wait a bit to be sure
 	//	that runningp rocess list is updated.
 #ifdef _TG_WINDOWS_
 	_sleep(1000);
@@ -117,15 +117,16 @@ string StarterUtil::removeFQDN(string s)
 //+------------------------------------------------------------------
 char *StarterUtil::get_server_name(char *argin)
 {
-	char	*servname;
-	char	tmp[50];
-	char	*p1 = argin;
-	char	*p2 = tmp;	
-	while (*p1 && *p1!='/')
-		*p2++ = *p1++;
-	*p2++ = '\0';
-	servname = (char *)malloc(strlen(tmp)+1);
-	strcpy(servname, tmp);
+    string fullName(argin);
+    string serverName;
+    string::size_type	pos = fullName.find('/');
+	if (pos == string::npos)
+		serverName = fullName;
+	else
+		serverName = fullName.substr(0, pos);
+
+	char	*servname = new char[serverName.length()+1];
+	strcpy(servname, serverName.c_str());
 	return servname;
 }
 //+------------------------------------------------------------------
@@ -135,25 +136,22 @@ char *StarterUtil::get_server_name(char *argin)
 //+------------------------------------------------------------------
 char *StarterUtil::get_instance_name(char *argin)
 {
-	char	*instancename;
-	char	tmp[50];
-	char	*p1 = argin;
-	char	*p2 = tmp;	
-	while (*p1 && *p1!='/')
-		p1++;
-	p1++;
-	while (*p1)
-		*p2++ = *p1++;
-	*p2++ = '\0';
-	
-	instancename = (char *)malloc(strlen(tmp)+1);
-	strcpy(instancename, tmp);
+    string fullName(argin);
+    string instanceName;
+    string::size_type	pos = fullName.find('/');
+	if (pos == string::npos)
+		instanceName = fullName;
+	else
+		instanceName = fullName.substr(pos+1);
+
+	char	*instancename = new char[instanceName.length()+1];
+	strcpy(instancename, instanceName.c_str());
 	return instancename;
 }
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::check_file()
-// 
+//
 // description : 	Check if executable file exists
 //					and return its full name with good path.
 //
@@ -197,20 +195,20 @@ char *StarterUtil::check_exe_file(string name)
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::check_file()
-// 
+//
 // description : 	Check if executable file exists
 //					and return its full name with good path.
 //
 //-----------------------------------------------------------------------------
 char *StarterUtil::check_exe_file(char *servname, vector<string>v_path)
 {
-	unsigned int	i;	
+	unsigned int	i;
 	for (i=0 ; i<v_path.size() ; i++)
 	{
 		string	filename(v_path[i]);
 		filename += slash;
 		filename += servname;
-	
+
 		//	Check if exist
 		char *p;
 		if ((p=check_exe_file(filename))!=NULL)
@@ -374,12 +372,12 @@ void StarterUtil::manage_log_file_history(char *filename, int nb_max)
 	ifstream	ifs((char *)log_file.c_str());
 	if (!ifs)
 		return;	//	Does not exist-> do nothing
-	
+
 	//	Get the log file list
 	vector<string>	list =  get_log_file_list(log_file);
 	//for (unsigned int i=0 ; i<list.size() ; i++)
 	//	cout << list[i] << endl;
-	
+
 	//	Check if too much files -> delete
 	while (list.size()>((unsigned int)nb_max-1))	//	-1 because a new one will exist bellow
 	{
@@ -444,7 +442,7 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 		pos = str.rfind('.');
 		string	filter = str.substr(0, pos);
 		filter += "_[";
-		
+
 #ifndef _TG_WINDOWS_
 		//cout << "Searching " << filter << "  in " << path << endl;
 		DIR		*dir = opendir ((char *)path.c_str()) ;
@@ -472,7 +470,7 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 					desc,
 					(const char *)"StarterUtil::get_log_file_list()");
 
-		} 
+		}
 		struct dirent	*ent;
 		while ( (ent=readdir(dir)) )
 		{
@@ -536,13 +534,13 @@ string StarterUtil::build_log_file_name(char *server)
 	char	servname[50];
 	char	intancename[50];
 	char	*p1 = server;
-	char	*p2 = servname;	
+	char	*p2 = servname;
 	while (*p1 && *p1!='/')
 		*p2++ = *p1++;
 	*p2++ = '\0';
 	p1++;
 
-	p2 = intancename;	
+	p2 = intancename;
 	while (*p1)
 		*p2++ = *p1++;
 	*p2++ = '\0';
@@ -675,7 +673,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 	}
 
 	if (trace)	cout << "--------------  Check if list of servers modified  --------------" << endl;
-	
+
 	//	Check servers really used (erase this one and database server)
 	vector<string>::iterator pos;
 	vector<string>	result;
@@ -684,7 +682,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 		int	idx = (*pos).find_first_of("/");
 		if (idx>0)
 		{
-			//	Get process name only in lower case before compeare
+			//	Get process name only in lower case before compare
 			string	s = (*pos).substr(0, idx);
 			transform(s.begin(), s.end(), s.begin(), ::tolower);
 			if (s!="starter"            &&
@@ -715,12 +713,13 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 
 			if (!found)
 			{
-				if (trace)	cout << s1 << " has disappeared" << endl;
+				if (trace)  cout << s1 << " has disappeared" << endl;
 				//	if disappeared then stop thread and remove reference
 				it->thread_data->set_stop_thread();
+				it->thread->join(0);
 				servers->erase(it);
 				redo = true;
-				break;	//	get out of loop (vector size has changed.
+				break;	//	get out of loop (vector size has changed).
 			}
 		}
 	}
@@ -737,9 +736,8 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 
 			server.name = name;
 			server.admin_name = "dserver/" + server.name;
-			server.dev = NULL;
 			server.controlled = (atoi((*pos++).c_str())==0)? false: true;
-			server.startup_level =  atoi((*pos++).c_str());
+			server.startup_level = atoi((*pos++).c_str());
 			server.state         = Tango::FAULT;
 			server.stopped       = false;
 			server.auto_start    = false;
@@ -748,7 +746,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 
 			//	Add a thread to ping server
 			server.thread_data = new PingThreadData(server.name);
-			server.thread = 
+			server.thread =
 				new PingThread(server.thread_data, server.name, proc_util);
 			server.thread->start();
 
@@ -789,7 +787,7 @@ ControlledServer *StarterUtil::get_server_by_name(string &servname, vector<Contr
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::
-// 
+//
 // description : 	Return true if Notify Daemon is alive
 //
 //-----------------------------------------------------------------------------
@@ -827,7 +825,7 @@ void StarterUtil::import_notifyd()
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::
-// 
+//
 // description : 	Return true if Notify Daemon is alive
 //
 //-----------------------------------------------------------------------------
@@ -848,12 +846,12 @@ Tango::DevState StarterUtil::is_notifyd_alive()
 			delete ch_id;
 
 			cout2 << notifyd_name << "EventChannelFactory is ON" << endl;
- 			
+
 			notifd_state = Tango::ON;
 		}
 		catch (...)
 		{
-			cerr << notify_procname << " is running  BUT not responding" << endl;			
+			cerr << notify_procname << " is running  BUT not responding" << endl;
 			//cerr << "Failed to narrow the EventChannelFactory on " << notifyd_name << endl;
 			ch_factory = NULL;
  			notifd_state = Tango::UNKNOWN;

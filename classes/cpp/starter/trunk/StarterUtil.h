@@ -60,20 +60,19 @@ namespace Starter_ns
 typedef unsigned char boolean;
 #endif
 
-struct ControlledServer {
-    ~ControlledServer() { delete dev; };
-	string	name;
-	string	admin_name;
-	bool	controlled;
-	short	startup_level;
-	PingThreadData		*thread_data;
-	PingThread			*thread;
-	Tango::DeviceProxy	*dev;
-	Tango::DevState		state;
-	bool		stopped;
-	bool		auto_start;
-	time_t		started_time;
-	time_t		failure_time;
+class ControlledServer {
+    public:
+        string	name;
+        string	admin_name;
+        bool	controlled;
+        short	startup_level;
+        PingThreadData		*thread_data;
+        PingThread			*thread;
+        Tango::DevState		state;
+        bool		stopped;
+        bool		auto_start;
+        time_t		started_time;
+        time_t		failure_time;
 };
 
 //	Millisecond sleep platform independent.
