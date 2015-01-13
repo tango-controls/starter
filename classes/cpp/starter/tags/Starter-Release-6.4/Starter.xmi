@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="Starter" pogoRevision="9.0">
+    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_4Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
+      <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
+    </description>
+    <classProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </classProperties>
+    <classProperties name="LogFileHome" description="The home directory to log servers traces.&#xA;For Linux the default value is /var/tmp&#xA;For Win32 it is c:\temp">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <classProperties name="NbStartupLevels" description="Number of startup levels managed by starter.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>5</DefaultPropValue>
+    </classProperties>
+    <classProperties name="ReadInfoDbPeriod" description="Period to read database for new info if not fired from Database server.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </classProperties>
+    <classProperties name="ServerStartupTimeout" description="Timeout on device server startup in seconds.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </classProperties>
+    <classProperties name="StartServersAtStartup" description="Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>true</DefaultPropValue>
+    </classProperties>
+    <classProperties name="UseEvents" description="Use events if not null.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </classProperties>
+    <deviceProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="InterStartupLevelWait" description="Time to wait before two startup levels in seconds.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>1</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="KeepLogFiles" description="Number of log file kept.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>3</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="LogFileHome" description="The home directory to log servers traces.&#xA;For Linux the default value is /var/tmp&#xA;For Win32 it is c:\temp">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="ServerStartupTimeout" description="Timeout on device server startup in seconds.">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>5</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="StartDsPath" description="Path to find executable files&#xA;to start device servers">
+      <type xsi:type="pogoDsl:StringVectorType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <deviceProperties name="StartServersAtStartup" description="Skip starting servers at startup if false.">
+      <type xsi:type="pogoDsl:BooleanType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>true</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="UseEvents" description="Use events if not null.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="WaitForDriverStartup" description="The Starter will wait a bit before starting servers, to be sure than the drivers&#xA;are started.This time is in seconds.">
+      <type xsi:type="pogoDsl:ShortType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="1000">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="State Code">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its &lt;i>device_status&lt;/i> data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none.">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Status description">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true" concreteHere="false"/>
+    </commands>
+    <commands name="DevStart" description="Start the specified server." execMethod="dev_start" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Server to be started.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevStop" description="Stop the specified server." execMethod="dev_stop" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Servero be stopped.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevStartAll" description="Start all device servers controled on the host for the argin level." execMethod="dev_start_all" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Startup level.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevStopAll" description="Stop all device servers controled on the host for the argin level." execMethod="dev_stop_all" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Startup Level.">
+        <type xsi:type="pogoDsl:ShortType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevGetRunningServers" description="Control the running process from property list.&#xA;And return the list of the processes which are really running." execMethod="dev_get_running_servers" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="True for all servers. False for controled servers only.">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="List of the processes which are running.">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevGetStopServers" description="Control the running process from property list.&#xA;And return the list of the processes which are not running." execMethod="dev_get_stop_servers" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="True for all servers. False for controled servers only.">
+        <type xsi:type="pogoDsl:BooleanType"/>
+      </argin>
+      <argout description="List of the processes which are not running.">
+        <type xsi:type="pogoDsl:StringArrayType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="DevReadLog" description="At server startup, its standard error is redirected to a log file.&#xA;This command will read this file and return the read string from the file." execMethod="dev_read_log" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="server name and domain (e.g. Starter/corvus)&#xA;If argin ==``Starter``     -> return Starter logg file content.&#xA;If argin ==``Statistics``  -> return Starter statistics file content.">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="String found in log file.">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="HardKillServer" description="Hard kill a server (kill -9)" execMethod="hard_kill_server" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="Server name">
+        <type xsi:type="pogoDsl:StringType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="NotifyDaemonState" description="Returns the Notify Daemon state." execMethod="notify_daemon_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Tango::ON if Notify daemon is running else Tango::FAULT.">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="ResetStatistics" description="Reset statistics file." execMethod="reset_statistics" displayLevel="EXPERT" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <commands name="UpdateServersInfo" description="Indicate to the device server than the information about servers to be controlled has been modified.&#xA;The device server must read the database to update the servers info list.&#xA;If the default case, this command is sent by Database server itself." execMethod="update_servers_info" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argout>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </commands>
+    <attributes name="NotifdState" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="0" maxY="0">
+      <dataType xsi:type="pogoDsl:StateType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="return ON or FAULT if notify daemon is running or not." label="Notifd State" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="HostState" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="0" maxY="0" allocReadMember="false">
+      <dataType xsi:type="pogoDsl:ShortType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="RunningServers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="200" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="StoppedServers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="200" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Return all the Stopped servers.\n" label="All Stopped Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="Servers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="1024" maxY="0">
+      <dataType xsi:type="pogoDsl:StringType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="Return all registred servers for this host.\nServer names are followed by their states and controls" label="Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="UNKNOWN" description="This device server has NOT been correctly initialised.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ON" description="All controlled servers are running.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="ALARM" description="At least one controled device server is not running.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <states name="MOVING" description="The Sarter is starting servers.">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <additionalFiles name="CheckProcessUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/CheckProcessUtil.cpp"/>
+    <additionalFiles name="PingThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/PingThread.cpp"/>
+    <additionalFiles name="StarterUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StarterUtil.cpp"/>
+    <additionalFiles name="StartProcessThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StartProcessThread.cpp"/>
+  </classes>
+</pogoDsl:PogoSystem>
