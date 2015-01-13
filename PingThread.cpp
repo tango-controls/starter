@@ -20,12 +20,12 @@ static const char *RcsId = "$Header$";
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -144,7 +144,7 @@ void PingThreadData::set_state(Tango::DevState st)
 Tango::DevState PingThreadData::get_state()
 {
 	omni_mutex_lock sync(*this);
-	return state;	
+	return state;
 }
 //+----------------------------------------------------------------------------
 /**
@@ -200,7 +200,7 @@ void *PingThread::run_undetached(TANGO_UNUSED(void *ptr))
 				catch(...)
 				{
 					cout << "============================================" << endl;
-					cout << "	Exception catched !!!!!!" << endl;
+					cout << "	Exception catch !!!!!!" << endl;
 					cout << "============================================" << endl;
 				}
 			}
@@ -225,7 +225,7 @@ void *PingThread::run_undetached(TANGO_UNUSED(void *ptr))
 
 		if (trace) cout << "Ping thread:[" << servname << "]	" <<
 				Tango::DevStateName[state]    << endl;
-		
+
 		//	Compute time to sleep
 		GetTime(after);
 		double	dt = (double)Elapsed(before, after);

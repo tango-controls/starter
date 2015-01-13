@@ -173,10 +173,10 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
 	//	Free the process structure field
 	for (i=0 ; i<processes.size() ; i++)
 	{
-		free(processes[i]->servname);
-		free(processes[i]->instancename);
-		delete [] processes[i]->adminname;
-		delete [] processes[i]->logfile;
+		delete[] processes[i]->servname;
+		delete[] processes[i]->instancename;
+		delete[] processes[i]->adminname;
+		delete[] processes[i]->logfile;
 		delete processes[i];
 	}
 
@@ -389,7 +389,7 @@ bool StartProcessShared::level_is_still_active(int level)
 //+------------------------------------------------------------------
 void StartProcessShared::remove_level(int level)
 {
-	omni_mutex_lock sync(*this);	
+	omni_mutex_lock sync(*this);
 	vector<int>::iterator it = start_process_thread_levels.begin();
 	for (  ; it<start_process_thread_levels.end() ; it++) {
         if (*it==level) {

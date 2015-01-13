@@ -1464,7 +1464,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 	//-------------------------------------
 	char	*servname     = util->get_server_name(argin) ;
 	char	*instancename = util->get_instance_name(argin);
-	char	*adminname = new char[strlen(servname)+ strlen(instancename)+10];
+	char	*adminname    = new char[strlen(servname)+ strlen(instancename)+10];
 	sprintf(adminname, "dserver/%s/%s", servname, instancename);
 	char	*filename;
 	try {
@@ -1472,9 +1472,9 @@ NewProcess *Starter::processCouldStart(char *argin)
 	}
 	catch(Tango::DevFailed &e)
 	{
-		free(servname);
-		free(instancename);
-		delete [] adminname;
+		delete[] servname;
+		delete[] instancename;
+		delete[] adminname;
 		if (throwable)
 			throw;
 		else
@@ -1483,7 +1483,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 			return NULL;
 		}
 	}
-	free(servname);
+	delete[] servname;
 
 	check_log_dir();
 

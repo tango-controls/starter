@@ -158,9 +158,6 @@ char *StarterUtil::get_instance_name(char *argin)
 //-----------------------------------------------------------------------------
 char *StarterUtil::check_exe_file(string name)
 {
-	static char	*result = NULL;
-	if (result==NULL)
-		free(result);
 	string	filename(name);
 #ifdef	_TG_WINDOWS_
 	filename += ".exe";
@@ -170,13 +167,13 @@ char *StarterUtil::check_exe_file(string name)
 	if (ifs)
 	{
 		ifs.close();
-		result = (char *)malloc(strlen(filename.c_str())+1);
-		strcpy(result, filename.c_str());
-		return result;
+		char *exeFullName = new char[strlen(filename.c_str())+1];
+		strcpy(exeFullName, filename.c_str());
+		return exeFullName;
 	}
 #ifdef	_TG_WINDOWS_
 
-	//	Check for catch file
+	//	Check for batch file
 	filename = name;
 	filename += ".bat";
 	//cout << "Checking " << filename << endl;
@@ -184,9 +181,9 @@ char *StarterUtil::check_exe_file(string name)
 	if (ifs2)
 	{
 		ifs2.close();
-		result = (char *)malloc(strlen(filename.c_str())+1);
-		strcpy(result, filename.c_str());
-		return result;
+		char *exeFullName = new char[strlen(filename.c_str())+1];
+		strcpy(exeFullName, filename.c_str());
+		return exeFullName;
 	}
 #endif
 
