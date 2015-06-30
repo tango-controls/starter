@@ -1,6 +1,6 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-6.4 $";
+static const char *TagName    = "$Name: Starter-Release-6.5 $";
 static const char *CvsPath    = "$Source:  $";
 static const char *SvnPath    = "$HeadURL: https://tango-cs.svn.sourceforge.net/svnroot/tango-cs/classes/cpp/starter $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";
@@ -17,7 +17,7 @@ static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
