@@ -13,6 +13,9 @@
 
 
 
+Starter-6.6 	30/06/2015:
+	VC12 project added.
+
 Starter-6.5 	30/06/2015:
 	close stdout at server startup.
 
