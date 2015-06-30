@@ -9,7 +9,7 @@ static const char *RcsId = "$Header$";
 //
 // $Author$
 //
-// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014
+// Copyright (C) :      2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015
 //						European Synchrotron Radiation Facility
 //                      BP 220, Grenoble 38043
 //                      FRANCE
@@ -226,27 +226,26 @@ void StartProcessThread::start_process(NewProcess *process)
 				setpgrp();
 
 				//	Call setsid() to do NOT stop children if Starter is killed.
-				//--------------------------------------------------------------
 				setsid();
 #endif
+				// Close standard out
+				close(1);
+                open("/dev/null", O_RDWR | O_CREAT, 0664);
 
 				//	Close the stderr and re-open it on a log file.
-				//-------------------------------------------------
-				close(2);
-				starter->util->manage_log_file_history(
-						process->logfile, starter->keepLogFiles);
-				//remove(process->logfile);
-				open(process->logfile, O_RDWR | O_CREAT, 0664);
+                close(2);
+                starter->util->manage_log_file_history(
+                        process->logfile, starter->keepLogFiles);
+                open(process->logfile, O_RDWR | O_CREAT, 0664);
 
-				//	Start the execution of the device server
-				//---------------------------------------------
-				if (execvp(argv[0], argv)<0)
-				{
-					ofstream	of(process->logfile);
-					of << "Exec(" << argv[0] << ") failed " << endl;
-					of << strerror(errno) << endl;
-					of.close();
-				}
+                //	Start the execution of the device server
+                if (execvp(argv[0], argv)<0)
+                {
+                    ofstream	of(process->logfile);
+                    of << "Exec(" << argv[0] << ") failed " << endl;
+                    of << strerror(errno) << endl;
+                    of.close();
+                }
 				_exit(0);
 			}
 			break;
@@ -302,15 +301,6 @@ string StartWinThread::get_server_name_with_cotes(string servname)
 		str += servname.substr(pos);
 
 		return str;
-
-		/*
-		string	str("\"");
-		str += servname;
-		str += "\"";
-
-		string	str("c:\\\"Program Files\"\\Tango\\notify_daemon.bat");
-		return str;
-		*/
 	}
 	else
 		return servname;
@@ -375,10 +365,10 @@ bool StartProcessShared::level_is_still_active(int level)
 	omni_mutex_lock sync(*this);
 	vector<int>::iterator it = start_process_thread_levels.begin();
 	for (  ; it<start_process_thread_levels.end() ; it++)
-    if (*it==level) {
-        //cout << "Level " << level << " is still active" << endl;
-        return true;
-    }
+    	if (*it==level) {
+        	//cout << "Level " << level << " is still active" << endl;
+        	return true;
+    	}
         //cout << "Level " << level << " is NOT still active" << endl;
    return false;
 }

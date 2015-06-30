@@ -13,6 +13,12 @@
 
 
 
+Starter-6.5 	30/06/2015:
+	close stdout at server startup.
+
+Starter-6.4 	13/01/2015:
+	 Fix problem with very long server name (>50 chars) 
+
 Starter-6.3 	09/11/2014:
 	Add patches from Elettra.
 	Improve level managemnt for startup.
