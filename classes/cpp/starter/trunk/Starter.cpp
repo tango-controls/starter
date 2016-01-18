@@ -975,13 +975,13 @@ void Starter::dev_stop(Tango::DevString argin)
         try {
 		    dev = new Tango::DeviceProxy(server->admin_name);
             dev->command_inout("Kill");
-        }
+            delete dev;
+       }
         catch (Tango::DevFailed &e) {
             if (dev!=NULL)
                 delete dev;
             throw e;
         }
-
 
 		TangoSys_OMemStream out_stream;
 		out_stream << argin << " stopped";
