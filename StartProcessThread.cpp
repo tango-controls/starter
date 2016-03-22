@@ -205,44 +205,62 @@ void StartProcessThread::start_process(NewProcess *process)
 	case -1:
 		cerr << "Fork Failed !" << endl;
 		break;
-    case 0:
-        {
-            // Change process group and close control tty
+	case 0:
+	    //  Double fork to prevent defunct child processes
+		switch(fork())
+		{
+		case -1:
+			cerr << "Fork Failed !" << endl;
+			break;
+		case 0:
+			{
+				// Change process group and close control tty
 #if defined(__darwin__) || defined( __MACOS__)
 
-            setpgrp();
+				setpgrp();
 
 #elif defined (__freebsd__)
 
-            setpgrp(0,setsid());
+				setpgrp(0,setsid());
 
 #else
-            setpgrp();
+				setpgrp();
 
-            //	Call setsid() to do NOT stop children if Starter is killed.
-            setsid();
+				//	Call setsid() to do NOT stop children if Starter is killed.
+				setsid();
 #endif
-            // Close standard out
-            close(1);
-            open("/dev/null", O_RDWR | O_CREAT, 0664);
+				// Close standard out
+				close(1);
+                open("/dev/null", O_RDWR | O_CREAT, 0664);
 
-            //	Close the stderr and re-open it on a log file.
-            close(2);
-            starter->util->manage_log_file_history(
-                    process->logfile, starter->keepLogFiles);
-            open(process->logfile, O_RDWR | O_CREAT, 0664);
+				//	Close the stderr and re-open it on a log file.
+                close(2);
+                starter->util->manage_log_file_history(
+                        process->logfile, starter->keepLogFiles);
+                open(process->logfile, O_RDWR | O_CREAT, 0664);
 
-            //	Start the execution of the device server
-            if (execvp(argv[0], argv)<0)
-            {
-                ofstream	of(process->logfile);
-                of << "Exec(" << argv[0] << ") failed " << endl;
-                of << strerror(errno) << endl;
-                of.close();
-            }
-            _exit(0);
-        }
-        break;
+                //	Start the execution of the device server
+                if (execvp(argv[0], argv)<0)
+                {
+                    ofstream	of(process->logfile);
+                    of << "Exec(" << argv[0] << ") failed " << endl;
+                    of << strerror(errno) << endl;
+                    of.close();
+                }
+				_exit(0);
+			}
+			break;
+		default:
+			//cout << fork_id << " exit()" << endl;
+			_exit(0);
+			break;
+		}
+		break;
+
+	default:
+		int		res_wait;
+		wait(&res_wait);
+		break;
 	}
 }
 

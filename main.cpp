@@ -24,12 +24,12 @@ static const char *RcsId = "$Id$";
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // Tango is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with Tango.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -68,16 +68,16 @@ using namespace std;
 int main(int argc,char *argv[])
 {
 	//	First time set SIGINT to default to do not block
-	//	signal handling for child proceeses
+	//	signal handling for child processes
 	//---------------------------------------------------
 #ifndef _TG_WINDOWS_
 	//sigset(SIGINT, SIG_DFL);
 	struct sigaction sa;
-	
+
 	sa.sa_flags = 0;
 	sa.sa_handler = SIG_DFL;
 	sigemptyset(&sa.sa_mask);
-	
+
 	if (sigaction(SIGINT,&sa,NULL) == -1)
 		cerr << "Starter main() --> Can't reset default action for SIGINT to SIG_DFL" << endl;
 #endif
@@ -88,7 +88,7 @@ int main(int argc,char *argv[])
 		char *p;
 		for (p=argv[1] ; *p ; p++)
 			if (*p=='.')
-				*p = '\0';	//	Take off extention (eg:.esrf.fr)
+				*p = '\0';	//	Take off extension (eg:.esrf.fr)
 	}
 
 	//	Set an automatic retry on database connection
@@ -114,7 +114,7 @@ int main(int argc,char *argv[])
 		//----------------------------------------
 		Tango::Util *tg = Tango::Util::init(argc,argv);
 
-		// Create the device server singleton 
+		// Create the device server singleton
 		//	which will create everything
 		//----------------------------------------
 		tg->server_init();
@@ -135,7 +135,7 @@ int main(int argc,char *argv[])
 	catch (CORBA::Exception &e)
 	{
 		Tango::Except::print_exception(e);
-		
+
 		cerr << "Received a CORBA_Exception" << endl;
 		cerr << "Exiting" << endl;
 	}
