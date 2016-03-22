@@ -12,6 +12,9 @@
 #-======================================================================
 
 
+Starter-6.9 	22/03/2016:
+	Restore double fork to prevent defunct child processes
+
 Starter-6.8 	18/01/2016:
 	Delete dev added in dev_stop()
 

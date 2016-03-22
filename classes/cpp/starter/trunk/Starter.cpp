@@ -1461,7 +1461,6 @@ NewProcess *Starter::processCouldStart(char *argin)
 	}
 
 	//	Separate server name and instancename.
-	//-------------------------------------
 	char	*servname     = util->get_server_name(argin) ;
 	char	*instancename = util->get_instance_name(argin);
 	char	*adminname    = new char[strlen(servname)+ strlen(instancename)+10];
@@ -1650,7 +1649,7 @@ void Starter::check_log_dir()
 }
 //=================================================================
 //=================================================================
-void Starter::manage_changing_state(ControlledServer *server, Tango::DevState previous_state)
+void Starter::manage_changing_state(ControlledServer *server, TANGO_UNUSED(Tango::DevState previous_state))
 {
 	//	Do it only if server is controlled.
 	if (server->controlled==false || server->startup_level==0)
