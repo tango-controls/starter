@@ -246,7 +246,7 @@
     <states name="MOVING" description="The Sarter is starting servers.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
+    <preferences docHome="./docs" makefileHome="/segfs/tango/cppserver/env"/>
     <additionalFiles name="CheckProcessUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/CheckProcessUtil.cpp"/>
     <additionalFiles name="PingThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/PingThread.cpp"/>
     <additionalFiles name="StarterUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StarterUtil.cpp"/>
