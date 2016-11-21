@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Starter" pogoRevision="9.1">
-    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,VC12 Project,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+  <classes name="Starter" pogoRevision="9.4">
+    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,CMakeLists,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_5Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
@@ -246,7 +246,7 @@
     <states name="MOVING" description="The Sarter is starting servers.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
     <additionalFiles name="CheckProcessUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/CheckProcessUtil.cpp"/>
     <additionalFiles name="PingThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/PingThread.cpp"/>
     <additionalFiles name="StarterUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StarterUtil.cpp"/>

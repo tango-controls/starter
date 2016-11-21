@@ -47,13 +47,11 @@
 #include <sstream>
 
 
-#define PING_TIMEOUT			3	//	seconds
 #define	TIME_BETWEEN_STARTUPS	500	//	Milli seconds
 #define NOTIFY_DAEMON_SCRIPT	"notify_daemon"
 
 //	Used onlyduring the Cpp Api bug fixing on
 //	specAtt->get_max_x() method.
-#define NB_SERVERS_MAX			200
 #define SERVER_TIMEOUT		30	//	Timeout Minimum at server startup
 
 
@@ -98,10 +96,6 @@ class Starter : public TANGO_BASE_CLASS
 
 	//		Add your own data members
 public:
-	/**
-	 *	Manage the PollingState object startup
-	 */
-	void manage_PollingState_startup();
 	/**
 	 *	Start process thread Shared data
 	 */
