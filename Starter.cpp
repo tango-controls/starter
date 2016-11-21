@@ -248,7 +248,7 @@ void Starter::init_device()
 			cout << "hosts_list = " << str_list << endl;
 			int	start = 0;
 			int	end = 0;
-			while ((end=str_list.find_first_of(":", start))>0)
+			while ((end= (int) str_list.find_first_of(":", (unsigned long) start)) > 0)
 			{
 				string	s = str_list.substr(start, end-start);
 				hosts_list.push_back(s);
@@ -761,7 +761,7 @@ Tango::DevState Starter::dev_state()
 	DEBUG_STREAM << "Starter::State()  - " << device_name << endl;
 	/*----- PROTECTED REGION ID(Starter::dev_state) ENABLED START -----*/
 
-	Tango::DevState	argout = DeviceImpl::dev_state();
+	Tango::DevState	argout = Tango::DeviceImpl::dev_state();
 		//	Add your own state management
 	//	Check if last command is more than readInfoDbPeriod class property
 	int	period =
@@ -866,7 +866,7 @@ Tango::DevState Starter::dev_state()
 	/*----- PROTECTED REGION END -----*/	//	Starter::dev_state
 	set_state(argout);    // Give the state to Tango.
 	if (argout!=Tango::ALARM)
-		DeviceImpl::dev_state();
+		Tango::DeviceImpl::dev_state();
 	return get_state();  // Return it after Tango management.
 }
 //--------------------------------------------------------
