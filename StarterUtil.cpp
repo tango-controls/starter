@@ -36,11 +36,7 @@ static const char *RcsId = "$Header$";
 
 #include <tango.h>
 
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
 #include <fcntl.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #ifndef _TG_WINDOWS_
 #	include <sys/time.h>
@@ -48,7 +44,6 @@ static const char *RcsId = "$Header$";
 
 
 #include <StarterUtil.h>
-#include <sstream>
 
 
 namespace Starter_ns
@@ -449,18 +444,20 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 			//	error
 			switch(errno)
 			{
-			case EACCES: desc = "Permission denied.";
-				break;
-			case EMFILE: desc = "Too many file descriptors in use by process.";
-				break;
-			case ENFILE: desc = "Too many file are currently open in the system.";
-				break;
-			case ENOENT: desc = "Directory does not exist or NAME is an empty string.";
-				break;
-			case ENOMEM: desc = "Insufficient memory to complete the operation.";
-				break;
-			case ENOTDIR:desc  = "NAME is not a directory.";
-				break;
+				case EACCES: desc = "Permission denied.";
+					break;
+				case EMFILE: desc = "Too many file descriptors in use by process.";
+					break;
+				case ENFILE: desc = "Too many file are currently open in the system.";
+					break;
+				case ENOENT: desc = "Directory does not exist or NAME is an empty string.";
+					break;
+				case ENOMEM: desc = "Insufficient memory to complete the operation.";
+					break;
+				case ENOTDIR:desc  = "NAME is not a directory.";
+					break;
+				default: desc = "Unknown error: ";
+						 desc += errno;
 			}
 			Tango::Except::throw_exception(
 					(const char *)"READ_FILE_LIST_FAILED",
@@ -591,7 +588,7 @@ vector<string>	StarterUtil::get_host_ds_list()
 		vector<string>::iterator pos;
 		for (pos=tmp.begin() ; pos<tmp.end() ; ++pos)
 		{
-			int	idx = (*pos).find_first_of("/");
+			unsigned long idx = (*pos).find_first_of("/");
 			if (idx>0)
 			{
 				//	Get process name only in lower case before compeare
@@ -636,8 +633,8 @@ void StarterUtil::get_server_info(ControlledServer *server)
 		Tango::DeviceData	argout = dbase->command_inout("DbGetServerInfo", argin);
 		vector<string>	result;
 		argout >> result;
-		server->controlled     = (atoi(result[2].c_str())==0)? false: true;
-		server->startup_level =  atoi(result[3].c_str());
+		server->controlled = atoi(result[2].c_str()) != 0;
+		server->startup_level =  (short)atoi(result[3].c_str());
 	}
 	catch(Tango::DevFailed &e)
 	{
@@ -676,7 +673,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 	vector<string>	result;
 	for (pos=result_from_db.begin() ; pos<result_from_db.end() ; pos+=3)
 	{
-		int	idx = (*pos).find_first_of("/");
+		unsigned long idx = (*pos).find_first_of("/");
 		if (idx>0)
 		{
 			//	Get process name only in lower case before compare
@@ -733,8 +730,8 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 
 			server.name = name;
 			server.admin_name = "dserver/" + server.name;
-			server.controlled = (atoi((*pos++).c_str())==0)? false: true;
-			server.startup_level = atoi((*pos++).c_str());
+			server.controlled = atoi((*pos++).c_str()) != 0;
+			server.startup_level = (short)atoi((*pos++).c_str());
 			server.state         = Tango::FAULT;
 			server.stopped       = false;
 			server.auto_start    = false;
@@ -753,8 +750,8 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 		else
 		{
 			//	Update levels
-			p_serv->controlled    = (atoi((*pos++).c_str())==0)? false: true;
-			p_serv->startup_level =  atoi((*pos++).c_str());
+			p_serv->controlled = atoi((*pos++).c_str()) != 0;
+			p_serv->startup_level = (short) atoi((*pos++).c_str());
 		}
 	}
 }
