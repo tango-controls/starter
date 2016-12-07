@@ -1,6 +1,6 @@
 /*----- PROTECTED REGION ID(StarterClass.cpp) ENABLED START -----*/
 static const char *RcsId      = "$Id$";
-static const char *TagName    = "$Name: Starter-Release-6.9 $";
+static const char *TagName    = "$Name: Starter-Release-6.10 $";
 static const char *CvsPath    = "$Source:  $";
 static const char *SvnPath    = "$HeadURL: https://tango-cs.svn.sourceforge.net/svnroot/tango-cs/classes/cpp/starter $";
 static const char *HttpServer = "http://www.esrf.eu/computing/cs/tango/tango_doc/ds_doc/";

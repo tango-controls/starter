@@ -12,6 +12,9 @@
 #-======================================================================
 
 
+Starter-6.10 	07/12/2016:
+	Fix a problem when server is started with java -jar
+
 Starter-6.9 	22/03/2016:
 	Restore double fork to prevent defunct child processes
 

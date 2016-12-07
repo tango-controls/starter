@@ -747,7 +747,7 @@ void ProcessData::check_cpp_process(Process* process)
  *	Check for  java processes
  */
 //=============================================================
-bool ProcessData::check_java_process(Process* process)
+bool ProcessData::check_java_process(Process *process)
 {
 	if (process->line_args.size()==0)
 		return false;
@@ -766,18 +766,32 @@ bool ProcessData::check_java_process(Process* process)
 	{
 		if (process->line_args[i]!="" && process->line_args[i].c_str()[0]!='-')
 		{
-			if (i>1)	
+			if (i>1)	 // -1 because last one is instance
 			{
-
 				//	To get class name, remove package name of previous arg
 				string	full_name(process->line_args[i-1]);
 				string::size_type	start = 0;
 				string::size_type	end;
 				while ((end=full_name.find('.', start))!=string::npos)
 					start = end+1;
-				//	Get last one
-				process->name = full_name.substr(start);
-				
+                string name = full_name.substr(start);
+
+                if (name!="jar") {
+                    //	Get last one
+                    process->name = name;
+                }
+                else {
+                    // if jar file get file name without extension
+                    full_name = full_name.substr(0, start-1);
+                    start = full_name.rfind("."); // last in package
+                    if (start==string::npos)
+                        start = full_name.rfind("/");// last in path
+                    if (start==string::npos)
+                        start = 0; // only name
+                    else
+                        start++; // after / or .
+                    process->name = full_name.substr(start);
+                }
 				//	and take this one as instance 
 				process->proc_args.push_back(process->line_args[i]);
 				found = true;

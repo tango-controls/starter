@@ -29,7 +29,7 @@ MAKE_ENV = /segfs/tango/cppserver/env
 #
 PACKAGE_NAME = Starter
 MAJOR_VERS   = 6
-MINOR_VERS   = 9
+MINOR_VERS   = 10
 RELEASE      = $(MAJOR_VERS).$(MINOR_VERS)
 
 # #=============================================================================
