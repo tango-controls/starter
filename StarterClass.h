@@ -91,7 +91,7 @@ class RunningServersAttrib: public Tango::SpectrumAttr
 {
 public:
 	RunningServersAttrib():SpectrumAttr("RunningServers",
-			Tango::DEV_STRING, Tango::READ, 200) {};
+			Tango::DEV_STRING, Tango::READ, 1024) {};
 	~RunningServersAttrib() {};
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_RunningServers(att);}
@@ -104,7 +104,7 @@ class StoppedServersAttrib: public Tango::SpectrumAttr
 {
 public:
 	StoppedServersAttrib():SpectrumAttr("StoppedServers",
-			Tango::DEV_STRING, Tango::READ, 200) {};
+			Tango::DEV_STRING, Tango::READ, 1024) {};
 	~StoppedServersAttrib() {};
 	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
 		{(static_cast<Starter *>(dev))->read_StoppedServers(att);}
@@ -435,6 +435,7 @@ public:
 		static StarterClass *_instance;
 		void command_factory();
 		void attribute_factory(vector<Tango::Attr *> &);
+		void pipe_factory();
 		void write_class_property();
 		void set_default_property();
 		void get_class_property();

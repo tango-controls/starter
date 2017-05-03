@@ -1,5 +1,4 @@
 /*----- PROTECTED REGION ID(Starter.cpp) ENABLED START -----*/
-static const char *RcsId = "$Id$";
 //=============================================================================
 //
 // file :        Starter.cpp
@@ -88,8 +87,8 @@ static const char *RcsId = "$Id$";
 //================================================================
 //  NotifdState     |  Tango::DevState	Scalar
 //  HostState       |  Tango::DevShort	Scalar
-//  RunningServers  |  Tango::DevString	Spectrum  ( max = 200)
-//  StoppedServers  |  Tango::DevString	Spectrum  ( max = 200)
+//  RunningServers  |  Tango::DevString	Spectrum  ( max = 1024)
+//  StoppedServers  |  Tango::DevString	Spectrum  ( max = 1024)
 //  Servers         |  Tango::DevString	Spectrum  ( max = 1024)
 //================================================================
 
@@ -192,11 +191,11 @@ void Starter::init_device()
 	cout << "Starter::Starter() init device " << device_name << endl;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::init_device_before
-
+	
 
 	//	Get the device properties from database
 	get_device_property();
-
+	
 	/*----- PROTECTED REGION ID(Starter::init_device) ENABLED START -----*/
 
 	debug = false;
@@ -405,7 +404,7 @@ void Starter::get_device_property()
 		//	Call database and extract values
 		if (Tango::Util::instance()->_UseDb==true)
 			get_db_device()->get_property(dev_prop);
-
+	
 		//	get instance on StarterClass to get class property
 		Tango::DbDatum	def_prop, cl_prop;
 		StarterClass	*ds_class =
@@ -620,7 +619,7 @@ void Starter::read_NotifdState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute HostState related method
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -641,10 +640,10 @@ void Starter::read_HostState(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute RunningServers related method
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevString
- *	Attr type:	Spectrum max = 200
+ *	Attr type:	Spectrum max = 1024
  */
 //--------------------------------------------------------
 void Starter::read_RunningServers(Tango::Attribute &attr)
@@ -670,10 +669,10 @@ void Starter::read_RunningServers(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute StoppedServers related method
- *	Description: Return all the Stopped servers.\n
+ *	Description: Return all the Stopped servers.
  *
  *	Data type:	Tango::DevString
- *	Attr type:	Spectrum max = 200
+ *	Attr type:	Spectrum max = 1024
  */
 //--------------------------------------------------------
 void Starter::read_StoppedServers(Tango::Attribute &attr)
@@ -931,7 +930,7 @@ void Starter::dev_start(Tango::DevString argin)
  *	Command DevStop related method
  *	Description: Stop the specified server.
  *
- *	@param argin Server be stopped.
+ *	@param argin Servero be stopped.
  */
 //--------------------------------------------------------
 void Starter::dev_stop(Tango::DevString argin)
@@ -1424,6 +1423,21 @@ void Starter::update_servers_info()
 	do_update_from_db = true;
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::update_servers_info
+}
+//--------------------------------------------------------
+/**
+ *	Method      : Starter::add_dynamic_commands()
+ *	Description : Create the dynamic commands if any
+ *                for specified device.
+ */
+//--------------------------------------------------------
+void Starter::add_dynamic_commands()
+{
+	/*----- PROTECTED REGION ID(Starter::add_dynamic_commands) ENABLED START -----*/
+	
+	//	Add your own code to create and add dynamic commands if any
+	
+	/*----- PROTECTED REGION END -----*/	//	Starter::add_dynamic_commands
 }
 
 /*----- PROTECTED REGION ID(Starter::namespace_ending) ENABLED START -----*/

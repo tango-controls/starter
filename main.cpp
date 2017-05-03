@@ -1,5 +1,5 @@
 /*PROTECTED REGION ID(Starter::main.cpp) ENABLED START*/
-static const char *RcsId = "$Id$";
+static const char *releaseName    = "Starter-Release-6.2";
 //=============================================================================
 //
 // file :        main.cpp
@@ -108,6 +108,8 @@ int main(int argc,char *argv[])
 
 #else
 
+	if (argc==1)
+		cout <<  releaseName << endl;
 	try
 	{
 		// Initialise the device server

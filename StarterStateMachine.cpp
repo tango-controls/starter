@@ -1,5 +1,4 @@
 /*----- PROTECTED REGION ID(StarterStateMachine.cpp) ENABLED START -----*/
-static const char *RcsId = "$Id$";
 //=============================================================================
 //
 // file :        StarterStateMachine.cpp
@@ -140,6 +139,7 @@ bool Starter::is_Servers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/*----- PROTECTED REGION END -----*/	//	Starter::ServersStateAllowed_READ
 	return true;
 }
+
 
 //=================================================
 //		Commands Allowed Methods
@@ -309,5 +309,12 @@ bool Starter::is_UpdateServersInfo_allowed(TANGO_UNUSED(const CORBA::Any &any))
 	/*----- PROTECTED REGION END -----*/	//	Starter::UpdateServersInfoStateAllowed
 	return true;
 }
+
+
+/*----- PROTECTED REGION ID(Starter::StarterStateAllowed.AdditionalMethods) ENABLED START -----*/
+
+//	Additional Methods
+
+/*----- PROTECTED REGION END -----*/	//	Starter::StarterStateAllowed.AdditionalMethods
 
 }	//	End of namespace

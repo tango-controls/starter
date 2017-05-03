@@ -1,5 +1,4 @@
 /*----- PROTECTED REGION ID(Starter::ClassFactory.cpp) ENABLED START -----*/
-static const char *RcsId = "$Header$";
 //+=============================================================================
 //
 // file :        ClassFactory.cpp

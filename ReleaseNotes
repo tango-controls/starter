@@ -12,6 +12,9 @@
 #-======================================================================
 
 
+Starter-6.2 	03/05/2017:
+	Increase spectrum attributes dim_x
+
 Starter-6.10 	07/12/2016:
 	Fix a problem when server is started with java -jar
 

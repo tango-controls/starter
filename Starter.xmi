@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Starter" pogoRevision="9.4">
-    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,CMakeLists,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
-      <inheritances classname="Device_5Impl" sourcePath="/segfs/tango/templates/AbstractClasses"/>
+    <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_5Impl" sourcePath="../../../../../../segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
     <classProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">
@@ -213,19 +213,21 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="RunningServers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="200" maxY="0">
+    <attributes name="RunningServers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="1024" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
-    <attributes name="StoppedServers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="200" maxY="0">
+    <attributes name="StoppedServers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="1024" maxY="0" allocReadMember="false" isDynamic="false">
       <dataType xsi:type="pogoDsl:StringType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>
       <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Return all the Stopped servers.\n" label="All Stopped Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Return all the Stopped servers." label="All Stopped Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <attributes name="Servers" attType="Spectrum" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="1024" maxY="0">
       <dataType xsi:type="pogoDsl:StringType"/>
@@ -246,7 +248,7 @@
     <states name="MOVING" description="The Sarter is starting servers.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <preferences docHome="./docs" makefileHome="/segfs/tango/cppserver/env"/>
+    <preferences docHome="./doc_html" makefileHome="/segfs/tango/cppserver/env"/>
     <additionalFiles name="CheckProcessUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/CheckProcessUtil.cpp"/>
     <additionalFiles name="PingThread" path="/mntdirect/_segfs/tango/cppserver/admin/starter/PingThread.cpp"/>
     <additionalFiles name="StarterUtil" path="/mntdirect/_segfs/tango/cppserver/admin/starter/StarterUtil.cpp"/>

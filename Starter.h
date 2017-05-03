@@ -243,7 +243,7 @@ public:
 	virtual bool is_NotifdState_allowed(Tango::AttReqType type);
 /**
  *	Attribute HostState related methods
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevShort
  *	Attr type:	Scalar
@@ -252,19 +252,19 @@ public:
 	virtual bool is_HostState_allowed(Tango::AttReqType type);
 /**
  *	Attribute RunningServers related methods
- *	Description:
+ *	Description: 
  *
  *	Data type:	Tango::DevString
- *	Attr type:	Spectrum max = 200
+ *	Attr type:	Spectrum max = 1024
  */
 	virtual void read_RunningServers(Tango::Attribute &attr);
 	virtual bool is_RunningServers_allowed(Tango::AttReqType type);
 /**
  *	Attribute StoppedServers related methods
- *	Description: Return all the Stopped servers.\n
+ *	Description: Return all the Stopped servers.
  *
  *	Data type:	Tango::DevString
- *	Attr type:	Spectrum max = 200
+ *	Attr type:	Spectrum max = 1024
  */
 	virtual void read_StoppedServers(Tango::Attribute &attr);
 	virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
@@ -286,6 +286,7 @@ public:
 	 */
 	//--------------------------------------------------------
 	void add_dynamic_attributes();
+
 
 
 
@@ -395,6 +396,14 @@ public:
 	virtual void update_servers_info();
 	virtual bool is_UpdateServersInfo_allowed(const CORBA::Any &any);
 
+
+	//--------------------------------------------------------
+	/**
+	 *	Method      : Starter::add_dynamic_commands()
+	 *	Description : Add dynamic commands if any.
+	 */
+	//--------------------------------------------------------
+	void add_dynamic_commands();
 
 /*----- PROTECTED REGION ID(Starter::Additional Method prototypes) ENABLED START -----*/
 
