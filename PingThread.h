@@ -65,6 +65,7 @@ private:
 	bool			stop_thread;
 	time_t			last_write_time;
 	Tango::DevState	state;
+    int nbInstances;
 
 public:
 	PingThreadData(string name);
@@ -97,6 +98,9 @@ public:
 	 *	Force thread to update data.
 	 */
 	void wake_up();
+
+	int getNbInstaces();
+	void setNbInstaces(int nb);
 };
 //=========================================================
 /**
@@ -124,10 +128,7 @@ public:
 	 *	@param	name The pinged server name
 	 *	@param	timeout	timeout value in milliseconds for ping command.
 	 */
-	PingThread(PingThreadData *sd, string name, CheckProcessUtil *proc_util)\
-	{\
-		shared = sd;  servname = name;  process_util = proc_util;\
-	};
+	PingThread(PingThreadData *sd, string name, CheckProcessUtil *proc_util);
 
 	/**
 	 *	Execute the thread loop.

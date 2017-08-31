@@ -997,7 +997,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	Attribute : Servers
 	ServersAttrib	*servers = new ServersAttrib();
 	Tango::UserDefaultAttrProp	servers_prop;
-	servers_prop.set_description("Return all registred servers for this host.\nServer names are followed by their states and controls");
+	servers_prop.set_description("Return all registred servers for this host.\nServer names are followed by:   [states] [controled] [level] [nb instances]\nIf nb instances >1 a warning will be displayed in Astor");
 	servers_prop.set_label("Servers");
 	//	unit	not set for Servers
 	//	standard_unit	not set for Servers

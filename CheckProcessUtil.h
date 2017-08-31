@@ -137,6 +137,7 @@ public:
 	void update_process_list();
 	bool is_server_running(string argin);
 	bool is_process_running(string argin);
+	int getNbServerInstances(string argin);
 	int  get_server_pid(string argin);
 	vector<Process>	get_process_list();
 #ifdef _TG_WINDOWS_
@@ -158,6 +159,7 @@ public:
 	CheckProcessUtil() { data=new ProcessData(); stop_thread=false;};
 	bool is_server_running(string argin);
 	bool is_process_running(string argin);
+	int getNbServerInstances(string argin);
 	int  get_server_pid(string argin);
 	vector<Process> get_process_list();
 	void stop_it() { stop_thread= true; };

@@ -338,6 +338,7 @@ void Starter::init_device()
 			{
 				ControlledServer	*server = &servers[i];
 				server->state = server->thread_data->get_state();
+				server->nbInstances = server->thread_data->getNbInstaces();
 			}
 			//	And then starl-c16-1 (ZMQ)t levels
 			for (int level=1 ; level<=nb_levels ; level++)
@@ -583,6 +584,7 @@ void Starter::read_attr_hardware(TANGO_UNUSED(vector<long> &attr_list))
 				Tango::DevState	previous_state = servers[j].state;
 				//	Update server state
 				servers[j].state = servers[j].thread_data->get_state();
+				servers[j].nbInstances = servers[j].thread_data->getNbInstaces();
 
 				//	Check if state has changed.
 				if (previous_state!=servers[j].state)
@@ -698,7 +700,9 @@ void Starter::read_StoppedServers(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute Servers related method
- *	Description: Return all registred servers for this host.\nServer names are followed by their states and controls
+ *	Description: Return all registred servers for this host.
+ *               Server names are followed by:   [states] [controled] [level] [nb instances]
+ *               If nb instances >1 a warning will be displayed in Astor
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 1024
@@ -714,9 +718,10 @@ void Starter::read_Servers(Tango::Attribute &attr)
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 	{
 		TangoSys_OMemStream tms;
-		tms << servers[i].name << "\t" <<
-					Tango::DevStateName[servers[i].state] << "\t" <<
-					servers[i].controlled  << "\t" << servers[i].startup_level;
+		tms << servers[i].name << '\t'
+            << Tango::DevStateName[servers[i].state] << '\t'
+            << servers[i].controlled  << '\t'
+            << servers[i].startup_level << '\t' << servers[i].nbInstances;
 		string	s = tms.str();
 		vs.push_back(s);
 

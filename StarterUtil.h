@@ -71,6 +71,7 @@ class ControlledServer {
         Tango::DevState		state;
         bool		stopped;
         bool		auto_start;
+		int 		nbInstances;
         time_t		started_time;
         time_t		failure_time;
 };

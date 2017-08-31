@@ -36,6 +36,7 @@
 
 
 #include <CheckProcessUtil.h>
+#include "CheckProcessUtil.h"
 
 #ifndef	TIME_VAR
 #ifndef _TG_WINDOWS_
@@ -995,6 +996,7 @@ void ProcessData::update_process_list()
 			if(check_python_process(process)==false)
 				check_cpp_process(process);
 		build_server_names(process);
+
 #ifdef TRACE2
 		cout << process->pid << "	" << process->name;
 		if (process->proc_args.empty()==false)
@@ -1053,8 +1055,8 @@ bool ProcessData::is_server_running(string argin)
 	for (unsigned int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
-		if (process->servname == argin)
-			return true;
+        if (!process->servname.empty() && process->servname == argin)
+            return true;
 	}
 	return false;
 }
@@ -1069,10 +1071,27 @@ bool ProcessData::is_process_running(string argin)
 	for (unsigned int i=0 ; i<proc_list.size() ; i++)
 	{
 		Process	*process = proc_list[i];
-		if (process->name == argin)
+		if (!process->servname.empty() && process->name == argin)
 			return true;
 	}
 	return false;
+}
+//=============================================================
+/**
+ * Returs true if process running
+ */
+//=============================================================
+int ProcessData::getNbServerInstances(string argin)
+{
+	omni_mutex_lock sync(*this);
+    int nb = 0;
+    for (unsigned int i=0 ; i<proc_list.size() ; i++)
+    {
+        Process	*process = proc_list[i];
+        if (!process->servname.empty() && process->servname==argin)
+            nb++;
+    }
+	return nb;
 }
 //=============================================================
 //=============================================================
@@ -1139,6 +1158,15 @@ bool CheckProcessUtil::is_server_running(string argin)
 bool CheckProcessUtil::is_process_running(string argin)
 {
 	return data->is_process_running(argin);
+}
+//=============================================================
+/**
+ * Returs true if process running several times (normally cannot occurs)
+ */
+//=============================================================
+int CheckProcessUtil::getNbServerInstances(string argin)
+{
+	return data->getNbServerInstances(argin);
 }
 //=============================================================
 //=============================================================

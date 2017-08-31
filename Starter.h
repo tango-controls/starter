@@ -270,7 +270,9 @@ public:
 	virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
 /**
  *	Attribute Servers related methods
- *	Description: Return all registred servers for this host.\nServer names are followed by their states and controls
+ *	Description: Return all registred servers for this host.
+ *               Server names are followed by:   [states] [controled] [level] [nb instances]
+ *               If nb instances >1 a warning will be displayed in Astor
  *
  *	Data type:	Tango::DevString
  *	Attr type:	Spectrum max = 1024
