@@ -29,7 +29,7 @@ MAKE_ENV = /segfs/tango/cppserver/env
 #
 PACKAGE_NAME = Starter
 MAJOR_VERS   = 6
-MINOR_VERS   = 10
+MINOR_VERS   = 12
 RELEASE      = $(MAJOR_VERS).$(MINOR_VERS)
 
 # #=============================================================================
@@ -134,18 +134,6 @@ SVC_OBJS =      \
 #	include common targets
 #
 include $(MAKE_ENV)/common_target.opt
-
-
-
-
-SVN_TAG_REV  = Release-$(RELEASE)
-SVN_SVC_PATH = $(SVN_TCS)/classes/cpp/starter
-tag:
-	@echo "Tagging  $(PACKAGE_NAME)  for $(SVN_TAG_REV)"
-	svn copy  $(SVN_SVC_PATH)/trunk \
-	          $(SVN_SVC_PATH)/tags/$(PACKAGE_NAME)-$(SVN_TAG_REV)
-
-
 
 WWW_HOST=webserv02
 WWW_HOME=/ftp/pub/cs/tango
