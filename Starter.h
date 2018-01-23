@@ -163,6 +163,9 @@ public:
 	//	WaitForDriverStartup:	The Starter will wait a bit before starting servers, to be sure than the drivers
 	//  are started.This time is in seconds.
 	Tango::DevShort	waitForDriverStartup;
+	//	MovingMaxDuration:	If a server is moving during a period more than this value,
+	//  the Starter will be switched from MOVING to STANDBY
+	Tango::DevLong	movingMaxDuration;
 
 //	Attribute data members
 public:

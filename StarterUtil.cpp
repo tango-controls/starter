@@ -74,7 +74,7 @@ StarterUtil::StarterUtil(Tango::DeviceProxy *database, vector<string> host_names
 	proc_util = new CheckProcessUtil();
 	proc_util->start();
 	//	Wait a bit to be sure
-	//	that runningp rocess list is updated.
+	//	that running process list is updated.
 #ifdef _TG_WINDOWS_
 	_sleep(1000);
 #else
@@ -299,7 +299,7 @@ void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers)
 				failure_time = time(NULL);
 
 			strlog << it->name           << "\t" <<
-	                ((it->state==Tango::ON)? "ON\t" : "FAULT\t") <<
+	                ((it->get_state()==Tango::ON)? "ON\t" : "FAULT\t") <<
 	                it->started_time << "\t" <<
 						failure_time << "\t" <<
 					"false" << endl;
@@ -321,7 +321,7 @@ void StarterUtil::log_starter_statistics(ControlledServer *server)
 {
 	stringstream	strlog;
 	strlog << server->name           << "\t" <<
-	                ((server->state==Tango::ON)? "ON\t" : "FAULT\t") <<
+	                ((server->get_state()==Tango::ON)? "ON\t" : "FAULT\t") <<
 	                server->started_time  << "\t" <<
 					server->failure_time  << "\t" <<
 					((server->auto_start)? "true" : "false") << endl;
@@ -522,8 +522,8 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
 //+------------------------------------------------------------------
 string StarterUtil::build_log_file_name(char *server)
 {
-	//	Separate server name and intance name.
-	//-----------------------------------------
+	//	Separate server name and instance name.
+	/*
 	char	servname[50];
 	char	intancename[50];
 	char	*p1 = server;
@@ -537,15 +537,19 @@ string StarterUtil::build_log_file_name(char *server)
 	while (*p1)
 		*p2++ = *p1++;
 	*p2++ = '\0';
+    */
+    string serverName(server);
+    unsigned long index = serverName.find('/');
+    string binary = serverName.substr(0, index);
+    string instance = serverName.substr(++index);
 
 	//	And create full name with path
-	//-----------------------------------------
 	string	log_file;
 	LogPath(log_file,log_home);
 	log_file += slash;
-	log_file += servname;
+	log_file += binary;
 	log_file += "_";
-	log_file += intancename;
+	log_file += instance;
 	log_file += ".log";
 	return log_file;
 }
@@ -720,7 +724,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 	for (pos=result.begin() ; pos<result.end() ; )
 	{
 		string	name(*pos++);
-		ControlledServer	*p_serv = get_server_by_name(name, *servers);
+		ControlledServer *p_serv = get_server_by_name(name, *servers);
 		if (p_serv==NULL)
 		{
 			if (trace)	cout << name << " appeared " << endl;
@@ -731,7 +735,7 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
 			server.admin_name = "dserver/" + server.name;
 			server.controlled = atoi((*pos++).c_str()) != 0;
 			server.startup_level = (short)atoi((*pos++).c_str());
-			server.state         = Tango::FAULT;
+			server.set_state(Tango::FAULT);
 			server.stopped       = false;
 			server.auto_start    = false;
 			server.started_time  = time(NULL);
@@ -776,7 +780,15 @@ ControlledServer *StarterUtil::get_server_by_name(string &servname, vector<Contr
 	}
 	return NULL;
 }
-
+//+----------------------------------------------------------------------------
+//+----------------------------------------------------------------------------
+    void ControlledServer::set_state(Tango::DevState st) {
+        if (st==Tango::MOVING && state!=Tango::MOVING) {
+            //  Has just been switched to MOVING
+            moving_time = time(NULL);
+        }
+        state = st;
+    }
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::

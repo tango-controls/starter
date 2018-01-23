@@ -416,6 +416,9 @@ public:
 		Tango::DevBoolean	startServersAtStartup;
 		//	UseEvents:	Use events if not null.
 		Tango::DevShort	useEvents;
+		//	MovingMaxDuration:	If a server is moving during a period more than this value,
+		//  the Starter will be switched from MOVING to STANDBY
+		Tango::DevLong	movingMaxDuration;
 	public:
 		//	write class properties data members
 		Tango::DbData	cl_prop;

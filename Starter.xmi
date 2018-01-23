@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
-  <classes name="Starter" pogoRevision="9.5">
+  <classes name="Starter" pogoRevision="9.6">
     <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_5Impl" sourcePath="../../../../../../segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
@@ -37,6 +37,11 @@
       <type xsi:type="pogoDsl:ShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
+    </classProperties>
+    <classProperties name="MovingMaxDuration" description="If a server is moving during a period more than this value,&#xA;the Starter will be switched from MOVING to STANDBY">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>120</DefaultPropValue>
     </classProperties>
     <deviceProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">
       <type xsi:type="pogoDsl:IntType"/>
@@ -80,6 +85,11 @@
       <type xsi:type="pogoDsl:ShortType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>0</DefaultPropValue>
+    </deviceProperties>
+    <deviceProperties name="MovingMaxDuration" description="If a server is moving during a period more than this value,&#xA;the Starter will be switched from MOVING to STANDBY">
+      <type xsi:type="pogoDsl:IntType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <DefaultPropValue>120</DefaultPropValue>
     </deviceProperties>
     <commands name="State" description="This command gets the device state (stored in its &lt;i>device_state&lt;/i> data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="1000">
       <argin description="none.">

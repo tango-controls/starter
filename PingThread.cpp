@@ -35,21 +35,6 @@
 
 #include <tango.h>
 
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#ifndef _TG_WINDOWS_
-
-#	include <sys/time.h>
-
-#endif
-
-
-#include <sstream>
 #include <PingThread.h>
 
 #ifndef    TIME_VAR
@@ -197,11 +182,9 @@ namespace Starter_ns {
  */
 //+----------------------------------------------------------------------------
     void *PingThread::run_undetached(TANGO_UNUSED(void *ptr)) {
-        bool trace = false;
-        if (trace) cout << "Start a thread to ping " << servname << endl;
-        TimeVal before, after;
+         TimeVal before, after;
         Tango::DeviceProxy *dev = NULL;
-        Tango::DevState state = Tango::FAULT;
+        Tango::DevState state;
         bool stop_thread = false;
         string adm_devname("dserver/");
         adm_devname += servname;
@@ -210,16 +193,12 @@ namespace Starter_ns {
             //  Make sure server running in one instance
             int nbInstances = process_util->getNbServerInstances(servname);
             shared->setNbInstaces(nbInstances);
-            if (trace && nbInstances > 1) {
-                cout << servname << "  is running " << nbInstances << " times !!!!" << endl;
-            }
             //	Check before if server running or failed
             if (process_util->is_server_running(servname)) {
                 //	try to build DeviceProxy
                 if (dev == NULL) {
                     try {
-                        if (dev == NULL)
-                            dev = new Tango::DeviceProxy(adm_devname);
+                        dev = new Tango::DeviceProxy(adm_devname);
                     }
                     catch (Tango::DevFailed &e) {
                         Tango::Except::print_exception(e);
@@ -230,24 +209,19 @@ namespace Starter_ns {
                         cout << "============================================" << endl;
                     }
                 }
-                if (dev != NULL) {
-                    try {
-                        dev->ping();
-                        state = Tango::ON;
-                    }
-                    catch (Tango::DevFailed &) {
-                        cout << servname << " is running but not responding !!!" << endl;
-                        //Tango::Except::print_exception(e);
-                        state = Tango::MOVING;
-                    }
+                try {
+                    dev->ping();
+                    state = Tango::ON;
                 }
-            } else
+                catch (Tango::DevFailed &) {
+                    cout << servname << " is running but not responding !!!" << endl;
+                    //Tango::Except::print_exception(e);
+                        state = Tango::MOVING;
+                }
+            } else {
                 state = Tango::FAULT;
+            }
             shared->set_state(state);
-
-            if (trace)
-                cout << "Ping thread:[" << servname << "]	" <<
-                     Tango::DevStateName[state] << endl;
 
             //	Compute time to sleep
             GetTime(after);
@@ -265,12 +239,9 @@ namespace Starter_ns {
             }
             stop_thread = shared->get_stop_thread();
         }
-
-
         delete shared;
         if (dev != NULL)
             delete dev;
-        if (trace) cout << "Ping thread:[" << servname << "] - leaving...." << endl;
         return NULL;
     }
 //+----------------------------------------------------------------------------

@@ -36,7 +36,6 @@
 
 
 #include <CheckProcessUtil.h>
-#include "CheckProcessUtil.h"
 
 #ifndef	TIME_VAR
 #ifndef _TG_WINDOWS_
@@ -541,6 +540,8 @@ void ProcessData::read_process_list_from_sys()
 			break;
 		case ENOTDIR:desc  = "NAME is not a directory.";
 			break;
+        default:desc  = "Undefined error.";
+			break;
 		}
 		Tango::Except::throw_exception(
 				(const char *)"READ_PROCESS_LIST_FAILED",
@@ -762,7 +763,7 @@ bool ProcessData::check_java_process(Process *process)
 
 	//	Parse class and instance name
 	bool	found=false;
-	for (int i=process->line_args.size()-1 ; !found && i>0 ; i--)
+	for (unsigned long i=process->line_args.size()-1 ; !found && i>0 ; i--)
 	{
 		if (process->line_args[i]!="" && process->line_args[i].c_str()[0]!='-')
 		{
@@ -1039,7 +1040,7 @@ int ProcessData::get_server_pid(string argin)
 			servname += process->proc_args[0];
 			//cout << servname << "==" << argin << endl;
 			if (servname == argin)
-				return process->pid;
+				return (int)process->pid;
 		}
 	}
 	return -1;

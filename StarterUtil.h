@@ -61,19 +61,24 @@ typedef unsigned char boolean;
 #endif
 
 class ControlledServer {
-    public:
-        string	name;
-        string	admin_name;
-        bool	controlled;
-        short	startup_level;
-        PingThreadData		*thread_data;
-        PingThread			*thread;
-        Tango::DevState		state;
-        bool		stopped;
-        bool		auto_start;
-		int 		nbInstances;
-        time_t		started_time;
-        time_t		failure_time;
+private:
+    Tango::DevState		state;
+    time_t moving_time; // When moving has been detected
+public:
+    string name;
+    string admin_name;
+    bool   controlled;
+    short  startup_level;
+    PingThreadData *thread_data;
+    PingThread *thread;
+    bool   stopped;
+    bool   auto_start;
+    int    nbInstances;
+    time_t started_time;
+    time_t failure_time;
+    void set_state(Tango::DevState st);
+    Tango::DevState get_state() { return state; };
+    time_t get_moving_duration() { return time(NULL)-moving_time; }
 };
 
 //	Millisecond sleep platform independent.

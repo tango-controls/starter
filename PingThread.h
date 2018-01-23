@@ -104,7 +104,7 @@ public:
 };
 //=========================================================
 /**
- *	Create a thread to ping server.
+ *	Create a thread to ping server (admin device).
  */
 //=========================================================
 class PingThread: public omni_thread
@@ -118,7 +118,8 @@ private:
 	/**
 	 *	The pinged server name
 	 */
-	string	servname;
+	string servname;
+
 
 public:
 	/**

@@ -442,6 +442,7 @@ void StarterClass::get_class_property()
 	cl_prop.push_back(Tango::DbDatum("ServerStartupTimeout"));
 	cl_prop.push_back(Tango::DbDatum("StartServersAtStartup"));
 	cl_prop.push_back(Tango::DbDatum("UseEvents"));
+	cl_prop.push_back(Tango::DbDatum("MovingMaxDuration"));
 	
 	//	Call database and extract values
 	if (Tango::Util::instance()->_UseDb==true)
@@ -531,6 +532,18 @@ void StarterClass::get_class_property()
 		{
 			def_prop    >>  useEvents;
 			cl_prop[i]  <<  useEvents;
+		}
+	}
+	//	Try to extract MovingMaxDuration value
+	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  movingMaxDuration;
+	else
+	{
+		//	Check default value for MovingMaxDuration
+		def_prop = get_default_class_property(cl_prop[i].name);
+		if (def_prop.is_empty()==false)
+		{
+			def_prop    >>  movingMaxDuration;
+			cl_prop[i]  <<  movingMaxDuration;
 		}
 	}
 	/*----- PROTECTED REGION ID(StarterClass::get_class_property_after) ENABLED START -----*/
@@ -663,6 +676,20 @@ void StarterClass::set_default_property()
 	}
 	else
 		add_wiz_class_prop(prop_name, prop_desc);
+	prop_name = "MovingMaxDuration";
+	prop_desc = "If a server is moving during a period more than this value,\nthe Starter will be switched from MOVING to STANDBY";
+	prop_def  = "120";
+	vect_data.clear();
+	vect_data.push_back("120");
+	if (prop_def.length()>0)
+	{
+		Tango::DbDatum	data(prop_name);
+		data << vect_data ;
+		cl_def_prop.push_back(data);
+		add_wiz_class_prop(prop_name, prop_desc,  prop_def);
+	}
+	else
+		add_wiz_class_prop(prop_name, prop_desc);
 
 	//	Set Default device Properties
 	prop_name = "AutoRestartDuration";
@@ -780,6 +807,20 @@ void StarterClass::set_default_property()
 	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
+	if (prop_def.length()>0)
+	{
+		Tango::DbDatum	data(prop_name);
+		data << vect_data ;
+		dev_def_prop.push_back(data);
+		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
+	}
+	else
+		add_wiz_dev_prop(prop_name, prop_desc);
+	prop_name = "MovingMaxDuration";
+	prop_desc = "If a server is moving during a period more than this value,\nthe Starter will be switched from MOVING to STANDBY";
+	prop_def  = "120";
+	vect_data.clear();
+	vect_data.push_back("120");
 	if (prop_def.length()>0)
 	{
 		Tango::DbDatum	data(prop_name);
@@ -1240,7 +1281,7 @@ void StarterClass::erase_dynamic_attributes(const Tango::DevVarStringArray *devl
 
 //--------------------------------------------------------
 /**
- *	Method      : StarterClass::get_attr_by_name()
+ *	Method      : StarterClass::get_attr_object_by_name()
  *	Description : returns Tango::Attr * object found by name
  */
 //--------------------------------------------------------
