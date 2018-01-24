@@ -821,7 +821,7 @@ Tango::DevState Starter::dev_state()
 	}
 	else
 	{
-		//	ToDo Check hown many servers are running
+		//	Check how many servers are running
 		ControlledServer *p_serv;
 		int		nb_running = 0;
 		int		nb_controlled = 0;
@@ -841,7 +841,7 @@ Tango::DevState Starter::dev_state()
 					nb_running++;
 				else
 				if (p_serv->get_state()==Tango::MOVING) {
-//#ifdef MOVING_DURATION
+//ToDo #ifdef MOVING_DURATION
                     //cout << p_serv->get_moving_duration() << endl;
                     if (p_serv->get_moving_duration()>movingMaxDuration)
                         nb_long_time_moving++;
@@ -1044,12 +1044,16 @@ void Starter::dev_start_all(Tango::DevShort argin)
 	DEBUG_STREAM << "Starter::DevStartAll()  - " << device_name << endl;
 	/*----- PROTECTED REGION ID(Starter::dev_start_all) ENABLED START -----*/
 
-	//	Add your own code
 	Tango::DevShort  level = argin;
-	cout << "Starter::dev_start_all(): entering for level "<< level <<"... !" << endl;
 
+	//	Check if level is still active
+	if (start_proc_data->level_is_still_active(level)) {
+		TangoSys_OMemStream tms;
+		tms << "Level " << level << " is already starting" << endl;
+		Tango::Except::throw_exception(
+				"LevelAlreadStarting", tms.str().c_str(), "Starter::dev_start_all()");
+	}
 	//	Check if servers object initialized
-	//---------------------------------------
 	if (servers.empty()) {
 		if (throwable) {
 			TangoSys_OMemStream out_stream;
@@ -1064,8 +1068,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 	throwable = false;
 
 	//	And start the stopped ones
-	//---------------------------------------------------
-	vector<NewProcess *>	processes;
+	vector<NewProcess *> processes;
 	for (unsigned int i=0 ; i<servers.size() ; i++)
 	{
 		ControlledServer *server = &servers[i];
@@ -1535,12 +1538,10 @@ NewProcess *Starter::processCouldStart(char *argin)
 void Starter::startProcesses(vector<NewProcess *> v_np, int level)
 {
 	//	Start process to start processes
-	//-------------------------------------
 	try {
 		start_proc_data->push_back_level(level);
-		StartProcessThread	*pt =
-		new StartProcessThread(v_np, level, this);
-		pt->start();
+		StartProcessThread	*thread = new StartProcessThread(v_np, level, this);
+		thread->start();
 	}
 	catch(omni_thread_fatal &e) {
 		TangoSys_OMemStream tms;

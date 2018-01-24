@@ -61,7 +61,7 @@
 #	define	LOG_HOME	"/var/tmp"
 #endif
 
-//	Structure to difine a new process to start
+//	Structure to define a new process to start
 typedef struct {
 	bool	could_start;
 	char	*adminname;
@@ -510,9 +510,9 @@ public:
 //=========================================================
 class StartProcessThread: public omni_thread
 {
-	vector<NewProcess *>	processes;
-	Starter					*starter;
-	int						thread_level;
+	vector<NewProcess *> processes;
+	Starter *starter;
+	int thread_level;
 public:
 /**
  *	Initialize the sub process parameters (name, domain, log_file).
