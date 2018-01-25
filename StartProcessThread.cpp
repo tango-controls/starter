@@ -43,7 +43,6 @@
 #	include <io.h>
 #else
 #	include <sys/wait.h>
-#	include <sys/time.h>
 #endif
 
 #include <fcntl.h>
@@ -89,73 +88,66 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
 	for (i=0 ; i<processes.size() &&
                 starter->start_proc_data->level_is_still_active(thread_level) ; i++)
 	{
-        start_process(processes[i]);
+		//	Build server name from admin name and check if stopped before start it
+		char *p = processes[i]->adminName + strlen("dserver/");
+		string servname(p);
+		if (process_util->is_server_running(servname)==false) {
+			start_process(processes[i]);
 
-        //	Build server name from admin name
-        char	*p = processes[i]->adminname + strlen("dserver/");
-        string	servname(p);
-        bool	failed = false;
 
-        //	Sleep a bit between start ups
-        //	to do not overload database
-        bool	started = false;
-        time_t	t0 = time(NULL);
-        time_t	t1 = t0;
-        Tango::DeviceProxy	*serv;
-        while (failed==false && started==false && (t1-t0)<starter->serverStartupTimeout)
-        {
+			//	Sleep a bit between start ups
+			//	to do not overload database
+			bool started = false;
+			time_t t0 = time(NULL);
+			time_t t1 = t0;
+			Tango::DeviceProxy *serv;
+			bool failed = false;
+			while (failed == false && started == false &&
+					(t1 - t0) < starter->serverStartupTimeout) {
 #		ifdef _TG_WINDOWS_
-            _sleep(1000);
+				_sleep(1000);
 #		else
-            sleep(1);
+				sleep(1);
 #		endif
 
 
-            //	do not test before 4 seconds to be sure
-            //	process list has been updated.
-            t1 = time(NULL);
-            if ((t1-t0)>=4)
-            {
-                //	Check if server running or failed
-                if (process_util->is_server_running(servname)==false)
-                    failed = true;
-                else
-                {
-                    //	if  not failed check if start up is terminated
-                    serv = NULL;
-                    try
-                    {
-                        serv = new Tango::DeviceProxy(processes[i]->adminname);
-                        serv->ping();
-                        started = true;
-                    }
-                    catch(Tango::DevFailed &)
-                    {
-                        //cout << e.errors[0].desc << endl;
-                    }
-                    if (serv!=NULL)
-                        delete serv;
-                    t1 = time(NULL);
-                }
-            }
-        }
-        if (started)
-        {
-            TangoSys_OMemStream out_stream;
-            out_stream << servname << " started";
-            starter->util->log_starter_info(out_stream.str());
+				//	do not test before 4 seconds to be sure
+				//	process list has been updated.
+				t1 = time(NULL);
+				if ((t1 - t0) >= 4) {
+					//	Check if server running or failed
+					if (process_util->is_server_running(servname) == false)
+						failed = true;
+					else {
+						//	if  not failed check if start up is terminated
+						try {
+							serv = new Tango::DeviceProxy(processes[i]->adminName);
+							serv->ping();
+							started = true;
+						}
+						catch (Tango::DevFailed &) {
+							//cout << e.errors[0].desc << endl;
+						}
+						delete serv;
+						t1 = time(NULL);
+					}
+				}
+			}
+			if (started) {
+				TangoSys_OMemStream out_stream;
+				out_stream << servname << " started";
+				starter->util->log_starter_info(out_stream.str());
 
-            //cout << "----- " << servname << " started in " << (t1-t0) << " sec." << endl;
-        }
-        else
-        if (failed)
-            cout << "----- " << servname << " failed in " << (t1-t0) << " sec." << endl;
-        else
-            cout << "----- " << servname << " Timeout = " << (t1-t0) << endl;
+				//cout << "----- " << serverName << " started in " << (t1-t0) << " sec." << endl;
+			} else if (failed)
+				cout << "----- " << servname << " failed in " << (t1 - t0) << " sec." << endl;
+			else
+				cout << "----- " << servname << " Timeout = " << (t1 - t0) << endl;
 
-		//	Wait a bit betwee 2 startup (not for last one)
-		if (thread_level>0 && i<processes.size()-1) {
-	        ms_sleep(TIME_BETWEEN_STARTUPS);
+			//	Wait a bit betwee 2 startup (not for last one)
+			if (thread_level > 0 && i < processes.size() - 1) {
+				ms_sleep(TIME_BETWEEN_STARTUPS);
+			}
 		}
     }
 
@@ -172,10 +164,10 @@ void StartProcessThread::run(TANGO_UNUSED(void *ptr))
 	//	Free the process structure field
 	for (i=0 ; i<processes.size() ; i++)
 	{
-		delete[] processes[i]->servname;
-		delete[] processes[i]->instancename;
-		delete[] processes[i]->adminname;
-		delete[] processes[i]->logfile;
+		delete[] processes[i]->serverName;
+		delete[] processes[i]->instanceName;
+		delete[] processes[i]->adminName;
+		delete[] processes[i]->logFileName;
 		delete processes[i];
 	}
 
@@ -192,10 +184,10 @@ void StartProcessThread::start_process(NewProcess *process)
 {
 	char	*argv[4];
 	int		i = 0;
-	argv[i++] = process->servname;
-	argv[i++] = process->instancename;
+	argv[i++] = process->serverName;
+	argv[i++] = process->instanceName;
 	//argv[i++] = "-v5";
-	argv[i++] = NULL;
+	argv[i] = NULL;
 
 	//	Fork a child process to start the device server
 	int	fork_id = fork();
@@ -211,8 +203,8 @@ void StartProcessThread::start_process(NewProcess *process)
 		case -1:
 			cerr << "Fork Failed !" << endl;
 			break;
+
 		case 0:
-			{
 				// Change process group and close control tty
 #if defined(__darwin__) || defined( __MACOS__)
 
@@ -235,29 +227,27 @@ void StartProcessThread::start_process(NewProcess *process)
 				//	Close the stderr and re-open it on a log file.
                 close(2);
                 starter->util->manage_log_file_history(
-                        process->logfile, starter->keepLogFiles);
-                open(process->logfile, O_RDWR | O_CREAT, 0664);
+                        process->logFileName, starter->keepLogFiles);
+                open(process->logFileName, O_RDWR | O_CREAT, 0664);
 
                 //	Start the execution of the device server
                 if (execvp(argv[0], argv)<0)
                 {
-                    ofstream	of(process->logfile);
+                    ofstream	of(process->logFileName);
                     of << "Exec(" << argv[0] << ") failed " << endl;
                     of << strerror(errno) << endl;
                     of.close();
                 }
 				_exit(0);
-			}
-			break;
+
 		default:
 			//cout << fork_id << " exit()" << endl;
 			_exit(0);
-			break;
 		}
 		break;
 
 	default:
-		int		res_wait;
+		int res_wait;
 		wait(&res_wait);
 		break;
 	}
@@ -287,23 +277,23 @@ void StartProcessThread::start_process(NewProcess *process)
 /**
  *	Set the path between cotes for windows.
  *
- *      @param  servname	server name
+ *      @param  serverName	server name
  */
 //+------------------------------------------------------------------
-string StartWinThread::get_server_name_with_cotes(string servname)
+string StartWinThread::get_server_name_with_cotes(string serverName)
 {
-	string::size_type	pos = servname.find_last_of("/\\");
+	string::size_type	pos = serverName.find_last_of("/\\");
 	if (pos!=string::npos)
 	{
 		string	str("\"");
-		str += servname.substr(0, pos);
+		str += serverName.substr(0, pos);
 		str += "\"";
-		str += servname.substr(pos);
+		str += serverName.substr(pos);
 
 		return str;
 	}
 	else
-		return servname;
+		return serverName;
 }
 //+----------------------------------------------------------
 //	WIN 32 Thread to fork a sub process
@@ -312,11 +302,11 @@ string StartWinThread::get_server_name_with_cotes(string servname)
 void StartWinThread::run(void *ptr)
 {
 	//	Check if batch file
-	string str_server(process->servname);
-	string str_with_cotes = get_server_name_with_cotes(process->servname);
+	string str_server(process->serverName);
+	string str_with_cotes = get_server_name_with_cotes(process->serverName);
 	string cmd(str_with_cotes);
 	cmd += "  ";
-	cmd += process->instancename;
+	cmd += process->instanceName;
 	cout << "system(" << cmd << ");" << endl;
 	system(cmd.c_str());
 	return;

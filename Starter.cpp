@@ -898,8 +898,6 @@ void Starter::dev_start(Tango::DevString argin)
 {
 	DEBUG_STREAM << "Starter::DevStart()  - " << device_name << endl;
 	/*----- PROTECTED REGION ID(Starter::dev_start) ENABLED START -----*/
-
-	//	Add your own code
 	try {
 		NewProcess	*np = processCouldStart(argin);
 		if (np==NULL)
@@ -1051,7 +1049,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 		TangoSys_OMemStream tms;
 		tms << "Level " << level << " is already starting" << endl;
 		Tango::Except::throw_exception(
-				"LevelAlreadStarting", tms.str().c_str(), "Starter::dev_start_all()");
+				"LevelAlreadyStarting", tms.str().c_str(), "Starter::dev_start_all()");
 	}
 	//	Check if servers object initialized
 	if (servers.empty()) {
@@ -1082,7 +1080,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 				if (np!=NULL)
 				{
 					processes.push_back(np);
-					cout << "Try to start " << np->servname << endl;
+					cout << "Try to start " << np->serverName << endl;
 				}
 				else
 					cout << "np is null (?)" << endl;
@@ -1475,7 +1473,6 @@ NewProcess *Starter::processCouldStart(char *argin)
 	INFO_STREAM << "Starter::processCouldStart(\""<< argin << "\"): entering... !" << endl;
 
 	//	Make sure that it's not running.
-	//---------------------------------------
 	if (servers.empty()==false)
 	{
 		string	name(argin);
@@ -1495,7 +1492,7 @@ NewProcess *Starter::processCouldStart(char *argin)
 			}
 	}
 
-	//	Separate server name and instancename.
+	//	Separate server name and instanceName.
 	char	*servname     = util->get_server_name(argin) ;
 	char	*instancename = util->get_instance_name(argin);
 	char	*adminname    = new char[strlen(servname)+ strlen(instancename)+10];
@@ -1523,11 +1520,11 @@ NewProcess *Starter::processCouldStart(char *argin)
 
 	string	log_file = util->build_log_file_name(argin);
 	NewProcess	*np  = new NewProcess;
-	np->servname     = filename;
-	np->instancename = instancename;
-	np->adminname    = adminname;
-	np->logfile      = new char[log_file.length()+1];
-	np->logfile      = strcpy(np->logfile, log_file.c_str());
+	np->serverName     = filename;
+	np->instanceName = instancename;
+	np->adminName    = adminname;
+	np->logFileName      = new char[log_file.length()+1];
+	np->logFileName      = strcpy(np->logFileName, log_file.c_str());
 
 	INFO_STREAM << "LOG file : " << log_file << endl;
 

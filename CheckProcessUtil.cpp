@@ -903,8 +903,8 @@ void ProcessData::build_server_names(Process* process)
 		process->servname += instance;
 #ifdef _TG_WINDOWS_
 	//	Wain32 is case unsensitive
-	transform(process->servname.begin(), process->servname.end(),
-					process->servname.begin(), ::tolower);
+	transform(process->serverName.begin(), process->serverName.end(),
+					process->serverName.begin(), ::tolower);
 #endif
 }
 	else
@@ -1038,7 +1038,7 @@ int ProcessData::get_server_pid(string argin)
 			string	servname(process->name);
 			servname += "/";
 			servname += process->proc_args[0];
-			//cout << servname << "==" << argin << endl;
+			//cout << serverName << "==" << argin << endl;
 			if (servname == argin)
 				return (int)process->pid;
 		}

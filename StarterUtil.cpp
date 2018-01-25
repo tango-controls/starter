@@ -524,10 +524,10 @@ string StarterUtil::build_log_file_name(char *server)
 {
 	//	Separate server name and instance name.
 	/*
-	char	servname[50];
+	char	serverName[50];
 	char	intancename[50];
 	char	*p1 = server;
-	char	*p2 = servname;
+	char	*p2 = serverName;
 	while (*p1 && *p1!='/')
 		*p2++ = *p1++;
 	*p2++ = '\0';

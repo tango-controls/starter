@@ -64,10 +64,10 @@
 //	Structure to define a new process to start
 typedef struct {
 	bool	could_start;
-	char	*adminname;
-	char	*servname;
-	char	*instancename;
-	char	*logfile;
+	char	*adminName;
+	char	*serverName;
+	char	*instanceName;
+	char	*logFileName;
 }
 NewProcess;
 
@@ -496,7 +496,7 @@ public:
 		{ process = proc; starter=st;};
 
 	// Set the path between cotes for windows.
-	string get_server_name_with_cotes(string servname);
+	string get_server_name_with_cotes(string serverName);
 
 	void run(void *);
 	//void start() {start_undetached();}
