@@ -2,7 +2,7 @@
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Starter" pogoRevision="9.6">
     <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
-      <inheritances classname="Device_5Impl" sourcePath="../../../../../../segfs/tango/templates/AbstractClasses"/>
+      <inheritances classname="Device_5Impl" sourcePath="../../../tools/pogo-test/../../../tools/pogo-test/../../../../../../segfs/tango/templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
     <classProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.">

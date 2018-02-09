@@ -841,12 +841,10 @@ Tango::DevState Starter::dev_state()
 					nb_running++;
 				else
 				if (p_serv->get_state()==Tango::MOVING) {
-//ToDo #ifdef MOVING_DURATION
                     //cout << p_serv->get_moving_duration() << endl;
                     if (p_serv->get_moving_duration()>movingMaxDuration)
                         nb_long_time_moving++;
                     else
-//#endif
                         nb_moving++;
                 }
                 else
