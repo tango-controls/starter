@@ -28,9 +28,6 @@ MAKE_ENV = /segfs/tango/cppserver/env
 # PACKAGE_NAME is the name of the library/device/exe you want to build
 #
 PACKAGE_NAME = Starter
-MAJOR_VERS   = 6
-MINOR_VERS   = 12
-RELEASE      = $(MAJOR_VERS).$(MINOR_VERS)
 
 # #=============================================================================
 # # RELEASE_TYPE
