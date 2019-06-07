@@ -568,14 +568,14 @@ void ProcessData::read_process_list_from_sys()
 			}
 			catch(Tango::DevFailed &e)
 			{
-				cout << "Excepion catch during manageProcFiles for pid = "
+				cout << "Exception catch during manageProcFiles for pid = "
 					<< process->pid << endl;
 				cout << e.errors[0].desc;
 				delete process;
 			}
 			catch(...)
 			{
-				cout << "Excepion catch during manageProcFiles for pid = "
+				cout << "Exception catch during manageProcFiles for pid = "
 					<< process->pid << endl;
 				delete process;
 			}
@@ -836,7 +836,7 @@ bool ProcessData::check_python_process(Process* process)
 	{
 	    const string &arg = process->line_args[args_idx];
 	    
-	    if (arg.size() == 0)
+	    if (arg.empty())
 	        continue;
 	    
 	    if (arg[0] == '-')
@@ -860,12 +860,18 @@ bool ProcessData::check_python_process(Process* process)
             start++;
 
 	    string::size_type end = arg.rfind(".py");
-        
-        if (end == string::npos)
-            process->name = arg.substr(start);
+        if (end == string::npos) {
+        	//	Check if starts package name
+        	string fullName = arg.substr(start);
+			string::size_type index = fullName.rfind('.');
+			if (index==string::npos)
+	        	process->name = fullName;
+			else
+				process->name = fullName.substr(++index);
+        }
         else
             process->name = arg.substr(start, end-start);
-        // everything from now on is an argument
+        // everything from now is an argument
         args_idx++;
         break;
 	}
