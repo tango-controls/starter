@@ -828,17 +828,21 @@ Tango::DevState Starter::dev_state()
 		int		nb_moving = 0;
 		int		nb_long_time_moving = 0;
 		int		nb_stopped = 0;
+		int		nb_instances = 0;
 		for (unsigned int i=0 ; i<servers.size() ; i++)
 		{
 			p_serv = &servers[i];
-			//	Count how many are controlled
+			//	Count how many are controlled, running, stopped,....
 			if (p_serv->controlled)
 			{
 				nb_controlled++;
-
 				//	Fix witch one is running and count how many controlled are running
-				if ((p_serv->get_state()==Tango::ON))
-					nb_running++;
+				if ((p_serv->get_state()==Tango::ON)) {
+				    if (p_serv->nbInstances>1)
+				        nb_instances++;
+                    else
+    				    nb_running++;
+				}
 				else
 				if (p_serv->get_state()==Tango::MOVING) {
                     //cout << p_serv->get_moving_duration() << endl;
@@ -864,8 +868,13 @@ Tango::DevState Starter::dev_state()
         }
         else
 		if (nb_running==nb_controlled && notifyd_state==Tango::ON) {
-            argout = Tango::ON;
-            set_status("All controlled servers are running");
+		    if (nb_instances>0) {
+                argout = Tango::ALARM;
+                set_status("At least one server is running twice");
+            } else {
+                argout = Tango::ON;
+                set_status("All controlled servers are running");
+            }
         }
 		else
 		if (nb_stopped==nb_controlled) {

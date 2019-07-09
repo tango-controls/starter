@@ -1,5 +1,8 @@
 # Changelog
 
+#### Starter-7.2  (08/07/2019):
+    Set the state in ALARM if at least one server is running twice.
+
 #### Starter-7.1  (07/06/2019):
     Make it compatible with python process using package name.
 
