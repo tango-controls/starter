@@ -938,11 +938,11 @@ void Starter::dev_start(Tango::DevString argin)
 	}
 	catch (...) {
 		cerr << "================================" << endl <<
-				"    Unknown exception catched"    << endl <<
+				"    Unknown exception caught"    << endl <<
 				"================================" << endl;
 		Tango::Except::throw_exception(
 			   (const char *)"START_PROCASS_FAILDE",
-			   (const char *)"Starting process failed:    Unknown exception catched",
+			   (const char *)"Starting process failed:    Unknown exception caught",
 			   (const char *)"Starter::dev_start()");
 	}
 
