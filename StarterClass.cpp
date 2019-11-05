@@ -581,7 +581,7 @@ void StarterClass::set_default_property()
 
 	//	Set Default Class Properties
 	prop_name = "AutoRestartDuration";
-	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.";
+	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automatically.";
 	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");
@@ -693,7 +693,7 @@ void StarterClass::set_default_property()
 
 	//	Set Default device Properties
 	prop_name = "AutoRestartDuration";
-	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.";
+	prop_desc = "If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automatically.";
 	prop_def  = "0";
 	vect_data.clear();
 	vect_data.push_back("0");

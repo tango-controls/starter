@@ -400,7 +400,7 @@ public:
 
 	//	Class properties data members
 	public:
-		//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automaticly.
+		//	AutoRestartDuration:	If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automatically.
 		Tango::DevLong	autoRestartDuration;
 		//	LogFileHome:	The home directory to log servers traces.
 		//  For Linux the default value is /var/tmp
