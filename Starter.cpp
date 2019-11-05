@@ -709,7 +709,7 @@ void Starter::read_StoppedServers(Tango::Attribute &attr)
 /**
  *	Read attribute Servers related method
  *	Description: Return all registred servers for this host.
- *               Server names are followed by:   [states] [controled] [level] [nb instances]
+ *               Server names are followed by:   [states] [controlled] [level] [nb instances]
  *               If nb instances >1 a warning will be displayed in Astor
  *
  *	Data type:	Tango::DevString
@@ -1039,7 +1039,7 @@ void Starter::dev_stop(Tango::DevString argin)
 //--------------------------------------------------------
 /**
  *	Command DevStartAll related method
- *	Description: Start all device servers controled on the host for the argin level.
+ *	Description: Start all device servers controlled on the host for the argin level.
  *
  *	@param argin Startup level.
  */
@@ -1107,7 +1107,7 @@ void Starter::dev_start_all(Tango::DevShort argin)
 //--------------------------------------------------------
 /**
  *	Command DevStopAll related method
- *	Description: Stop all device servers controled on the host for the argin level.
+ *	Description: Stop all device servers controlled on the host for the argin level.
  *
  *	@param argin Startup Level.
  */
@@ -1153,7 +1153,7 @@ void Starter::dev_stop_all(Tango::DevShort argin)
  *	Description: Control the running process from property list.
  *               And return the list of the processes which are really running.
  *
- *	@param argin True for all servers. False for controled servers only.
+ *	@param argin True for all servers. False for controlled servers only.
  *	@returns List of the processes which are running.
  */
 //--------------------------------------------------------
@@ -1205,7 +1205,7 @@ Tango::DevVarStringArray *Starter::dev_get_running_servers(Tango::DevBoolean arg
  *	Description: Control the running process from property list.
  *               And return the list of the processes which are not running.
  *
- *	@param argin True for all servers. False for controled servers only.
+ *	@param argin True for all servers. False for controlled servers only.
  *	@returns List of the processes which are not running.
  */
 //--------------------------------------------------------

@@ -1038,7 +1038,7 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	Attribute : Servers
 	ServersAttrib	*servers = new ServersAttrib();
 	Tango::UserDefaultAttrProp	servers_prop;
-	servers_prop.set_description("Return all registred servers for this host.\nServer names are followed by:   [states] [controled] [level] [nb instances]\nIf nb instances >1 a warning will be displayed in Astor");
+	servers_prop.set_description("Return all registred servers for this host.\nServer names are followed by:   [states] [controlled] [level] [nb instances]\nIf nb instances >1 a warning will be displayed in Astor");
 	servers_prop.set_label("Servers");
 	//	unit	not set for Servers
 	//	standard_unit	not set for Servers
@@ -1146,7 +1146,7 @@ void StarterClass::command_factory()
 	DevGetRunningServersClass	*pDevGetRunningServersCmd =
 		new DevGetRunningServersClass("DevGetRunningServers",
 			Tango::DEV_BOOLEAN, Tango::DEVVAR_STRINGARRAY,
-			"True for all servers. False for controled servers only.",
+			"True for all servers. False for controlled servers only.",
 			"List of the processes which are running.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevGetRunningServersCmd);
@@ -1155,7 +1155,7 @@ void StarterClass::command_factory()
 	DevGetStopServersClass	*pDevGetStopServersCmd =
 		new DevGetStopServersClass("DevGetStopServers",
 			Tango::DEV_BOOLEAN, Tango::DEVVAR_STRINGARRAY,
-			"True for all servers. False for controled servers only.",
+			"True for all servers. False for controlled servers only.",
 			"List of the processes which are not running.",
 			Tango::OPERATOR);
 	command_list.push_back(pDevGetStopServersCmd);

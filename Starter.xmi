@@ -127,7 +127,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevStartAll" description="Start all device servers controled on the host for the argin level." execMethod="dev_start_all" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="DevStartAll" description="Start all device servers controlled on the host for the argin level." execMethod="dev_start_all" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Startup level.">
         <type xsi:type="pogoDsl:ShortType"/>
       </argin>
@@ -136,7 +136,7 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="DevStopAll" description="Stop all device servers controled on the host for the argin level." execMethod="dev_stop_all" displayLevel="OPERATOR" polledPeriod="0">
+    <commands name="DevStopAll" description="Stop all device servers controlled on the host for the argin level." execMethod="dev_stop_all" displayLevel="OPERATOR" polledPeriod="0">
       <argin description="Startup Level.">
         <type xsi:type="pogoDsl:ShortType"/>
       </argin>
@@ -146,7 +146,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="DevGetRunningServers" description="Control the running process from property list.&#xA;And return the list of the processes which are really running." execMethod="dev_get_running_servers" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="True for all servers. False for controled servers only.">
+      <argin description="True for all servers. False for controlled servers only.">
         <type xsi:type="pogoDsl:BooleanType"/>
       </argin>
       <argout description="List of the processes which are running.">
@@ -155,7 +155,7 @@
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
     <commands name="DevGetStopServers" description="Control the running process from property list.&#xA;And return the list of the processes which are not running." execMethod="dev_get_stop_servers" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="True for all servers. False for controled servers only.">
+      <argin description="True for all servers. False for controlled servers only.">
         <type xsi:type="pogoDsl:BooleanType"/>
       </argin>
       <argout description="List of the processes which are not running.">
@@ -245,7 +245,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Return all registred servers for this host.&#xA;Server names are followed by:   [states] [controled] [level] [nb instances]&#xA;If nb instances >1 a warning will be displayed in Astor" label="Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Return all registred servers for this host.&#xA;Server names are followed by:   [states] [controlled] [level] [nb instances]&#xA;If nb instances >1 a warning will be displayed in Astor" label="Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="UNKNOWN" description="This device server has NOT been correctly initialised.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
@@ -253,7 +253,7 @@
     <states name="ON" description="All controlled servers are running.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
-    <states name="ALARM" description="At least one controled device server is not running.">
+    <states name="ALARM" description="At least one controlled device server is not running.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </states>
     <states name="MOVING" description="The Sarter is starting servers.">
