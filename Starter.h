@@ -273,7 +273,7 @@ public:
 	virtual bool is_StoppedServers_allowed(Tango::AttReqType type);
 /**
  *	Attribute Servers related methods
- *	Description: Return all registred servers for this host.
+ *	Description: Return all registered servers for this host.
  *               Server names are followed by:   [states] [controlled] [level] [nb instances]
  *               If nb instances >1 a warning will be displayed in Astor
  *

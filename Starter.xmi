@@ -245,7 +245,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="Return all registred servers for this host.&#xA;Server names are followed by:   [states] [controlled] [level] [nb instances]&#xA;If nb instances >1 a warning will be displayed in Astor" label="Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="Return all registered servers for this host.&#xA;Server names are followed by:   [states] [controlled] [level] [nb instances]&#xA;If nb instances >1 a warning will be displayed in Astor" label="Servers" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="UNKNOWN" description="This device server has NOT been correctly initialised.">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>

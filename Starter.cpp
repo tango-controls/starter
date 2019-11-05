@@ -708,7 +708,7 @@ void Starter::read_StoppedServers(Tango::Attribute &attr)
 //--------------------------------------------------------
 /**
  *	Read attribute Servers related method
- *	Description: Return all registred servers for this host.
+ *	Description: Return all registered servers for this host.
  *               Server names are followed by:   [states] [controlled] [level] [nb instances]
  *               If nb instances >1 a warning will be displayed in Astor
  *
