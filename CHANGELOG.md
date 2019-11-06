@@ -1,5 +1,8 @@
 # Changelog
 
+#### Starter-7.3 (06/11/2019):
+    Fix some spelling errors.
+
 #### Starter-7.2  (08/07/2019):
     Set the state in ALARM if at least one server is running twice.
 
