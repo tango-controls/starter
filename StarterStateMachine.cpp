@@ -50,7 +50,7 @@
 //================================================================
 //  UNKNOWN  |  This device server has NOT been correctly initialised.
 //  ON       |  All controlled servers are running.
-//  ALARM    |  At least one controled device server is not running.
+//  ALARM    |  At least one controlled device server is not running.
 //  MOVING   |  The Sarter is starting servers.
 
 
