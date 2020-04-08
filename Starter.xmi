@@ -2,7 +2,7 @@
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="Starter" pogoRevision="9.6">
     <description description="This device server is able to control &lt;b>Tango&lt;/b> components (database, device servers, clients...).&#xA;It is able to start or stop and to report the status of these components." title="Starter for Tango Administration" sourcePath="/mntdirect/_segfs/tango/cppserver/admin/starter" language="Cpp" filestogenerate="XMI   file,Code files,Protected Regions" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
-      <inheritances classname="Device_5Impl" sourcePath="../../../tools/pogo-test/../../../tools/pogo-test/../../../../../../segfs/tango/templates/AbstractClasses"/>
+      <inheritances classname="Device_5Impl" sourcePath="../../../templates/AbstractClasses"/>
       <identification contact="at esrf.fr - verdier" author="verdier" emailDomain="esrf.fr" classFamily="System" siteSpecific="" platform="All Platforms" bus="Not Applicable" manufacturer="none" reference=""/>
     </description>
     <classProperties name="AutoRestartDuration" description="If this property is greater than 0, if a server has been running more than the specified value (in minutes), and has failed, it will be restart automatically.">
@@ -32,11 +32,6 @@
       <type xsi:type="pogoDsl:BooleanType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>true</DefaultPropValue>
-    </classProperties>
-    <classProperties name="UseEvents" description="Use events if not null.">
-      <type xsi:type="pogoDsl:ShortType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <DefaultPropValue>0</DefaultPropValue>
     </classProperties>
     <classProperties name="MovingMaxDuration" description="If a server is moving during a period more than this value,&#xA;the Starter will be switched from MOVING to STANDBY">
       <type xsi:type="pogoDsl:IntType"/>
@@ -75,11 +70,6 @@
       <type xsi:type="pogoDsl:BooleanType"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <DefaultPropValue>true</DefaultPropValue>
-    </deviceProperties>
-    <deviceProperties name="UseEvents" description="Use events if not null.">
-      <type xsi:type="pogoDsl:ShortType"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <DefaultPropValue>0</DefaultPropValue>
     </deviceProperties>
     <deviceProperties name="WaitForDriverStartup" description="The Starter will wait a bit before starting servers, to be sure than the drivers&#xA;are started.This time is in seconds.">
       <type xsi:type="pogoDsl:ShortType"/>
@@ -181,15 +171,6 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <commands name="NotifyDaemonState" description="Returns the Notify Daemon state." execMethod="notify_daemon_state" displayLevel="OPERATOR" polledPeriod="0">
-      <argin description="">
-        <type xsi:type="pogoDsl:VoidType"/>
-      </argin>
-      <argout description="Tango::ON if Notify daemon is running else Tango::FAULT.">
-        <type xsi:type="pogoDsl:StateType"/>
-      </argout>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-    </commands>
     <commands name="ResetStatistics" description="Reset statistics file." execMethod="reset_statistics" displayLevel="EXPERT" polledPeriod="0">
       <argin description="">
         <type xsi:type="pogoDsl:VoidType"/>
@@ -208,13 +189,6 @@
       </argout>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
     </commands>
-    <attributes name="NotifdState" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="0" maxY="0">
-      <dataType xsi:type="pogoDsl:StateType"/>
-      <changeEvent fire="false" libCheckCriteria="false"/>
-      <archiveEvent fire="false" libCheckCriteria="false"/>
-      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="return ON or FAULT if notify daemon is running or not." label="Notifd State" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-    </attributes>
     <attributes name="HostState" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="1000" maxX="0" maxY="0" allocReadMember="false">
       <dataType xsi:type="pogoDsl:ShortType"/>
       <changeEvent fire="false" libCheckCriteria="false"/>

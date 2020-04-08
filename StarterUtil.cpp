@@ -37,20 +37,22 @@
 
 #include <fcntl.h>
 #include <sys/stat.h>
+
 #ifndef _TG_WINDOWS_
+
 #	include <sys/time.h>
+
 #endif
 
 
 #include <StarterUtil.h>
 
 
-namespace Starter_ns
-{
+namespace Starter_ns {
 
-int StarterUtil::elapsed;
+    int StarterUtil::elapsed;
 #ifndef _TG_WINDOWS_
-struct timeval	StarterUtil::before, StarterUtil::after;
+    struct timeval    StarterUtil::before, StarterUtil::after;
 #else
 #endif /* _TG_WINDOWS_ */
 
@@ -59,89 +61,84 @@ struct timeval	StarterUtil::before, StarterUtil::after;
  *	Contructor - Initialize data members.
  */
 //+------------------------------------------------------------------
-StarterUtil::StarterUtil(Tango::DeviceProxy *database, vector<string> host_names, string logHome)
-{
-	dbase = database;
-	notifyd_name  = "notifd/factory/";
-	notifyd_name += host_names[0];
-	ch_factory   = NULL;
-	log_home     = logHome;
+    StarterUtil::StarterUtil(Tango::DeviceProxy *database,
+            const vector<string>& host_names, const string& logHome) {
+        dbase = database;
+        log_home = logHome;
 
-	//	Remove the Fully Qualify Domain Name for tango less than 5.2 compatibility
-	for (unsigned int i=0 ; i<host_names.size() ; i++)
-		hostnames.push_back(removeFQDN(host_names[i]));
+        //	Remove the Fully Qualify Domain Name for tango less than 5.2 compatibility
+        for (const auto & host_name : host_names)
+            hostNames.emplace_back(removeFQDN(host_name));
 
-	proc_util = new CheckProcessUtil();
-	proc_util->start();
-	//	Wait a bit to be sure
-	//	that running process list is updated.
+        proc_util = new CheckProcessUtil();
+        proc_util->start();
+        //	Wait a bit to be sure
+        //	that running process list is updated.
 #ifdef _TG_WINDOWS_
-	_sleep(1000);
+        _sleep(1000);
 #else
-	sleep(1);
+        sleep(1);
 #endif
 
-	//	Build starter log file name.
-	LogPath(starter_log_file, logHome);
-	starter_log_file += "/Starter.log";
+        //	Build starter log file name.
+        LogPath(starter_log_file, logHome)
+        starter_log_file += "/Starter.log";
 
-	LogPath(starter_stat_file, logHome);
-	starter_stat_file += "/Starter.stat";
+        LogPath(starter_stat_file, logHome)
+        starter_stat_file += "/Starter.stat";
 
-	cout << "---->  starter_log_file  = " << starter_log_file << endl;
-	cout << "---->  starter_stat_file = " << starter_stat_file << endl;
-}
+        cout << "---->  starter_log_file  = " << starter_log_file << endl;
+        cout << "---->  starter_stat_file = " << starter_stat_file << endl;
+    }
 //+------------------------------------------------------------------
 /**
  *	Remove the Fully Qualify Domain Name for tango less than 5.2 compatibility
  */
 //+------------------------------------------------------------------
-string StarterUtil::removeFQDN(string s)
-{
-	string::size_type	pos = s.find('.');
-	if (pos == string::npos)
-		return s;
-	else
-		return 	s.substr(0, pos);
-}
+    string StarterUtil::removeFQDN(string s) {
+        string::size_type pos = s.find('.');
+        if (pos == string::npos)
+            return s;
+        else
+            return s.substr(0, pos);
+    }
 //+------------------------------------------------------------------
 /**
  *	Extract server name from input parameter (servname/instance).
  */
 //+------------------------------------------------------------------
-char *StarterUtil::get_server_name(char *argin)
-{
-    string fullName(argin);
-    string serverName;
-    string::size_type	pos = fullName.find('/');
-	if (pos == string::npos)
-		serverName = fullName;
-	else
-		serverName = fullName.substr(0, pos);
+    char *StarterUtil::get_server_name(char *argin) {
+        string fullName(argin);
+        string serverName;
+        string::size_type pos = fullName.find('/');
+        if (pos == string::npos)
+            serverName = fullName;
+        else
+            serverName = fullName.substr(0, pos);
 
-	char	*servname = new char[serverName.length()+1];
-	strcpy(servname, serverName.c_str());
-	return servname;
-}
+        char *servname = new char[serverName.length() + 1];
+        strcpy(servname, serverName.c_str());
+        return servname;
+    }
 //+------------------------------------------------------------------
 /**
  *	Extract instance name from input parameter (servname/instance).
  */
 //+------------------------------------------------------------------
-char *StarterUtil::get_instance_name(char *argin)
-{
-    string fullName(argin);
-    string instanceName;
-    string::size_type	pos = fullName.find('/');
-	if (pos == string::npos)
-		instanceName = fullName;
-	else
-		instanceName = fullName.substr(pos+1);
+    char *StarterUtil::get_instance_name(char *argin) {
+        string fullName(argin);
+        string instanceName;
+        string::size_type pos = fullName.find('/');
+        if (pos == string::npos)
+            instanceName = fullName;
+        else
+            instanceName = fullName.substr(pos + 1);
 
-	char	*instancename = new char[instanceName.length()+1];
-	strcpy(instancename, instanceName.c_str());
-	return instancename;
-}
+        char *instancename = new char[instanceName.length() + 1];
+        strcpy(instancename, instanceName.c_str());
+        return instancename;
+    }
+
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::check_file()
@@ -150,39 +147,38 @@ char *StarterUtil::get_instance_name(char *argin)
 //					and return its full name with good path.
 //
 //-----------------------------------------------------------------------------
-char *StarterUtil::check_exe_file(string name)
-{
-	string	filename(name);
-#ifdef	_TG_WINDOWS_
-	filename += ".exe";
+    char *StarterUtil::check_exe_file(string name) {
+        string filename(name);
+#ifdef    _TG_WINDOWS_
+        filename += ".exe";
 #endif
-	//cout << "Checking " << filename << endl;
-	ifstream	ifs(filename.c_str());
-	if (ifs)
-	{
-		ifs.close();
-		char *exeFullName = new char[strlen(filename.c_str())+1];
-		strcpy(exeFullName, filename.c_str());
-		return exeFullName;
-	}
-#ifdef	_TG_WINDOWS_
+        //cout << "Checking " << filename << endl;
+        ifstream ifs(filename.c_str());
+        if (ifs) {
+            ifs.close();
+            char *exeFullName = new char[strlen(filename.c_str()) + 1];
+            strcpy(exeFullName, filename.c_str());
+            return exeFullName;
+        }
+#ifdef    _TG_WINDOWS_
 
-	//	Check for batch file
-	filename = name;
-	filename += ".bat";
-	//cout << "Checking " << filename << endl;
-	ifstream	ifs2(filename.c_str());
-	if (ifs2)
-	{
-		ifs2.close();
-		char *exeFullName = new char[strlen(filename.c_str())+1];
-		strcpy(exeFullName, filename.c_str());
-		return exeFullName;
-	}
+        //	Check for batch file
+        filename = name;
+        filename += ".bat";
+        //cout << "Checking " << filename << endl;
+        ifstream	ifs2(filename.c_str());
+        if (ifs2)
+        {
+            ifs2.close();
+            char *exeFullName = new char[strlen(filename.c_str())+1];
+            strcpy(exeFullName, filename.c_str());
+            return exeFullName;
+        }
 #endif
 
-	return NULL;
-}
+        return nullptr;
+    }
+
 //+----------------------------------------------------------------------------
 //
 // method : 		StarterUtil::check_file()
@@ -191,324 +187,307 @@ char *StarterUtil::check_exe_file(string name)
 //					and return its full name with good path.
 //
 //-----------------------------------------------------------------------------
-char *StarterUtil::check_exe_file(char *servname, vector<string>v_path)
-{
-	unsigned int	i;
-	for (i=0 ; i<v_path.size() ; i++)
-	{
-		string	filename(v_path[i]);
-		filename += slash;
-		filename += servname;
+    char *StarterUtil::check_exe_file(char *servname, const vector<string>& v_path) {
+        for (auto filename : v_path) {
+            filename += slash;
+            filename += servname;
 
-		//	Check if exist
-		char *p;
-		if ((p=check_exe_file(filename))!=NULL)
-			return p;
-	}
+            //	Check if exist
+            char *p;
+            if ((p = check_exe_file(filename)) != nullptr)
+                return p;
+        }
 
-	//	server has not been found in path(es)
-	//----------------------------------------------
-	TangoSys_OMemStream out_stream;
-	out_stream << servname << " :  not found in \'StartDsPath\' property:" << endl;
-	for (i=0 ; i<v_path.size() ; i++)
-		out_stream << " - " << v_path[i] << endl;
-	out_stream << ends;
-	Tango::Except::throw_exception((const char *)"CANNOT_RUN_FILE",
-				out_stream.str(),
-				(const char *)"StarterUtil::check_exe_file()");
-	return NULL;
-}
+        //	server has not been found in path(es)
+        //----------------------------------------------
+        TangoSys_OMemStream out_stream;
+        out_stream << servname << " :  not found in \'StartDsPath\' property:" << endl;
+        for (const auto & path : v_path)
+            out_stream << " - " << path << endl;
+        out_stream << ends;
+        Tango::Except::throw_exception((const char *) "CANNOT_RUN_FILE",
+                                       out_stream.str(),
+                                       (const char *) "StarterUtil::check_exe_file()");
+    }
 //+------------------------------------------------------------------
 /**
  *	Format the date and time in the argin value (Ux format) as string.
  */
 //+------------------------------------------------------------------
-char *StarterUtil::strtime(time_t t)
-{
-	static char	str[20] ;
-	struct tm	*st = localtime(&t) ;
+    char *StarterUtil::strtime(time_t t) {
+        static char str[20];
+        struct tm *st = localtime(&t);
 
-	if (st->tm_year>=100)
-		st->tm_year -= 100 ;
-	sprintf (str, "%02d/%02d/%02d   %02d:%02d:%02d",
-								st->tm_mday, st->tm_mon+1, st->tm_year,
-								st->tm_hour, st->tm_min, st->tm_sec ) ;
-	return str ;
-}
+        if (st->tm_year >= 100)
+            st->tm_year -= 100;
+        sprintf(str, "%02d/%02d/%02d   %02d:%02d:%02d",
+                st->tm_mday, st->tm_mon + 1, st->tm_year,
+                st->tm_hour, st->tm_min, st->tm_sec);
+        return str;
+    }
 //+------------------------------------------------------------------
 /**
  *	Get the last modification on a file and return it in a string.
  *	@param	filename	file's name to get the date.
  */
 //+------------------------------------------------------------------
-char *StarterUtil::get_file_date(char *filename)
-{
-	struct stat	info;
-	stat(filename, &info);
-	return strtime(info.st_mtime);
-}
+    char *StarterUtil::get_file_date(char *filename) {
+        struct stat info{};
+        stat(filename, &info);
+        return strtime(info.st_mtime);
+    }
 //+------------------------------------------------------------------
 /**
  *	Log info for starter.
  *	@param	message	 mesage to be logged
  */
 //+------------------------------------------------------------------
-void StarterUtil::log_starter_info(string message)
-{
-	stringstream	strlog;
-	strlog << strtime(time(NULL)) << "\t" << message  << endl;
+    void StarterUtil::log_starter_info(const string& message) {
+        stringstream strlog;
+        strlog << strtime(time(nullptr)) << "\t" << message << endl;
 
-	//	Read and close log file.
-	ifstream	ifs((char *)starter_log_file.c_str());
-	if (ifs)
-	{
-		strlog << ifs.rdbuf();
-		ifs.close();
-	}
-	//	Check for nb lines
-	string	str(strlog.str());
-	string::size_type	pos = 0;
-	int nb = 0;
-	while (nb<STARTER_LOG_DEPTH && (pos=str.find('\n', pos+1))!=string::npos)
-		nb++;
+        //	Read and close log file.
+        ifstream ifs((char *) starter_log_file.c_str());
+        if (ifs) {
+            strlog << ifs.rdbuf();
+            ifs.close();
+        }
+        //	Check for nb lines
+        string str(strlog.str());
+        string::size_type pos = 0;
+        int nb = 0;
+        while (nb < STARTER_LOG_DEPTH && (pos = str.find('\n', pos + 1)) != string::npos)
+            nb++;
 
-	if (pos!=string::npos)
-		str = str.substr(0, pos);
+        if (pos != string::npos)
+            str = str.substr(0, pos);
 
-	//	Write to log file
-	ofstream	ofs((char *)starter_log_file.c_str());
-	ofs << str;
-	ofs.close();
-}
+        //	Write to log file
+        ofstream ofs((char *) starter_log_file.c_str());
+        ofs << str;
+        ofs.close();
+    }
 //+------------------------------------------------------------------
 /**
  *	Reset statistics for starter.
  */
 //+------------------------------------------------------------------
-void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers)
-{
-	//	build present situation log
-	stringstream	strlog;
-	vector<ControlledServer>::iterator it;
-	for (it=servers->begin() ; it<servers->end() ; ++it)
-	{
-		if (it->controlled && it->startup_level>0)
-		{
-			time_t	failure_time = it->failure_time;
-			if (failure_time<0)
-				failure_time = time(NULL);
+    void StarterUtil::reset_starter_stat_file(vector<ControlledServer> *servers) {
+        //	build present situation log
+        stringstream strlog;
+        vector<ControlledServer>::iterator it;
+        for (it = servers->begin(); it < servers->end(); ++it) {
+            if (it->controlled && it->startup_level > 0) {
+                time_t failure_time = it->failure_time;
+                if (failure_time < 0)
+                    failure_time = time(nullptr);
 
-			strlog << it->name           << "\t" <<
-	                ((it->get_state()==Tango::ON)? "ON\t" : "FAULT\t") <<
-	                it->started_time << "\t" <<
-						failure_time << "\t" <<
-					"false" << endl;
-		}
-	}
+                strlog << it->name << "\t" <<
+                       ((it->get_state() == Tango::ON) ? "ON\t" : "FAULT\t") <<
+                       it->started_time << "\t" <<
+                       failure_time << "\t" <<
+                       "false" << endl;
+            }
+        }
 
-	//	Write an empty statistics file
-	ofstream	ofs((char *)starter_stat_file.c_str());
-	ofs << strlog.str();
-	ofs.close();
-}
+        //	Write an empty statistics file
+        ofstream ofs((char *) starter_stat_file.c_str());
+        ofs << strlog.str();
+        ofs.close();
+    }
 //+------------------------------------------------------------------
 /**
  *	Log statistica for starter.
  *	@param	message	 mesage to be logged
  */
 //+------------------------------------------------------------------
-void StarterUtil::log_starter_statistics(ControlledServer *server)
-{
-	stringstream	strlog;
-	strlog << server->name           << "\t" <<
-	                ((server->get_state()==Tango::ON)? "ON\t" : "FAULT\t") <<
-	                server->started_time  << "\t" <<
-					server->failure_time  << "\t" <<
-					((server->auto_start)? "true" : "false") << endl;
-	server->auto_start = false;
+    void StarterUtil::log_starter_statistics(ControlledServer *server) {
+        stringstream strlog;
+        strlog << server->name << "\t" <<
+               ((server->get_state() == Tango::ON) ? "ON\t" : "FAULT\t") <<
+               server->started_time << "\t" <<
+               server->failure_time << "\t" <<
+               ((server->auto_start) ? "true" : "false") << endl;
+        server->auto_start = false;
 
-	//	Read and close log file.
-	ifstream	ifs((char *)starter_stat_file.c_str());
-	if (ifs)
-	{
-		strlog << ifs.rdbuf();
-		ifs.close();
-	}
-	//	Check for nb lines
-	string	str(strlog.str());
-	string::size_type	pos = 0;
-	int nb = 0;
-	while (nb<STARTER_STAT_DEPTH && (pos=str.find('\n', pos+1))!=string::npos)
-		nb++;
+        //	Read and close log file.
+        ifstream ifs((char *) starter_stat_file.c_str());
+        if (ifs) {
+            strlog << ifs.rdbuf();
+            ifs.close();
+        }
+        //	Check for nb lines
+        string str(strlog.str());
+        string::size_type pos = 0;
+        int nb = 0;
+        while (nb < STARTER_STAT_DEPTH && (pos = str.find('\n', pos + 1)) != string::npos)
+            nb++;
 
-	if (pos!=string::npos)
-		str = str.substr(0, pos);
+        if (pos != string::npos)
+            str = str.substr(0, pos);
 
-	//	Write to log file
-	ofstream	ofs((char *)starter_stat_file.c_str());
-	ofs << str;
-	ofs.close();
-}
+        //	Write to log file
+        ofstream ofs((char *) starter_stat_file.c_str());
+        ofs << str;
+        ofs.close();
+    }
 //+------------------------------------------------------------------
 /**
  *	check if there is not to much log file and rename last one
  *	@param	filename	file's name to get the date and rename.
  */
 //+------------------------------------------------------------------
-void StarterUtil::manage_log_file_history(char *filename, int nb_max)
-{
-	string	log_file(filename);
+    void StarterUtil::manage_log_file_history(char *filename, int nb_max) {
+        string log_file(filename);
 
-	//	Try to open log file
-	ifstream	ifs((char *)log_file.c_str());
-	if (!ifs)
-		return;	//	Does not exist-> do nothing
+        //	Try to open log file
+        ifstream ifs((char *) log_file.c_str());
+        if (!ifs)
+            return;    //	Does not exist-> do nothing
 
-	//	Get the log file list
-	vector<string>	list =  get_log_file_list(log_file);
-	//for (unsigned int i=0 ; i<list.size() ; i++)
-	//	cout << list[i] << endl;
+        //	Get the log file list
+        vector<string> list = get_log_file_list(log_file);
+        //for (unsigned int i=0 ; i<list.size() ; i++)
+        //	cout << list[i] << endl;
 
-	//	Check if too much files -> delete
-	while (list.size()>((unsigned int)nb_max-1))	//	-1 because a new one will exist bellow
-	{
-		//cout << "Removing " << list[0] << endl;
-		if (remove(list[0].c_str())<0)
-			cerr << "remove failed : " << strerror(errno) << endl;
-		list.erase(list.begin());
-	}
+        //	Check if too much files -> delete
+        while (list.size() > ((unsigned int) nb_max - 1))    //	-1 because a new one will exist bellow
+        {
+            //cout << "Removing " << list[0] << endl;
+            if (remove(list[0].c_str()) < 0)
+                cerr << "remove failed : " << strerror(errno) << endl;
+            list.erase(list.begin());
+        }
 
-	//	Build date and time (of file creation) part
-	struct stat	info;
-	stat(filename, &info);
-	struct tm	*st = localtime(&info.st_mtime) ;
-	if (st->tm_year>=100)
-		st->tm_year -= 100 ;
-	char	strdate[32];
-	sprintf (strdate, "_[20%02d-%02d-%02d_%02d-%02d-%02d]",
-						st->tm_year, st->tm_mon+1, st->tm_mday,
-						st->tm_hour, st->tm_min, st->tm_sec ) ;
+        //	Build date and time (of file creation) part
+        struct stat info{};
+        stat(filename, &info);
+        struct tm *st = localtime(&info.st_mtime);
+        if (st->tm_year >= 100)
+            st->tm_year -= 100;
+        char strdate[32];
+        sprintf(strdate, "_[20%02d-%02d-%02d_%02d-%02d-%02d]",
+                st->tm_year, st->tm_mon + 1, st->tm_mday,
+                st->tm_hour, st->tm_min, st->tm_sec);
 
-	//	search position to insert (before extention)
-	string	str(filename);
-	string::size_type	pos = str.rfind(".log");
-	if (pos != string::npos)
-		str = str.substr(0, pos);
+        //	search position to insert (before extention)
+        string str(filename);
+        string::size_type pos = str.rfind(".log");
+        if (pos != string::npos)
+            str = str.substr(0, pos);
 
-	char	*new_filename = new char[strlen(filename) + strlen(strdate) +1];
-	strcpy(new_filename, str.c_str());
-	strcat(new_filename, strdate);
-	strcat(new_filename, ".log");
-	int ret = rename(filename, new_filename);
-	if (ret<0)
-		cerr << "Renaming " << filename << " to " << new_filename << " failed : " << strerror(errno) << endl;
-	//else
-	//	cout << "Renaming " << filename << " to " << new_filename << "  done." << endl;
-	delete [] new_filename;
-}
+        char *new_filename = new char[strlen(filename) + strlen(strdate) + 1];
+        strcpy(new_filename, str.c_str());
+        strcat(new_filename, strdate);
+        strcat(new_filename, ".log");
+        int ret = rename(filename, new_filename);
+        if (ret < 0)
+            cerr << "Renaming " << filename << " to " << new_filename << " failed : " << strerror(errno) << endl;
+        //else
+        //	cout << "Renaming " << filename << " to " << new_filename << "  done." << endl;
+        delete[] new_filename;
+    }
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool  alphabetical(string a,string b)
-{
-	//	returns alphabetic order.
-	return (a < b);
-}
+    bool alphabetical(const string& a, const string& b) {
+        //	returns alphabetic order.
+        return (a < b);
+    }
 //+------------------------------------------------------------------
 /**
  *	Rename log file list
  *	@param	filename	log file name
  */
 //+------------------------------------------------------------------
-vector<string> StarterUtil::get_log_file_list(string logfile)
-{
-	vector<string>	list;
-	//	Split path and file name
-	string::size_type	pos = logfile.rfind(slash);
-	if (pos != string::npos)
-	{
-		string	path = logfile.substr(0, pos);
-		pos++;
-		//	remove extention
-		string	str = logfile.substr(pos);
-		pos = str.rfind('.');
-		string	filter = str.substr(0, pos);
-		filter += "_[";
+    vector<string> StarterUtil::get_log_file_list(const string& logfile) {
+        vector<string> list;
+        //	Split path and file name
+        string::size_type pos = logfile.rfind(slash);
+        if (pos != string::npos) {
+            string path = logfile.substr(0, pos);
+            pos++;
+            //	remove extention
+            string str = logfile.substr(pos);
+            pos = str.rfind('.');
+            string filter = str.substr(0, pos);
+            filter += "_[";
 
 #ifndef _TG_WINDOWS_
-		//cout << "Searching " << filter << "  in " << path << endl;
-		DIR		*dir = opendir ((char *)path.c_str()) ;
-		if(dir==NULL)
-		{
-			string	desc;
-			//	error
-			switch(errno)
-			{
-				case EACCES: desc = "Permission denied.";
-					break;
-				case EMFILE: desc = "Too many file descriptors in use by process.";
-					break;
-				case ENFILE: desc = "Too many file are currently open in the system.";
-					break;
-				case ENOENT: desc = "Directory does not exist or NAME is an empty string.";
-					break;
-				case ENOMEM: desc = "Insufficient memory to complete the operation.";
-					break;
-				case ENOTDIR:desc  = "NAME is not a directory.";
-					break;
-				default: desc = "Unknown error: ";
-						 desc += errno;
-			}
-			Tango::Except::throw_exception(
-					(const char *)"READ_FILE_LIST_FAILED",
-					desc,
-					(const char *)"StarterUtil::get_log_file_list()");
+            //cout << "Searching " << filter << "  in " << path << endl;
+            DIR *dir = opendir((char *) path.c_str());
+            if (dir == nullptr) {
+                string desc;
+                //	error
+                switch (errno) {
+                    case EACCES:
+                        desc = "Permission denied.";
+                        break;
+                    case EMFILE:
+                        desc = "Too many file descriptors in use by process.";
+                        break;
+                    case ENFILE:
+                        desc = "Too many file are currently open in the system.";
+                        break;
+                    case ENOENT:
+                        desc = "Directory does not exist or NAME is an empty string.";
+                        break;
+                    case ENOMEM:
+                        desc = "Insufficient memory to complete the operation.";
+                        break;
+                    case ENOTDIR:
+                        desc = "NAME is not a directory.";
+                        break;
+                    default:
+                        desc = "Unknown error: ";
+                        desc += errno;
+                }
+                Tango::Except::throw_exception(
+                        (const char *) "READ_FILE_LIST_FAILED",
+                        desc,
+                        (const char *) "StarterUtil::get_log_file_list()");
 
-		}
-		struct dirent	*ent;
-		while ( (ent=readdir(dir)) )
-		{
-			string	name(ent->d_name);
-			pos = name.find(filter);
-			if (pos == 0)
-			{
-				string	full_name(path);
-				full_name += "/";
-				full_name += name;
-				list.push_back(full_name);
-			}
-		}
-		closedir(dir);
+            }
+            struct dirent *ent;
+            while ((ent = readdir(dir))) {
+                string name(ent->d_name);
+                pos = name.find(filter);
+                if (pos == 0) {
+                    string full_name(path);
+                    full_name += "/";
+                    full_name += name;
+                    list.push_back(full_name);
+                }
+            }
+            closedir(dir);
 #else
-		//cout << "Searching " << filter << "  in " << path << endl;
-		path += "\\";
-		path += filter;
-		path += "*";
-		WCHAR	*w_path = ProcessData::string2wchar(path);
+            //cout << "Searching " << filter << "  in " << path << endl;
+            path += "\\";
+            path += filter;
+            path += "*";
+            WCHAR	*w_path = ProcessData::string2wchar(path);
 
-		WIN32_FIND_DATA fd;
-		DWORD dwAttr = FILE_ATTRIBUTE_DIRECTORY;
-		HANDLE hFind = FindFirstFile(w_path, &fd);
-		if(hFind != INVALID_HANDLE_VALUE)
-		{
-			do
-			{
-				string	s = ProcessData::wchar2string(fd.cFileName);
-				list.push_back(s);
-			}
-			while (FindNextFile( hFind, &fd));
-			FindClose( hFind);
-		}
-		else
-		{
-			string desc = ProcessData::errorCodeToString(GetLastError(), "FindFirstFile()" );
-			cerr << "Invalid Handle value " << desc << endl;
-		}
-		delete w_path;
+            WIN32_FIND_DATA fd;
+            DWORD dwAttr = FILE_ATTRIBUTE_DIRECTORY;
+            HANDLE hFind = FindFirstFile(w_path, &fd);
+            if(hFind != INVALID_HANDLE_VALUE) {
+                do {
+                    string	s = ProcessData::wchar2string(fd.cFileName);
+                    list.push_back(s);
+                }
+                while (FindNextFile( hFind, &fd));
+                FindClose( hFind);
+            }
+            else {
+                string desc = ProcessData::errorCodeToString(GetLastError(), "FindFirstFile()" );
+                cerr << "Invalid Handle value " << desc << endl;
+            }
+            delete w_path;
 #endif
-	}
-	sort(list.begin(), list.end(), alphabetical);
-	return list;
-}
+        }
+        sort(list.begin(), list.end(), alphabetical);
+        return list;
+    }
 
 //+------------------------------------------------------------------
 /**
@@ -520,39 +499,23 @@ vector<string> StarterUtil::get_log_file_list(string logfile)
  *      @param  server   name of the server
  */
 //+------------------------------------------------------------------
-string StarterUtil::build_log_file_name(char *server)
-{
-	//	Separate server name and instance name.
-	/*
-	char	serverName[50];
-	char	intancename[50];
-	char	*p1 = server;
-	char	*p2 = serverName;
-	while (*p1 && *p1!='/')
-		*p2++ = *p1++;
-	*p2++ = '\0';
-	p1++;
+    string StarterUtil::build_log_file_name(char *server) {
+        //	Split server and instance names.
+        string serverName(server);
+        unsigned long index = serverName.find('/');
+        string binary = serverName.substr(0, index);
+        string instance = serverName.substr(++index);
 
-	p2 = intancename;
-	while (*p1)
-		*p2++ = *p1++;
-	*p2++ = '\0';
-    */
-    string serverName(server);
-    unsigned long index = serverName.find('/');
-    string binary = serverName.substr(0, index);
-    string instance = serverName.substr(++index);
-
-	//	And create full name with path
-	string	log_file;
-	LogPath(log_file,log_home);
-	log_file += slash;
-	log_file += binary;
-	log_file += "_";
-	log_file += instance;
-	log_file += ".log";
-	return log_file;
-}
+        //	And create full name with path
+        string log_file;
+        LogPath(log_file, log_home)
+        log_file += slash;
+        log_file += binary;
+        log_file += "_";
+        log_file += instance;
+        log_file += ".log";
+        return log_file;
+    }
 
 
 
@@ -574,49 +537,44 @@ string StarterUtil::build_log_file_name(char *server)
  *	@param dbase	Database device as a DeviceProxy for not implemented API commands.
  */
 //+------------------------------------------------------------------
-vector<string>	StarterUtil::get_host_ds_list()
-{
-	//	Read server info from database.
-	vector<string>		servnames;
-	for (unsigned int i=0 ; i<hostnames.size() ; i++)
-	{
-		Tango::DeviceData	argin;
-		argin << hostnames[i];
-		cout << "DbGetHostServerList for " << hostnames[i] << endl;
-		Tango::DeviceData	argout = dbase->command_inout("DbGetHostServerList", argin);
-		vector<string>	tmp;
-		argout >> tmp;
+    vector<string> StarterUtil::get_host_ds_list() {
+        //	Read server info from database.
+        vector<string> serverNames;
+        for (string hostName : hostNames) {
+            Tango::DeviceData argin;
+            argin << hostName;
+            cout << "DbGetHostServerList for " << hostName << endl;
+            Tango::DeviceData argout = dbase->command_inout("DbGetHostServerList", argin);
+            vector<string> tmp;
+            argout >> tmp;
 
-		//	Check servers really used (Erase this one and database server
-		vector<string>::iterator pos;
-		for (pos=tmp.begin() ; pos<tmp.end() ; ++pos)
-		{
-			unsigned long idx = (*pos).find_first_of("/");
-			if (idx>0)
-			{
-				//	Get process name only in lower case before compeare
-				string	s = (*pos).substr(0, idx);
-				transform(s.begin(), s.end(), s.begin(), ::tolower);
-				if (s=="starter"  ||
-					s=="databaseds" ||
-					s=="tangoaccesscontrol" ||
-					s=="logconsumer")
-				{
-					tmp.erase(pos);
-					--pos;	//	because erase decrease size !
-				}
-			}
-		}
-		//	Copy to global vector
-		for (unsigned int j=0 ; j<tmp.size() ; j++)
-			servnames.push_back(tmp[j]);
-	}
-	cout << "----------------------------------------" << endl;
-	cout << servnames.size() << " servers found" << endl;
-	for (unsigned int j=0 ; j<servnames.size() ; j++)
-		cout << "\t" <<  servnames[j]	<< endl;
-	return servnames;
-}
+            //	Check servers really used (Erase this one and database server
+            vector<string>::iterator pos;
+            for (pos = tmp.begin(); pos < tmp.end(); ++pos) {
+                unsigned long idx = (*pos).find_first_of("/");
+                if (idx > 0) {
+                    //	Get process name only in lower case before compeare
+                    string s = (*pos).substr(0, idx);
+                    transform(s.begin(), s.end(), s.begin(), ::tolower);
+                    if (s == "starter" ||
+                        s == "databaseds" ||
+                        s == "tangoaccesscontrol" ||
+                        s == "logconsumer") {
+                        tmp.erase(pos);
+                        --pos;    //	because erase decrease size !
+                    }
+                }
+            }
+            //	Copy to global vector
+            for (const auto & j : tmp)
+                serverNames.push_back(j);
+        }
+        cout << "----------------------------------------" << endl;
+        cout << serverNames.size() << " servers found" << endl;
+        for (const auto & serverName : serverNames)
+            cout << "\t" << serverName << endl;
+        return serverNames;
+    }
 //+------------------------------------------------------------------
 /**
  *	Read DS info from database to know if it is controlled
@@ -626,138 +584,115 @@ vector<string>	StarterUtil::get_host_ds_list()
  *	@param	server	object to be updated from db read.
  */
 //+------------------------------------------------------------------
-void StarterUtil::get_server_info(ControlledServer *server)
-{
-	try
-	{
-		//	Read server info from database.
-		Tango::DeviceData	argin;
-		argin << server->name;
-		Tango::DeviceData	argout = dbase->command_inout("DbGetServerInfo", argin);
-		vector<string>	result;
-		argout >> result;
-		server->controlled = atoi(result[2].c_str()) != 0;
-		server->startup_level =  (short)atoi(result[3].c_str());
-	}
-	catch(Tango::DevFailed &e)
-	{
-		Tango::Except::print_exception(e);
-		server->controlled = false;
-		server->startup_level = 0;
-	}
-	//cout << server->name << " - " << ((server->controlled)? "true": "false");
-	//cout << " ----> Startup level " << server->startup_level <<endl;
-}
+    void StarterUtil::get_server_info(ControlledServer *server) {
+        try {
+            //	Read server info from database.
+            Tango::DeviceData argin;
+            argin << server->name;
+            Tango::DeviceData argout = dbase->command_inout("DbGetServerInfo", argin);
+            vector<string> result;
+            argout >> result;
+            server->controlled = atoi(result[2].c_str()) != 0;
+            server->startup_level = (short) atoi(result[3].c_str());
+        }
+        catch (Tango::DevFailed &e) {
+            Tango::Except::print_exception(e);
+            server->controlled = false;
+            server->startup_level = 0;
+        }
+        //cout << server->name << " - " << ((server->controlled)? "true": "false");
+        //cout << " ----> Startup level " << server->startup_level <<endl;
+    }
 //+------------------------------------------------------------------
 /**
  *	Allocate and fill the servers controlled object
  */
 //+------------------------------------------------------------------
-void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
-{
-	bool trace = false;
-	if (trace)	cout << "build_server_ctrl_object()" << endl;
-	unsigned int	i;
-	vector<string>	result_from_db;
-	for (i=0 ; i<hostnames.size() ; i++)
-	{
-		//	Call for servers and their info for each host
-		//cout << "Call for servers on " << hostnames[i] << endl;
-		Tango::DeviceData	argin;
-		argin << hostnames[i];
-		Tango::DeviceData	argout = dbase->command_inout("DbGetHostServersInfo", argin);
-		argout >> result_from_db;
-	}
+    void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers) {
+        vector<string> result_from_db;
+        for (auto & hostName : hostNames) {
+            //	Call for servers and their info for each host
+            //cout << "Call for servers on " << hostnames[i] << endl;
+            Tango::DeviceData argin;
+            argin << hostName;
+            Tango::DeviceData argout = dbase->command_inout("DbGetHostServersInfo", argin);
+            argout >> result_from_db;
+        }
+        //	Check servers really used (erase this one and database server)
+        vector<string>::iterator pos;
+        vector<string> result;
+        for (pos = result_from_db.begin(); pos < result_from_db.end(); pos += 3) {
+            unsigned long idx = (*pos).find_first_of("/");
+            if (idx > 0) {
+                //	Get process name only in lower case before compare
+                string s = (*pos).substr(0, idx);
+                transform(s.begin(), s.end(), s.begin(), ::tolower);
+                if (s != "starter" &&
+                    s != "databaseds" &&
+                    s != "tangoaccesscontrol" &&
+                    s != "logconsumer") {
+                    result.push_back(*pos);        //	Server name
+                    result.push_back(*(pos + 1));    //	Controlled/Not Controlled
+                    result.push_back(*(pos + 2));    //	Startup Level
+                }
+            }
+        }
 
-	if (trace)	cout << "--------------  Check if list of servers modified  --------------" << endl;
+        //	Check if some servers have disappeared
+        vector<ControlledServer>::iterator it;
+        bool redo = true;    //	Iterators management seems to have changed
+        //	between vc6 and vc8  (??)
+        while (redo) {
+            redo = false;
+            for (it = servers->begin(); it < servers->end(); ++it) {
+                string s1(it->name);
+                bool found = false;
+                for (unsigned long i = 0; !found && i < result.size(); i += 3)
+                    found = (s1 == result[i]);
 
-	//	Check servers really used (erase this one and database server)
-	vector<string>::iterator pos;
-	vector<string>	result;
-	for (pos=result_from_db.begin() ; pos<result_from_db.end() ; pos+=3)
-	{
-		unsigned long idx = (*pos).find_first_of("/");
-		if (idx>0)
-		{
-			//	Get process name only in lower case before compare
-			string	s = (*pos).substr(0, idx);
-			transform(s.begin(), s.end(), s.begin(), ::tolower);
-			if (s!="starter"            &&
-				s!="databaseds"         &&
-				s!="tangoaccesscontrol" &&
-				s!="logconsumer")
-			{
-				result.push_back(*pos);		//	Server name
-				result.push_back(*(pos+1));	//	Controlled/Not Controlled
-				result.push_back(*(pos+2));	//	Startup Level
-			}
-		}
-	}
+                if (!found) {
+                    //	if disappeared then stop thread and remove reference
+                    it->thread_data->set_stop_thread();
+                    it->thread->join(0);
+                    servers->erase(it);
+                    redo = true;
+                    break;    //	get out of loop (vector size has changed).
+                }
+            }
+        }
+        //	Check if new servers appeared
+        for (pos = result.begin(); pos < result.end();) {
+            string name(*pos++);
+            ControlledServer *p_serv = get_server_by_name(name, *servers);
+            if (p_serv == nullptr) {
+                //	Create a new server instance
+                ControlledServer server;
 
-	//	Check if some servers have disappeared
-	vector<ControlledServer>::iterator it;
-	bool	redo = true;	//	Iterators management seems to have changed
-	                        //	between vc6 and vc8  (??)
-	while (redo)
-	{
-		redo = false;
-		for (it=servers->begin() ; it<servers->end() ; ++it)
-		{
-			string	s1(it->name);
-			bool	found = false;
-			for (i=0 ; !found && i<result.size() ; i+=3)
-				found = (s1==result[i]);
+                server.name = name;
+                server.admin_name = "dserver/" + server.name;
+                server.controlled = atoi((*pos++).c_str()) != 0;
+                server.startup_level = (short) atoi((*pos++).c_str());
+                server.set_state(Tango::FAULT);
+                server.stopped = false;
+                server.auto_start = false;
+                server.started_time = time(nullptr);
+                server.failure_time = -1;
 
-			if (!found)
-			{
-				if (trace)  cout << s1 << " has disappeared" << endl;
-				//	if disappeared then stop thread and remove reference
-				it->thread_data->set_stop_thread();
-				it->thread->join(0);
-				servers->erase(it);
-				redo = true;
-				break;	//	get out of loop (vector size has changed).
-			}
-		}
-	}
-	//	Check if new servers appeared
-	for (pos=result.begin() ; pos<result.end() ; )
-	{
-		string	name(*pos++);
-		ControlledServer *p_serv = get_server_by_name(name, *servers);
-		if (p_serv==NULL)
-		{
-			if (trace)	cout << name << " appeared " << endl;
-			//	Create a new server instance
-			ControlledServer	server;
+                //	Add a thread to ping server
+                server.thread_data = new PingThreadData(server.name);
+                server.thread =
+                        new PingThread(server.thread_data, server.name, proc_util);
+                server.thread->start();
 
-			server.name = name;
-			server.admin_name = "dserver/" + server.name;
-			server.controlled = atoi((*pos++).c_str()) != 0;
-			server.startup_level = (short)atoi((*pos++).c_str());
-			server.set_state(Tango::FAULT);
-			server.stopped       = false;
-			server.auto_start    = false;
-			server.started_time  = time(NULL);
-			server.failure_time  = -1;
-
-			//	Add a thread to ping server
-			server.thread_data = new PingThreadData(server.name);
-			server.thread =
-				new PingThread(server.thread_data, server.name, proc_util);
-			server.thread->start();
-
-			servers->push_back(server);
-			ms_sleep(50);	//	wait for server updated.
-		}
-		else
-		{
-			//	Update levels
-			p_serv->controlled = atoi((*pos++).c_str()) != 0;
-			p_serv->startup_level = (short) atoi((*pos++).c_str());
-		}
-	}
-}
+                servers->push_back(server);
+                ms_sleep(50) //	wait for server updated.
+            } else {
+                //	Update levels
+                p_serv->controlled = atoi((*pos++).c_str()) != 0;
+                p_serv->startup_level = (short) atoi((*pos++).c_str());
+            }
+        }
+    }
 
 //+------------------------------------------------------------------
 /**
@@ -766,109 +701,28 @@ void StarterUtil::build_server_ctrl_object(vector<ControlledServer> *servers)
  *	@param servname	Server searched name.
  */
 //+------------------------------------------------------------------
-ControlledServer *StarterUtil::get_server_by_name(string &servname, vector<ControlledServer> &servers)
-{
-	string serverName(servname);
-	transform(serverName.begin(), serverName.end(), serverName.begin(), ::tolower);
-	for (unsigned int i=0 ; i<servers.size() ; i++)
-	{
-		ControlledServer	*server = &servers[i];
-		string ctrlName(server->name);
-		transform(ctrlName.begin(), ctrlName.end(), ctrlName.begin(), ::tolower);
-		if (ctrlName == serverName)
-			return server;
-	}
-	return NULL;
-}
+    ControlledServer *StarterUtil::get_server_by_name(string &servname, vector<ControlledServer> &servers) {
+        string serverName(servname);
+        transform(serverName.begin(), serverName.end(), serverName.begin(), ::tolower);
+        for (auto & i : servers) {
+            ControlledServer *server = &i;
+            string ctrlName(server->name);
+            transform(ctrlName.begin(), ctrlName.end(), ctrlName.begin(), ::tolower);
+            if (ctrlName == serverName)
+                return server;
+        }
+        return nullptr;
+    }
+
 //+----------------------------------------------------------------------------
 //+----------------------------------------------------------------------------
     void ControlledServer::set_state(Tango::DevState st) {
-        if (st==Tango::MOVING && state!=Tango::MOVING) {
+        if (st == Tango::MOVING && state != Tango::MOVING) {
             //  Has just been switched to MOVING
-            moving_time = time(NULL);
+            moving_time = time(nullptr);
         }
         state = st;
     }
-//+----------------------------------------------------------------------------
-//
-// method : 		StarterUtil::
-//
-// description : 	Return true if Notify Daemon is alive
-//
 //-----------------------------------------------------------------------------
-void StarterUtil::import_notifyd()
-{
-	//	Get info about notify daemon
-	Tango::DeviceData	argin;
-	argin << notifyd_name;
-	Tango::DeviceData	import_argout =
-				dbase->command_inout("DbImportEvent", argin);
-	const Tango::DevVarLongStringArray	*lsa;
-	import_argout >> lsa;
-
-	//	store ior
-	string	factory_ior      = string((lsa->svalue)[1]);
-
-	//	Try to connect
-	Tango::Util		*tu = Tango::Util::instance();
-	CORBA::ORB_ptr	_orb = tu->get_orb();
-
-	CORBA::Object *event_factory_obj =
-		 _orb -> string_to_object(factory_ior.c_str());
-
-	if (event_factory_obj -> _non_existent())
-		event_factory_obj = CORBA::Object::_nil();
-
-	// Narrow the CORBA_Object reference to an EventChannelFactory
-	// reference so we can invoke its methods
-	//CORBA::Object	*_eventChannelFactory =	event_factory_obj;
-
-	//	Test the connection
-	ch_factory =
-	CosNotifyChannelAdmin::EventChannelFactory::_narrow(event_factory_obj);
-}
-//+----------------------------------------------------------------------------
-//
-// method : 		StarterUtil::
-//
-// description : 	Return true if Notify Daemon is alive
-//
 //-----------------------------------------------------------------------------
-Tango::DevState StarterUtil::is_notifyd_alive()
-{
-	string	notify_procname("notifd");
-	Tango::DevState	notifd_state;
-	if (proc_util->is_process_running(notify_procname))
-	{
-		try
-		{
-			//cout << notify_procname << " is running" << endl;
-			if (ch_factory==NULL)
-				import_notifyd();
-
-			CosNotifyChannelAdmin::ChannelIDSeq	*ch_id =
-							ch_factory->get_all_channels();
-			delete ch_id;
-
-			cout2 << notifyd_name << "EventChannelFactory is ON" << endl;
-
-			notifd_state = Tango::ON;
-		}
-		catch (...)
-		{
-			cerr << notify_procname << " is running  BUT not responding" << endl;
-			//cerr << "Failed to narrow the EventChannelFactory on " << notifyd_name << endl;
-			ch_factory = NULL;
- 			notifd_state = Tango::UNKNOWN;
-		}
-	}
-	else
-	{
-		//cout << notify_procname << " is NOT running" << endl;
- 		notifd_state = Tango::FAULT;
-	}
-	return notifd_state;
-}
-//-----------------------------------------------------------------------------
-
-}	//	namespace
+}    //	namespace

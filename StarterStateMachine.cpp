@@ -41,7 +41,6 @@
 
 
 #include <Starter.h>
-#include <StarterClass.h>
 
 /*----- PROTECTED REGION END -----*/	//	Starter::StarterStateMachine.cpp
 
@@ -59,22 +58,6 @@ namespace Starter_ns
 //=================================================
 //		Attributes Allowed Methods
 //=================================================
-
-//--------------------------------------------------------
-/**
- *	Method      : Starter::is_NotifdState_allowed()
- *	Description : Execution allowed for NotifdState attribute
- */
-//--------------------------------------------------------
-bool Starter::is_NotifdState_allowed(TANGO_UNUSED(Tango::AttReqType type))
-{
-
-	//	Not any excluded states for NotifdState attribute in read access.
-	/*----- PROTECTED REGION ID(Starter::NotifdStateStateAllowed_READ) ENABLED START -----*/
-	
-	/*----- PROTECTED REGION END -----*/	//	Starter::NotifdStateStateAllowed_READ
-	return true;
-}
 
 //--------------------------------------------------------
 /**
@@ -262,21 +245,6 @@ bool Starter::is_HardKillServer_allowed(TANGO_UNUSED(const CORBA::Any &any))
 	/*----- PROTECTED REGION ID(Starter::HardKillServerStateAllowed) ENABLED START -----*/
 
 	/*----- PROTECTED REGION END -----*/	//	Starter::HardKillServerStateAllowed
-	return true;
-}
-
-//--------------------------------------------------------
-/**
- *	Method      : Starter::is_NotifyDaemonState_allowed()
- *	Description : Execution allowed for NotifyDaemonState attribute
- */
-//--------------------------------------------------------
-bool Starter::is_NotifyDaemonState_allowed(TANGO_UNUSED(const CORBA::Any &any))
-{
-	//	Not any excluded states for NotifyDaemonState command.
-	/*----- PROTECTED REGION ID(Starter::NotifyDaemonStateStateAllowed) ENABLED START -----*/
-
-	/*----- PROTECTED REGION END -----*/	//	Starter::NotifyDaemonStateStateAllowed
 	return true;
 }
 

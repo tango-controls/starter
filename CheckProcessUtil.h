@@ -54,7 +54,6 @@
 #	include <WinBase.h>
 #else
 #		include <sys/wait.h>
-#		include <sys/time.h>
 #		include <dirent.h>
 #		include <sys/types.h>
 #		include <fcntl.h>
@@ -110,15 +109,15 @@ namespace Starter_ns
 class ProcessData: public Tango::TangoMonitor
 {
 private:
-	vector<Process*>	proc_list;
+	vector<Process*> proc_list;
 
 	void read_process_list_from_sys();
-	bool check_java_process(Process* process);
-	bool check_python_process(Process* process);
-	void check_cpp_process(Process* process);
-	void build_server_names(Process* process);
+	static bool check_java_process(Process* process);
+	static bool check_python_process(Process* process);
+	static void check_cpp_process(Process* process);
+	static void build_server_names(Process* process);
 
-	string	name_from_path(string full_name);
+	static string name_from_path(const string& fullName);
 
 #ifdef _TG_WINDOWS_
 	bool win2000;
@@ -128,17 +127,17 @@ private:
 	PVOID  getPebStructure(HANDLE hProcess, PVOID pebAddress);
 	UNICODE_STRING  getUnicodeCommandLine(HANDLE hProcess, PVOID paramAddress);
 #else
-	bool manageProcFiles(Process *process);
+	static bool manageProcFiles(Process *process);
 #endif
 
 public:
 	ProcessData();
 	~ProcessData();
 	void update_process_list();
-	bool is_server_running(string argin);
-	bool is_process_running(string argin);
-	int getNbServerInstances(string argin);
-	int  get_server_pid(string argin);
+	bool is_server_running(const string& argIn);
+	bool is_process_running(const string& argIn);
+	int getNbServerInstances(const string& argIn);
+	int  get_server_pid(const string& argin);
 	vector<Process>	get_process_list();
 #ifdef _TG_WINDOWS_
 	static string wchar2string(WCHAR *wch, int size=0x100);
@@ -153,14 +152,14 @@ class CheckProcessUtil: public omni_thread
 {
 private:
 	ProcessData	*data;
-	bool	stop_thread;
+	bool stop_thread;
 
 public:
 	CheckProcessUtil() { data=new ProcessData(); stop_thread=false;};
-	bool is_server_running(string argin);
-	bool is_process_running(string argin);
-	int getNbServerInstances(string argin);
-	int  get_server_pid(string argin);
+	bool is_server_running(const string& argin);
+	bool is_process_running(const string& argIn);
+	int getNbServerInstances(const string& argin);
+	int  get_server_pid(const string& argin);
 	vector<Process> get_process_list();
 	void stop_it() { stop_thread= true; };
 

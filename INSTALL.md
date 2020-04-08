@@ -9,13 +9,11 @@ The project has the following dependencies.
 * Tango Controls 9 or higher.
 * omniORB release 4 or higher.
 * libzmq - libzmq3-dev or libzmq5-dev.
-* Any other dependencies  **(Delete If Does Not Apply)**
 
 ### Toolchain Dependencies
 
 * C++11 compliant compiler.
-* CMake 3.0 or greater is required to perform the build. **(Delete If Does Not Apply)**
-* Any other dependencies  **(Delete If Does Not Apply)**
+* CMake 3.0 or greater is required to perform the build.
 
 ## Build
 

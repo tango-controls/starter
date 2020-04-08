@@ -78,7 +78,7 @@ public:
     time_t failure_time;
     void set_state(Tango::DevState st);
     Tango::DevState get_state() { return state; };
-    time_t get_moving_duration() { return time(NULL)-moving_time; }
+    time_t get_moving_duration() { return time(nullptr)-moving_time; }
 };
 
 //	Millisecond sleep platform independent.
@@ -87,10 +87,10 @@ public:
 #	define		ms_sleep(ms)	_sleep(ms);
 #	else
 #	define		ms_sleep(ms)	{\
-		struct timespec ts;     \
+		struct timespec ts{};     \
 		ts.tv_sec = ms / 1000;  \
 		ts.tv_nsec = (ms - (ts.tv_sec * 1000)) * 1000000; \
-		nanosleep(&ts,NULL); \
+		nanosleep(&ts,nullptr); \
 	}
 #	endif
 
@@ -117,16 +117,11 @@ class Starter;
 class StarterUtil
 {
 public :
-	string				notifyd_name;
-	string				log_home;
-	string				starter_log_file;	//	History log file
-	string				starter_stat_file;	//	Statistics file
-	CheckProcessUtil	*proc_util;
+	string log_home;
+	string starter_log_file;	//	History log file
+	string starter_stat_file;	//	Statistics file
+	CheckProcessUtil *proc_util;
 
-/**
- *	the event channel factory used to test if notifd is alive.
- */
-CosNotifyChannelAdmin::EventChannelFactory_var	ch_factory;
 /**
  *	@Constructor methods
  *	Constructor methods
@@ -135,7 +130,7 @@ CosNotifyChannelAdmin::EventChannelFactory_var	ch_factory;
 /**
  *	Default constructor.
  */
-StarterUtil(Tango::DeviceProxy *dev, vector<string> host_name, string logHome);
+StarterUtil(Tango::DeviceProxy *dev, const vector<string>& host_name, const string& logHome);
 //@}
 /**
  *	@name methods
@@ -145,19 +140,19 @@ StarterUtil(Tango::DeviceProxy *dev, vector<string> host_name, string logHome);
 /**
  *	Extract server name from input parameter (servname/instance).
  */
-string removeFQDN(string s);
+static string removeFQDN(string s);
 /**
  *	Extract server name from input parameter (servname/instance).
  *
  *      @param  argin     servname/instance
  */
-char *get_server_name(char *argin);
+static char *get_server_name(char *argin);
 /**
  *	Extract instance name from input parameter (servname/instance).
  *
  *      @param  argin     servname/instance
  */
-char *get_instance_name(char *argin);
+static char *get_instance_name(char *argin);
 /**
  *	Check if executable file exists
  *	and return its full name with good path.
@@ -165,8 +160,8 @@ char *get_instance_name(char *argin);
  *	@param	servname	Server name
  *	@param	fullpath	Path from property
  */
-char *check_exe_file(char *servname, vector<string> v_path);
-char *check_exe_file(string filename);
+static char *check_exe_file(char *servname, const vector<string>& v_path);
+static char *check_exe_file(string filename);
 /**
  *	Build the error log file name from server name and domain.
  *
@@ -177,21 +172,21 @@ string build_log_file_name(char *);
  *	Rename log file list
  *	@param	filename	log file name
  */
-vector<string> get_log_file_list(string filename);
+static vector<string> get_log_file_list(const string& filename);
 /**
  *	returns log file
- *	@param	filename	file's name to get the date and rename.
+ *	@param	filename	file's name to get the date and renstatic ame.
  */
 void manage_log_file_history(char *filename, int nb_max);
 /**
  *	Get the last modification on a file and return it in a string.
  *	@param	filename	file's name to get the date.
  */
-char *get_file_date(char *filename);
+static char *get_file_date(char *filename);
 /**
  *	Log info for starter.
  */
-void log_starter_info(string message);
+void log_starter_info(const string& message);
 /**
  *	Log statistics for specified server obsevrved by starter..
  */
@@ -203,14 +198,14 @@ void reset_starter_stat_file(vector<ControlledServer> *servers);
 /**
  *	Format the date and time in the argin value (Ux format) as string.
  */
-char *strtime(time_t t);
+static char *strtime(time_t t);
 /**
  *	search a server in ControlledServer array by it's name in an array.
  *
  *	@param servname	Server searched name.
  *	@param servers	Array of structure to search name.
  */
-ControlledServer *get_server_by_name(string&, vector<ControlledServer>&);
+static ControlledServer *get_server_by_name(string&, vector<ControlledServer>&);
 /**
  *	Get host device servers list from database.
  *
@@ -230,16 +225,11 @@ void get_server_info(ControlledServer *);
  *	Allocate and fill the servers controlled object
  */
 void build_server_ctrl_object(vector<ControlledServer> *servers);
-/**
- *	check if Notify Daemon is alive.
- */
-Tango::DevState is_notifyd_alive();
-void import_notifyd();
 
 //@}
 private:
 	static int		elapsed;
-	vector<string>	hostnames;
+	vector<string>	hostNames;
 	/**
 	 *	Database device (as DeviceProxy) for not implemented API commands.
 	 */

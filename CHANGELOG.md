@@ -1,5 +1,9 @@
 # Changelog
 
+#### Starter-7.4 (08/04/2020):
+    Remove all notifd control (not used since Tango 8)
+    Add several cpp-11 features (gcc.4.7 or higher)
+
 #### Starter-7.3 (06/11/2019):
     Fix some spelling errors.
 

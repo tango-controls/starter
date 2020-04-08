@@ -317,23 +317,6 @@ CORBA::Any *HardKillServerClass::execute(Tango::DeviceImpl *device, const CORBA:
 
 //--------------------------------------------------------
 /**
- * method : 		NotifyDaemonStateClass::execute()
- * description : 	method to trigger the execution of the command.
- *
- * @param	device	The device on which the command must be executed
- * @param	in_any	The command input data
- *
- *	returns The command output data (packed in the Any object)
- */
-//--------------------------------------------------------
-CORBA::Any *NotifyDaemonStateClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
-{
-	cout2 << "NotifyDaemonStateClass::execute(): arrived" << endl;
-	return insert((static_cast<Starter *>(device))->notify_daemon_state());
-}
-
-//--------------------------------------------------------
-/**
  * method : 		ResetStatisticsClass::execute()
  * description : 	method to trigger the execution of the command.
  *
@@ -430,7 +413,6 @@ void StarterClass::get_class_property()
 	//	Initialize class property data members
 	readInfoDbPeriod  = 4;
 	nbStartupLevels   = 5;
-	useEvents   = false;
 	logFileHome = LOG_HOME;
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::get_class_property_before
@@ -441,7 +423,6 @@ void StarterClass::get_class_property()
 	cl_prop.push_back(Tango::DbDatum("ReadInfoDbPeriod"));
 	cl_prop.push_back(Tango::DbDatum("ServerStartupTimeout"));
 	cl_prop.push_back(Tango::DbDatum("StartServersAtStartup"));
-	cl_prop.push_back(Tango::DbDatum("UseEvents"));
 	cl_prop.push_back(Tango::DbDatum("MovingMaxDuration"));
 	
 	//	Call database and extract values
@@ -522,18 +503,6 @@ void StarterClass::get_class_property()
 			cl_prop[i]  <<  startServersAtStartup;
 		}
 	}
-	//	Try to extract UseEvents value
-	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  useEvents;
-	else
-	{
-		//	Check default value for UseEvents
-		def_prop = get_default_class_property(cl_prop[i].name);
-		if (def_prop.is_empty()==false)
-		{
-			def_prop    >>  useEvents;
-			cl_prop[i]  <<  useEvents;
-		}
-	}
 	//	Try to extract MovingMaxDuration value
 	if (cl_prop[++i].is_empty()==false)	cl_prop[i]  >>  movingMaxDuration;
 	else
@@ -551,13 +520,12 @@ void StarterClass::get_class_property()
 	//	Check class property data members init
 	cout2 << "readInfoDbPeriod  = " << readInfoDbPeriod << endl;
 	cout2 << "nbStartupLevels   = " << nbStartupLevels << endl;
-	cout2 << "useEvents         = " << ((useEvents)? "True":"False") << endl;
 	cout2 << "logFileHome       = " << logFileHome   << endl;
 
 	//	Put the value (depends on OS) in cl_prop to be set as default value for device property..
-	for (unsigned int i=0 ; i<cl_prop.size() ; i++)
-		if (cl_prop[i].name == "LogFileHome")
-			cl_prop[i]  <<  logFileHome;
+	for (auto & i : cl_prop)
+		if (i.name == "LogFileHome")
+			i  <<  logFileHome;
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::get_class_property_after
 
@@ -653,20 +621,6 @@ void StarterClass::set_default_property()
 	prop_def  = "true";
 	vect_data.clear();
 	vect_data.push_back("true");
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		cl_def_prop.push_back(data);
-		add_wiz_class_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_class_prop(prop_name, prop_desc);
-	prop_name = "UseEvents";
-	prop_desc = "Use events if not null.";
-	prop_def  = "0";
-	vect_data.clear();
-	vect_data.push_back("0");
 	if (prop_def.length()>0)
 	{
 		Tango::DbDatum	data(prop_name);
@@ -779,20 +733,6 @@ void StarterClass::set_default_property()
 	prop_def  = "true";
 	vect_data.clear();
 	vect_data.push_back("true");
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "UseEvents";
-	prop_desc = "Use events if not null.";
-	prop_def  = "0";
-	vect_data.clear();
-	vect_data.push_back("0");
 	if (prop_def.length()>0)
 	{
 		Tango::DbDatum	data(prop_name);
@@ -939,30 +879,6 @@ void StarterClass::attribute_factory(vector<Tango::Attr *> &att_list)
 	//	Add your own code
 
 	/*----- PROTECTED REGION END -----*/	//	StarterClass::attribute_factory_before
-	//	Attribute : NotifdState
-	NotifdStateAttrib	*notifdstate = new NotifdStateAttrib();
-	Tango::UserDefaultAttrProp	notifdstate_prop;
-	notifdstate_prop.set_description("return ON or FAULT if notify daemon is running or not.");
-	notifdstate_prop.set_label("Notifd State");
-	//	unit	not set for NotifdState
-	//	standard_unit	not set for NotifdState
-	//	display_unit	not set for NotifdState
-	//	format	not set for NotifdState
-	//	max_value	not set for NotifdState
-	//	min_value	not set for NotifdState
-	//	max_alarm	not set for NotifdState
-	//	min_alarm	not set for NotifdState
-	//	max_warning	not set for NotifdState
-	//	min_warning	not set for NotifdState
-	//	delta_t	not set for NotifdState
-	//	delta_val	not set for NotifdState
-	
-	notifdstate->set_default_properties(notifdstate_prop);
-	notifdstate->set_polling_period(1000);
-	notifdstate->set_disp_level(Tango::OPERATOR);
-	//	Not Memorized
-	att_list.push_back(notifdstate);
-
 	//	Attribute : HostState
 	HostStateAttrib	*hoststate = new HostStateAttrib();
 	Tango::UserDefaultAttrProp	hoststate_prop;
@@ -1177,15 +1093,6 @@ void StarterClass::command_factory()
 			"",
 			Tango::OPERATOR);
 	command_list.push_back(pHardKillServerCmd);
-
-	//	Command NotifyDaemonState
-	NotifyDaemonStateClass	*pNotifyDaemonStateCmd =
-		new NotifyDaemonStateClass("NotifyDaemonState",
-			Tango::DEV_VOID, Tango::DEV_STATE,
-			"",
-			"Tango::ON if Notify daemon is running else Tango::FAULT.",
-			Tango::OPERATOR);
-	command_list.push_back(pNotifyDaemonStateCmd);
 
 	//	Command ResetStatistics
 	ResetStatisticsClass	*pResetStatisticsCmd =

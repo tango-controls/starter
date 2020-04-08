@@ -48,7 +48,6 @@
 
 
 #define	TIME_BETWEEN_STARTUPS	500	//	Milli seconds
-#define NOTIFY_DAEMON_SCRIPT	"notify_daemon"
 
 //	Used onlyduring the Cpp Api bug fixing on
 //	specAtt->get_max_x() method.
@@ -63,11 +62,11 @@
 
 //	Structure to define a new process to start
 typedef struct {
-	bool	could_start;
-	char	*adminName;
-	char	*serverName;
-	char	*instanceName;
-	char	*logFileName;
+	bool could_start;
+	char *adminName;
+	char *serverName;
+	char *instanceName;
+	char *logFileName;
 }
 NewProcess;
 
@@ -121,10 +120,6 @@ public:
 	 */
 	Tango::DeviceProxy	*dbase;
 	/**
-	 *	Notify daemon State.
-	 */
-	Tango::DevState	notifyd_state;
-	/**
 	 *	Is server list modification fired from DB ds.
 	 */
 	Tango::DevShort	fireFromDbase;
@@ -158,8 +153,6 @@ public:
 	vector<string>	startDsPath;
 	//	StartServersAtStartup:	Skip starting servers at startup if false.
 	Tango::DevBoolean	startServersAtStartup;
-	//	UseEvents:	Use events if not null.
-	Tango::DevShort	useEvents;
 	//	WaitForDriverStartup:	The Starter will wait a bit before starting servers, to be sure than the drivers
 	//  are started.This time is in seconds.
 	Tango::DevShort	waitForDriverStartup;
@@ -169,7 +162,6 @@ public:
 
 //	Attribute data members
 public:
-	Tango::DevState	*attr_NotifdState_read;
 	Tango::DevShort	*attr_HostState_read;
 	Tango::DevString	*attr_RunningServers_read;
 	Tango::DevString	*attr_StoppedServers_read;
@@ -235,15 +227,6 @@ public:
 	//--------------------------------------------------------
 	virtual void read_attr_hardware(vector<long> &attr_list);
 
-/**
- *	Attribute NotifdState related methods
- *	Description: return ON or FAULT if notify daemon is running or not.
- *
- *	Data type:	Tango::DevState
- *	Attr type:	Scalar
- */
-	virtual void read_NotifdState(Tango::Attribute &attr);
-	virtual bool is_NotifdState_allowed(Tango::AttReqType type);
 /**
  *	Attribute HostState related methods
  *	Description: 
@@ -376,14 +359,6 @@ public:
 	 */
 	virtual void hard_kill_server(Tango::DevString argin);
 	virtual bool is_HardKillServer_allowed(const CORBA::Any &any);
-	/**
-	 *	Command NotifyDaemonState related method
-	 *	Description: Returns the Notify Daemon state.
-	 *
-	 *	@returns Tango::ON if Notify daemon is running else Tango::FAULT.
-	 */
-	virtual Tango::DevState notify_daemon_state();
-	virtual bool is_NotifyDaemonState_allowed(const CORBA::Any &any);
 	/**
 	 *	Command ResetStatistics related method
 	 *	Description: Reset statistics file.

@@ -1,5 +1,4 @@
 /*PROTECTED REGION ID(Starter::main.cpp) ENABLED START*/
-static const char *releaseName    = "Starter-Release-6.2";
 //=============================================================================
 //
 // file :        main.cpp
@@ -52,10 +51,6 @@ static const char *releaseName    = "Starter-Release-6.2";
 #endif
 
 
-#include <string.h>
-#include <Starter.h>
-
-
 #ifdef USE_SERVICE
 #include <StarterService.h>
 using namespace std;
@@ -78,7 +73,7 @@ int main(int argc,char *argv[])
 	sa.sa_handler = SIG_DFL;
 	sigemptyset(&sa.sa_mask);
 
-	if (sigaction(SIGINT,&sa,NULL) == -1)
+	if (sigaction(SIGINT,&sa, nullptr) == -1)
 		cerr << "Starter main() --> Can't reset default action for SIGINT to SIG_DFL" << endl;
 #endif
 	//	Check for hostname
@@ -108,8 +103,6 @@ int main(int argc,char *argv[])
 
 #else
 
-	if (argc==1)
-		cout <<  releaseName << endl;
 	try
 	{
 		// Initialise the device server

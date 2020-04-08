@@ -60,19 +60,6 @@ namespace Starter_ns
 //=========================================
 //	Define classes for attributes
 //=========================================
-//	Attribute NotifdState class definition
-class NotifdStateAttrib: public Tango::Attr
-{
-public:
-	NotifdStateAttrib():Attr("NotifdState",
-			Tango::DEV_STATE, Tango::READ) {};
-	~NotifdStateAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<Starter *>(dev))->read_NotifdState(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<Starter *>(dev))->is_NotifdState_allowed(ty);}
-};
-
 //	Attribute HostState class definition
 class HostStateAttrib: public Tango::Attr
 {
@@ -313,29 +300,6 @@ public:
 	{return (static_cast<Starter *>(dev))->is_HardKillServer_allowed(any);}
 };
 
-//	Command NotifyDaemonState class definition
-class NotifyDaemonStateClass : public Tango::Command
-{
-public:
-	NotifyDaemonStateClass(const char   *name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out,
-				   const char        *in_desc,
-				   const char        *out_desc,
-				   Tango::DispLevel  level)
-	:Command(name,in,out,in_desc,out_desc, level)	{};
-
-	NotifyDaemonStateClass(const char   *name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out)
-	:Command(name,in,out)	{};
-	~NotifyDaemonStateClass() {};
-	
-	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
-	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
-	{return (static_cast<Starter *>(dev))->is_NotifyDaemonState_allowed(any);}
-};
-
 //	Command ResetStatistics class definition
 class ResetStatisticsClass : public Tango::Command
 {
@@ -414,8 +378,6 @@ public:
 		Tango::DevLong	serverStartupTimeout;
 		//	StartServersAtStartup:	Skip starting servers at startup if false. It a way to do not have a big re-start of many servers after a power cut.
 		Tango::DevBoolean	startServersAtStartup;
-		//	UseEvents:	Use events if not null.
-		Tango::DevShort	useEvents;
 		//	MovingMaxDuration:	If a server is moving during a period more than this value,
 		//  the Starter will be switched from MOVING to STANDBY
 		Tango::DevLong	movingMaxDuration;

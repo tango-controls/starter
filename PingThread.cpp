@@ -37,11 +37,13 @@
 
 #include <PingThread.h>
 
+#include <utility>
+
 #ifndef    TIME_VAR
 #ifndef _TG_WINDOWS_
 
 #	define    TimeVal    struct timeval
-#	define    GetTime(t)    gettimeofday(&t, NULL);
+#	define    GetTime(t)    gettimeofday(&t, nullptr);
 #	define    Elapsed(before, after)    \
         1000.0*(after.tv_sec-before.tv_sec) + \
         ((double)after.tv_usec-before.tv_usec) / 1000
@@ -57,104 +59,104 @@
 #endif    /*	TIME_VAR	*/
 
 namespace Starter_ns {
-//+----------------------------------------------------------------------------
-/**
- *	Constructor
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Constructor
+     */
+    //+----------------------------------------------------------------------------
     PingThreadData::PingThreadData(string sname) {
-        servname = sname;
+        servname = std::move(sname);
         stop_thread = false;
-        last_write_time = time(NULL);
+        last_write_time = time(nullptr);
         state = Tango::ON;
         nbInstances = 0;
     }
-//+----------------------------------------------------------------------------
-/**
- *	Get the server name
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Get the server name
+     */
+    //+----------------------------------------------------------------------------
     string PingThreadData::get_server_name() {
         omni_mutex_lock sync(*this);
         return servname;
     }
-//+----------------------------------------------------------------------------
-/**
- *	command to stop thread
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	command to stop thread
+     */
+    //+----------------------------------------------------------------------------
     void PingThreadData::set_stop_thread() {
         omni_mutex_lock sync(*this);
         stop_thread = true;
         signal();
     }
-//+----------------------------------------------------------------------------
-/**
- *	get  stop thread status
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	get  stop thread status
+     */
+    //+----------------------------------------------------------------------------
     bool PingThreadData::get_stop_thread() {
         omni_mutex_lock sync(*this);
         return stop_thread;
     }
-//+----------------------------------------------------------------------------
-/**
- *	Return the elapsed time from last write.
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Return the elapsed time from last write.
+     */
+    //+----------------------------------------------------------------------------
     time_t PingThreadData::get_last_write_time() {
         omni_mutex_lock sync(*this);
         return last_write_time;
     }
-//+----------------------------------------------------------------------------
-/**
- *	Set the ping result.
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Set the ping result.
+     */
+    //+----------------------------------------------------------------------------
     void PingThreadData::set_state(Tango::DevState st) {
         omni_mutex_lock sync(*this);
         state = st;
-        last_write_time = time(NULL);
+        last_write_time = time(nullptr);
     }
-//+----------------------------------------------------------------------------
-/**
- *	Set the ping result.
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Set the ping result.
+     */
+    //+----------------------------------------------------------------------------
     Tango::DevState PingThreadData::get_state() {
         omni_mutex_lock sync(*this);
         return state;
     }
-//+----------------------------------------------------------------------------
-/**
- *	Force thread to update data.
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Force thread to update data.
+     */
+    //+----------------------------------------------------------------------------
     void PingThreadData::wake_up() {
         omni_mutex_lock sync(*this);
         signal();
     }
-//+----------------------------------------------------------------------------
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
     void PingThreadData::setNbInstaces(int nb) {
         omni_mutex_lock sync(*this);
         nbInstances = nb;
     }
-//+----------------------------------------------------------------------------
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
     int PingThreadData::getNbInstaces() {
         omni_mutex_lock sync(*this);
         return nbInstances;
     }
-//+----------------------------------------------------------------------------
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
 
 
 
 
 
 
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
     /**
      *	Create a thread to ping server
      *
@@ -163,7 +165,7 @@ namespace Starter_ns {
      *	@param	timeout	timeout value in milliseconds for ping command.
      */
     //+----------------------------------------------------------------------------
-    PingThread::PingThread(PingThreadData *sd, string name, CheckProcessUtil *proc_util)
+    PingThread::PingThread(PingThreadData *sd, const string& name, CheckProcessUtil *proc_util)
 	{
         //  Convert instance to lowercase
         unsigned long idx = name.find('/');
@@ -176,14 +178,14 @@ namespace Starter_ns {
         shared = sd;
         process_util = proc_util;
 	}
-//+----------------------------------------------------------------------------
-/**
- *	Execute the thread loop.
- */
-//+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
+    /**
+     *	Execute the thread loop.
+     */
+    //+----------------------------------------------------------------------------
     void *PingThread::run_undetached(TANGO_UNUSED(void *ptr)) {
-         TimeVal before, after;
-        Tango::DeviceProxy *dev = NULL;
+         TimeVal before{}, after{};
+        Tango::DeviceProxy *pDevice = nullptr;
         Tango::DevState state;
         bool stop_thread = false;
         string adm_devname("dserver/");
@@ -196,9 +198,9 @@ namespace Starter_ns {
             //	Check before if server running or failed
             if (process_util->is_server_running(servname)) {
                 //	try to build DeviceProxy
-                if (dev == NULL) {
+                if (pDevice == nullptr) {
                     try {
-                        dev = new Tango::DeviceProxy(adm_devname);
+                        pDevice = new Tango::DeviceProxy(adm_devname);
                     }
                     catch (Tango::DevFailed &e) {
                         Tango::Except::print_exception(e);
@@ -209,14 +211,18 @@ namespace Starter_ns {
                         cout << "============================================" << endl;
                     }
                 }
-                try {
-                    dev->ping();
-                    state = Tango::ON;
-                }
-                catch (Tango::DevFailed &) {
-                    cout << servname << " is running but not responding !!!" << endl;
-                    //Tango::Except::print_exception(e);
+                if (pDevice != nullptr) {
+                    try {
+                        pDevice->ping();
+                        state = Tango::ON;
+                    }
+                    catch (Tango::DevFailed &) {
+                        cout << servname << " is running but not responding !!!" << endl;
+                        //Tango::Except::print_exception(e);
                         state = Tango::MOVING;
+                    }
+                } else {
+                    state = Tango::FAULT;
                 }
             } else {
                 state = Tango::FAULT;
@@ -224,7 +230,7 @@ namespace Starter_ns {
             shared->set_state(state);
 
             //	Compute time to sleep
-            GetTime(after);
+            GetTime(after)
             double dt = (double) Elapsed(before, after);
             long time_to_sleep = 2000 - (int) dt;
             if (time_to_sleep < 10)
@@ -240,11 +246,9 @@ namespace Starter_ns {
             stop_thread = shared->get_stop_thread();
         }
         delete shared;
-        if (dev != NULL)
-            delete dev;
-        return NULL;
+        delete pDevice;
+        return nullptr;
     }
-//+----------------------------------------------------------------------------
-
-
+    //+----------------------------------------------------------------------------
+    //+----------------------------------------------------------------------------
 }    //	namespace

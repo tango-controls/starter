@@ -85,7 +85,7 @@ public:
 	/**
 	 *	Get the last command time
 	 */
-	time_t get_last_write_time();
+	time_t  get_last_write_time();
 	/**
 	 *	Set the ping result
 	 */
@@ -129,7 +129,7 @@ public:
 	 *	@param	name The pinged server name
 	 *	@param	timeout	timeout value in milliseconds for ping command.
 	 */
-	PingThread(PingThreadData *sd, string name, CheckProcessUtil *proc_util);
+	PingThread(PingThreadData *sd, const string& name, CheckProcessUtil *proc_util);
 
 	/**
 	 *	Execute the thread loop.

@@ -33,7 +33,7 @@ The project has the following dependencies.
 #### Toolchain Dependencies
 
 * C++11 compliant compiler.
-* CMake 3.0 or greater is required to perform the build. **(Delete If Does Not Apply)**
+* CMake 3.0 or greater is required to perform the build.
 
 ### Build
 
