@@ -1,5 +1,8 @@
 # Changelog
 
+#### Starter-7.5 (15/04/2020):
+    Fix bug in Close the stderr and re-open it on a log file.
+
 #### Starter-7.4 (08/04/2020):
     Remove all notifd control (not used since Tango 8)
     Add several cpp-11 features (gcc.4.7 or higher)
