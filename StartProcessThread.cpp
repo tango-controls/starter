@@ -137,7 +137,7 @@ namespace Starter_ns {
                 else
                     cout << "----- " << servname << " Timeout = " << (t1 - t0) << endl;
 
-                //	Wait a bit betwee 2 startup (not for last one)
+                //	Wait a bit between 2 startup (not for last one)
                 if (thread_level > 0 && i < processes.size() - 1) {
                     ms_sleep(TIME_BETWEEN_STARTUPS)
                 }
@@ -211,7 +211,7 @@ namespace Starter_ns {
 #endif
                         // Close standard out
                         close(1);
-                        open("/dev/nullptr", O_RDWR | O_CREAT, 0664);
+                        open("/dev/null", O_RDWR | O_CREAT, 0664);
 
                         //	Close the stderr and re-open it on a log file.
                         close(2);
